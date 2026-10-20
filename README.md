@@ -278,6 +278,23 @@ python3 host/fanctl.py mode 3 dc
 python3 host/fanctl.py watch -i 2
 ```
 
+### Setting one fan
+
+Use the fan number (1–4) in place of `all`. Fan 1 is header J5, and fan 4 is header J8.
+
+```sh
+python3 host/fanctl.py set 1 50      # fan 1 to 50 %
+python3 host/fanctl.py set 3 80      # fan 3 to 80 %
+python3 host/fanctl.py set 4 0       # fan 4 off (in pwm mode the supply is cut too)
+python3 host/fanctl.py -p /dev/ttyACM1 set 2 40   # board on another port
+```
+
+- Each command sets one fan or all fans. Lists such as `1,2` and ranges such as `1-3` are not accepted.
+- To check a fan, run `python3 host/fanctl.py get`. Read the `fan N duty=… rpm=…` line.
+- Settings hold only while the host keeps talking to the board. When no
+  command arrives for 10 s, all fans return to 100 %. Keep `fanctl.py watch`
+  or a control daemon running to hold the values.
+
 The `FanController` class in `fanctl.py` can be imported to build a control
 daemon, for example one that maps an NTC reading from `ain` to a fan duty.
 For a 10 kΩ NTC on the 10 kΩ bias resistor, the resistance is
