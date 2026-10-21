@@ -3520,16 +3520,6 @@
 		(uuid "60f6c932-065a-5a42-892a-4f074eebcf12")
 	)
 	(label "GND"
-		(at 218.44 71.12 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "6224afd0-69f4-5ca0-b214-b3828f3b51ac")
-	)
-	(label "GND"
 		(at 109.22 44.45 180)
 		(effects
 			(font
@@ -3649,16 +3639,6 @@
 		)
 		(uuid "6e3a909b-6cd2-581c-b953-9191c7aa3d6e")
 	)
-	(label "USB_DM"
-		(at 218.44 68.58 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "6e435911-3a8e-5b10-9fc2-0c8c20149fb5")
-	)
 	(label "GND"
 		(at 480.06 127 0)
 		(effects
@@ -3728,16 +3708,6 @@
 			(justify right bottom)
 		)
 		(uuid "79d984af-2b78-5cb0-8b63-681345a5ecbc")
-	)
-	(label "USB_DP"
-		(at 218.44 66.04 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "7b6da955-d91e-550c-b38e-666900f5a32a")
 	)
 	(label "AIN4"
 		(at 657.86 292.1 0)
@@ -3930,16 +3900,6 @@
 		(uuid "95115aa3-feab-5bd9-8e4b-45588d051bb8")
 	)
 	(label "GND"
-		(at 22.86 46.99 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "98861e13-d2bc-5540-a17c-87c76a67dbc0")
-	)
-	(label "GND"
 		(at 657.86 378.46 0)
 		(effects
 			(font
@@ -3948,16 +3908,6 @@
 			(justify left bottom)
 		)
 		(uuid "99b117c5-ea31-5a29-87e1-580154adde4a")
-	)
-	(label "+3V3"
-		(at 213.36 83.82 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9b5f99f3-423c-5d72-9c56-cad58d86e561")
 	)
 	(label "GND"
 		(at 35.56 99.06 0)
@@ -4009,16 +3959,6 @@
 		)
 		(uuid "a159b50c-5b88-5ce9-8635-f169453b1c6b")
 	)
-	(label "VIN_12V"
-		(at 22.86 44.45 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a1837a12-9b30-5287-b343-90deaa006066")
-	)
 	(label "FAN3_PWM_G"
 		(at 480.06 76.2 0)
 		(effects
@@ -4048,26 +3988,6 @@
 			(justify right bottom)
 		)
 		(uuid "a4437eff-62ad-542b-82e0-02610aa94987")
-	)
-	(label "USB_DM"
-		(at 198.12 68.58 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a501b314-b632-58bf-adf5-e2aeefce439d")
-	)
-	(label "GND"
-		(at 200.66 54.61 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a8676fa7-8bc4-5e8c-a2a3-1e4e3d9bfe46")
 	)
 	(label "FAN2_PWM"
 		(at 381 76.2 180)
@@ -4128,16 +4048,6 @@
 			(justify left bottom)
 		)
 		(uuid "b0853ecf-4acc-522b-869b-b42774b8e6f4")
-	)
-	(label "USB_DP"
-		(at 203.2 83.82 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "b09115ea-5b39-56ed-86dd-814c5f1f7f53")
 	)
 	(label "FAN3_PWM"
 		(at 469.9 76.2 180)
@@ -4499,16 +4409,6 @@
 		)
 		(uuid "d68e1e8e-947e-5a76-a78c-856437429e70")
 	)
-	(label "USB_DM"
-		(at 200.66 49.53 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d7e5ae21-a00e-5f83-8b9f-8ae3c848613e")
-	)
 	(label "V12_SENSE"
 		(at 35.56 149.86 0)
 		(effects
@@ -4608,16 +4508,6 @@
 			(justify left bottom)
 		)
 		(uuid "dea56840-8607-569e-9ece-9320ba86fdfc")
-	)
-	(label "+5V"
-		(at 200.66 46.99 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "dedae843-edda-5042-b705-7135893d4b59")
 	)
 	(label "FAN1_PWM"
 		(at 736.6 96.52 180)
@@ -4759,16 +4649,6 @@
 		)
 		(uuid "f1f98b85-1ebe-5dcd-89a0-1aa5458325e7")
 	)
-	(label "USB_DP"
-		(at 200.66 52.07 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "f2d41756-1816-5515-9163-340e5e0713ac")
-	)
 	(label "FAN2_PWM_OUT"
 		(at 393.7 59.69 0)
 		(effects
@@ -4879,16 +4759,6 @@
 		)
 		(uuid "fce32c96-5cbe-5ef8-8607-51e687385965")
 	)
-	(label "USB_DP"
-		(at 198.12 66.04 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "fd12bc79-0dcb-5551-98e5-0e25ff6ece04")
-	)
 	(label "FAN3_PWM_G"
 		(at 469.9 88.9 180)
 		(effects
@@ -4898,106 +4768,6 @@
 			(justify right bottom)
 		)
 		(uuid "fdfa9962-ca21-5990-a80f-52ed47bdd92e")
-	)
-	(label "+5V"
-		(at 198.12 71.12 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "ff223561-4e42-5eeb-a4f5-08cc916fad98")
-	)
-	(symbol
-		(lib_id "fanctl:Conn_01x02")
-		(at 30.48 45.72 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "0033a43e-89e6-577c-a57b-2894eab57c29")
-		(property "Reference" "J1"
-			(at 30.48 41.91 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "12V IN"
-			(at 30.48 49.53 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
-			(at 30.48 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 30.48 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "12 V input from PSU"
-			(at 30.48 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "Phoenix 1715721"
-			(at 30.48 45.72 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "6ede5ded-eec7-5a3d-9f8e-7bbaf4ff27de")
-		)
-		(pin "2"
-			(uuid "d290ad14-070c-5783-bfe2-a73828adbb9a")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "J1")
-					(unit 1)
-				)
-			)
-		)
 	)
 	(symbol
 		(lib_id "fanctl:C")
@@ -6062,108 +5832,6 @@
 		)
 	)
 	(symbol
-		(lib_id "fanctl:USBLC6-2SC6")
-		(at 208.28 68.58 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "1dbb0c7a-f309-5546-8328-76c0179358d6")
-		(property "Reference" "U1"
-			(at 208.28 63.5 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "USBLC6-2SC6"
-			(at 208.28 73.66 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
-			(at 208.28 68.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 208.28 68.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "USB ESD protection"
-			(at 208.28 68.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "STMicroelectronics USBLC6-2SC6"
-			(at 208.28 68.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "c5627cfd-b1cb-5afc-876c-fa156e6da4f6")
-		)
-		(pin "3"
-			(uuid "7d0a949e-d357-5683-b713-70b2f4405f22")
-		)
-		(pin "5"
-			(uuid "dfc3250a-20ee-514f-8a27-0959ede3f260")
-		)
-		(pin "6"
-			(uuid "4109e875-67ec-5d2d-95e7-95a117ff16e6")
-		)
-		(pin "4"
-			(uuid "120e90ce-55ff-5a6e-9378-048f577d1eeb")
-		)
-		(pin "2"
-			(uuid "4edbfd51-172e-55e3-8148-6e387c7dd806")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "U1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "fanctl:BluePill_B")
 		(at 119.38 129.54 0)
 		(unit 1)
@@ -6851,96 +6519,6 @@
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
 					(reference "J10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "fanctl:R")
-		(at 208.28 83.82 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp yes)
-		(uuid "348ef3bc-1d31-5f7e-a806-461dcc519314")
-		(property "Reference" "R3"
-			(at 208.28 81.28 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1k8"
-			(at 208.28 86.36 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 208.28 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 208.28 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Fit only if the Blue Pill's D+ pull-up (R10) is 10k; 1k8 || 10k = 1k5"
-			(at 208.28 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" ""
-			(at 208.28 83.82 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "2f7602de-cdd7-551e-8b50-002590a34fbc")
-		)
-		(pin "2"
-			(uuid "f917e160-7386-50ff-97ba-5e4d22ac504f")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -8936,102 +8514,6 @@
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
 					(reference "TP1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "fanctl:Conn_01x04")
-		(at 208.28 50.8 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "7378c5e6-5bd5-5a17-b924-6b151581f4a1")
-		(property "Reference" "J4"
-			(at 208.28 44.45 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "USB int"
-			(at 208.28 57.15 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
-			(at 208.28 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 208.28 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Alt. to Blue Pill micro-B: cable to motherboard USB 2.0 header (VBUS D- D+ GND)"
-			(at 208.28 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" ""
-			(at 208.28 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "8ad6f5bf-0dff-5988-b82b-2604cce8e03f")
-		)
-		(pin "2"
-			(uuid "facbe0b1-0c1c-5fb2-a131-0c302c8499ee")
-		)
-		(pin "3"
-			(uuid "79d881b5-f517-5124-8bc0-5fcbf5c3b749")
-		)
-		(pin "4"
-			(uuid "99fc03b9-bc93-5981-ae44-5a3fc1047c42")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "J4")
 					(unit 1)
 				)
 			)
@@ -12474,6 +11956,140 @@
 				)
 			)
 		)
+	)
+	(symbol
+		(lib_id "fanctl:Conn_01x04")
+		(at 30.48 45.72 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "84d3f042-abc4-4b19-a1d1-a49e87f29575")
+		(property "Reference" "J1"
+			(at 30.48 39.37 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "12V IN"
+			(at 30.48 52.07 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "fanctl:ConnHeader_MateNLok_1x04_P5.08mm_Vertical"
+			(at 30.48 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 30.48 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "12 V input from PSU, 4-ckt Mate-N-Lok (pins 1-2 +12V, pins 3-4 GND, 12A/pin, 0.2in pitch)"
+			(at 30.48 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "TE Connectivity 350424-1"
+			(at 30.48 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ce145506-66a4-4909-888e-922873b09367")
+		)
+		(pin "2"
+			(uuid "e2472a63-0d14-4fef-8b95-e6652d0c5002")
+		)
+		(pin "3"
+			(uuid "ac448f5d-2eff-4ced-a42b-ce7dff05f73b")
+		)
+		(pin "4"
+			(uuid "584268a7-fe66-4639-85fe-482e2d47dc41")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "VIN_12V"
+		(at 22.86 41.91 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "db7c103e-6b12-48bc-91c5-d1ac2ed8e06c")
+	)
+	(label "VIN_12V"
+		(at 22.86 44.449999999999996 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0553646f-bf77-41a4-9738-f0d8ba967738")
+	)
+	(label "GND"
+		(at 22.86 46.99 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3bb12c8f-8250-423a-b3b2-19cf5631ddb7")
+	)
+	(label "GND"
+		(at 22.86 49.53 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "89ecb359-4f3c-4090-8cea-9c04437cc126")
 	)
 	(sheet_instances
 		(path "/"

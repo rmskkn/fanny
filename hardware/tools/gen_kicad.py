@@ -86,6 +86,7 @@ FP_PTC = "Fuse:Fuse_1812_4532Metric"
 FP_SOT236 = "Package_TO_SOT_SMD:SOT-23-6"
 FP_FAN = "Connector:FanPinHeader_1x04_P2.54mm_Vertical"
 FP_TERM = "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+FP_MATENLOK = "fanctl:ConnHeader_MateNLok_1x04_P5.08mm_Vertical"
 FP_TP = "TestPoint:TestPoint_Pad_D1.5mm"
 FP_SOCKET20 = "Connector_PinSocket_2.54mm:PinSocket_1x20_P2.54mm_Vertical"
 
@@ -114,7 +115,9 @@ def cap(block, value, a, b="GND", fp=FP_C, desc=""):
 
 # Power input and protection (fans only; the Blue Pill runs from USB), 12 V sense
 B = "Power"
-part(B, "Conn_01x02", "12V IN", FP_TERM, {"1": "VIN_12V", "2": "GND"}, "Phoenix 1715721", "12 V input from PSU")
+part(B, "Conn_01x04", "12V IN", FP_MATENLOK,
+     {"1": "VIN_12V", "2": "VIN_12V", "3": "GND", "4": "GND"}, "TE Connectivity 350424-1",
+     "12 V input from PSU, 4-ckt Mate-N-Lok (2x +12V + 2x GND, 12 A/pin, 0.2in pitch)")
 part(B, "Polyfuse", "2.5A", FP_PTC, {"1": "VIN_12V", "2": "+12V"}, "Bourns MF-MSMF250/16X-2", "PTC 2.5 A hold, 16 V")
 part(B, "D_TVS", "SMBJ13A", FP_SMB, {"1": "+12V", "2": "GND"}, "Littelfuse SMBJ13A",
      "TVS 13 V standoff; also crowbars reverse polarity into F1")
