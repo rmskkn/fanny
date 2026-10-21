@@ -25,6 +25,8 @@ LIB = "fanctl"
 NS = uuid.UUID("6f1c0d2e-3a51-4c1b-9d0e-2b7f5a3c8e41")  # stable UUIDs across runs
 ROOT_UUID = str(uuid.uuid5(NS, "root"))
 G = 2.54
+BOARD_W, BOARD_H = 75, 60  # mm
+HOLES = [(x, y) for y in (3.5, BOARD_H - 3.5) for x in (3.5, BOARD_W - 3.5)]  # M3, 3.2 mm
 
 # --------------------------------------------------------------------------
 # Symbols: (left pins, right pins, body width, show pin names)
@@ -47,14 +49,10 @@ SYMBOLS = {
     "Polyfuse": two_pin(),
     # KiCad diode/LED footprints: pad 1 = cathode.
     "D": dict(left=[("2", "A")], right=[("1", "K")], w=2 * G, names=True),
-    "D_Zener": dict(left=[("2", "A")], right=[("1", "K")], w=2 * G, names=True),
-    "D_Schottky": dict(left=[("2", "A")], right=[("1", "K")], w=2 * G, names=True),
     "D_TVS": dict(left=[("2", "A")], right=[("1", "K")], w=2 * G, names=True),
     "LED": dict(left=[("2", "A")], right=[("1", "K")], w=2 * G, names=True),
     "BAT54S": dict(left=[("1", "A1"), ("2", "K2")], right=[("3", "K1A2")], w=4 * G, names=True),
-    "Q_PMOS_GSD": dict(left=[("1", "G")], right=[("2", "S"), ("3", "D")], w=4 * G, names=True),
     "Q_NMOS_GSD": dict(left=[("1", "G")], right=[("3", "D"), ("2", "S")], w=4 * G, names=True),
-    "AMS1117": dict(left=[("3", "VI"), ("1", "GND")], right=[("2", "VO")], w=6 * G, names=True),
     "USBLC6-2SC6": dict(left=[("1", "IO1"), ("3", "IO2"), ("5", "VBUS")],
                         right=[("6", "IO1"), ("4", "IO2"), ("2", "GND")], w=6 * G, names=True),
     "Fan_4pin": dict(left=[("1", "GND"), ("2", "+12V"), ("3", "Tach"), ("4", "PWM")], right=[], w=6 * G, names=True),
@@ -68,9 +66,9 @@ SYMBOLS = {
     "BluePill_B": dict(left=[(str(i + 1), n) for i, n in enumerate(BLUEPILL_B)], right=[], w=6 * G, names=True),
 }
 
-PREFIX = {"R": "R", "C": "C", "C_Pol": "C", "FerriteBead": "FB", "Polyfuse": "F", "D": "D", "D_Zener": "D",
-          "D_Schottky": "D", "D_TVS": "D", "LED": "D", "BAT54S": "D", "Q_PMOS_GSD": "Q",
-          "Q_NMOS_GSD": "Q", "AMS1117": "U", "USBLC6-2SC6": "U",
+PREFIX = {"R": "R", "C": "C", "C_Pol": "C", "FerriteBead": "FB", "Polyfuse": "F", "D": "D",
+          "D_TVS": "D", "LED": "D", "BAT54S": "D",
+          "Q_NMOS_GSD": "Q", "USBLC6-2SC6": "U",
           "Fan_4pin": "J", "Conn_01x02": "J", "Conn_01x03": "J", "Conn_01x04": "J",
           "TestPoint": "TP", "BluePill_A": "J", "BluePill_B": "J"}
 
@@ -78,18 +76,13 @@ PREFIX = {"R": "R", "C": "C", "C_Pol": "C", "FerriteBead": "FB", "Polyfuse": "F"
 # Footprints (KiCad 8 standard libraries)
 # --------------------------------------------------------------------------
 FP_R = "Resistor_SMD:R_0603_1608Metric"
-FP_R1206 = "Resistor_SMD:R_1206_3216Metric"
 FP_C = "Capacitor_SMD:C_0603_1608Metric"
 FP_C1206 = "Capacitor_SMD:C_1206_3216Metric"
 FP_CP = "Capacitor_SMD:CP_Elec_6.3x7.7"
-FP_TANT = "Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B"
 FP_FB = "Inductor_SMD:L_0603_1608Metric"
 FP_SOT23 = "Package_TO_SOT_SMD:SOT-23"
-FP_SOD123 = "Diode_SMD:D_SOD-123"
-FP_SMA = "Diode_SMD:D_SMA"
 FP_SMB = "Diode_SMD:D_SMB"
 FP_PTC = "Fuse:Fuse_1812_4532Metric"
-FP_SOT223 = "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
 FP_SOT236 = "Package_TO_SOT_SMD:SOT-23-6"
 FP_FAN = "Connector:FanPinHeader_1x04_P2.54mm_Vertical"
 FP_TERM = "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
@@ -111,15 +104,15 @@ def part(block, sym, value, fp, pins, mpn="", desc="", dnp=False):
     PARTS.append(Part(block, sym, value, fp, pins, mpn, desc, dnp))
 
 
-def res(block, value, a, b, desc="", fp=FP_R):
-    part(block, "R", value, fp, {"1": a, "2": b}, desc=desc)
+def res(block, value, a, b, desc=""):
+    part(block, "R", value, FP_R, {"1": a, "2": b}, desc=desc)
 
 
 def cap(block, value, a, b="GND", fp=FP_C, desc=""):
     part(block, "C", value, fp, {"1": a, "2": b}, desc=desc)
 
 
-# Power input, protection, 5 V regulator for the Blue Pill, 12 V sense
+# Power input and protection (fans only; the Blue Pill runs from USB), 12 V sense
 B = "Power"
 part(B, "Conn_01x02", "12V IN", FP_TERM, {"1": "VIN_12V", "2": "GND"}, "Phoenix 1715721", "12 V input from PSU")
 part(B, "Polyfuse", "2.5A", FP_PTC, {"1": "VIN_12V", "2": "+12V"}, "Bourns MF-MSMF250/16X-2", "PTC 2.5 A hold, 16 V")
@@ -127,19 +120,6 @@ part(B, "D_TVS", "SMBJ13A", FP_SMB, {"1": "+12V", "2": "GND"}, "Littelfuse SMBJ1
      "TVS 13 V standoff; also crowbars reverse polarity into F1")
 part(B, "C_Pol", "100u 25V", FP_CP, {"1": "+12V", "2": "GND"}, desc="Bulk, 12 V rail")
 cap(B, "10u 25V", "+12V", fp=FP_C1206)
-# The TVS clamps up to 21.5 V, above the LDO's 15 V limit. The series resistor and
-# 13 V zener hold VREG_IN below 15 V during surges and take ~2.4 V off the LDO.
-res(B, "47", "+12V", "VREG_IN", "LDO feed; limits zener current, 0.12 W at 50 mA", fp=FP_R1206)
-part(B, "D_Zener", "BZT52C13", FP_SOD123, {"1": "VREG_IN", "2": "GND"}, "Diodes Inc BZT52C13-7-F",
-     "LDO input clamp, 13 V")
-cap(B, "10u 25V", "VREG_IN", fp=FP_C1206)
-part(B, "AMS1117", "AMS1117-5.0", FP_SOT223, {"1": "GND", "2": "+5V_REG", "3": "VREG_IN"}, "AMS1117-5.0",
-     "LDO 5 V for the Blue Pill; 15 V max in, ~0.23 W at 12 V in")
-part(B, "C_Pol", "22u 10V", FP_TANT, {"1": "+5V_REG", "2": "GND"}, "KEMET T491B226K010AT",
-     "Tantalum: AMS1117 needs output ESR for stability")
-# The Blue Pill ties USB VBUS straight to its 5V pin; the diode keeps USB from back-feeding the LDO.
-part(B, "D_Schottky", "SS14", FP_SMA, {"1": "+5V", "2": "+5V_REG"}, "SS14",
-     "OR with USB VBUS; Blue Pill runs from USB or 12 V")
 part(B, "FerriteBead", "600R@100MHz", FP_FB, {"1": "+3V3", "2": "+3V3A"}, "Murata BLM18AG601SN1D", "VDDA filter")
 cap(B, "1u", "+3V3A")
 cap(B, "10n", "+3V3A")
@@ -153,7 +133,6 @@ bluepill = {
     "GND": "GND", "3V3": "+3V3", "5V": "+5V", "NRST": "NRST",
     "PA0": "AIN1", "PA1": "AIN2", "PA2": "AIN3", "PA3": "AIN4", "PA4": "AIN5", "PA5": "AIN6",
     "PB0": "V12_SENSE", "PA11": "USB_DM", "PA12": "USB_DP",
-    "PA15": "FAN1_PWR", "PB3": "FAN2_PWR", "PB10": "FAN3_PWR", "PB11": "FAN4_PWR",
     "PB6": "FAN1_PWM", "PB7": "FAN2_PWM", "PB8": "FAN3_PWM", "PB9": "FAN4_PWM",
     "PB12": "FAN1_TACH", "PB13": "FAN2_TACH", "PB14": "FAN3_TACH", "PB15": "FAN4_TACH",
 }
@@ -176,22 +155,8 @@ part(B, "R", "1k8", FP_R, {"1": "USB_DP", "2": "+3V3"},
 for n in range(1, 5):
     B = f"Fan {n}"
     f = f"FAN{n}"
-    # High-side switch with gate protection:
-    #   R_GS/R_G divider limits Vgs to -Vin/2 (-6 V at 12 V), inside AO3401A's +-12 V rating;
-    #   the 10 V zener clamps transients on the 12 V rail; R_G limits zener current.
-    part(B, "Q_PMOS_GSD", "AO3401A", FP_SOT23, {"1": f"{f}_GATE", "2": "+12V", "3": f"{f}_SW_12V"},
-         "Alpha & Omega AO3401A", "High-side P-MOSFET, -30 V, -4 A")
-    part(B, "Polyfuse", "1.1A", FP_PTC, {"1": f"{f}_SW_12V", "2": f"{f}_12V"}, "Bourns MF-MSMF110/16-2",
+    part(B, "Polyfuse", "1.1A", FP_PTC, {"1": "+12V", "2": f"{f}_12V"}, "Bourns MF-MSMF110/16-2",
          "PTC 1.1 A hold, 16 V; a shorted fan does not trip F1")
-    res(B, "4k7", "+12V", f"{f}_GATE", "Gate-source pull-up (P-FET off by default)")
-    res(B, "4k7", f"{f}_GATE", f"{f}_DRV", "Gate divider / zener current limit")
-    part(B, "D_Zener", "BZT52C10", FP_SOD123, {"1": "+12V", "2": f"{f}_GATE"}, "Diodes Inc BZT52C10-7-F",
-         "Gate-source clamp, 10 V")
-    part(B, "Q_NMOS_GSD", "BSS138", FP_SOT23, {"1": f"{f}_PWR_G", "2": "GND", "3": f"{f}_DRV"},
-         "onsemi BSS138", "Level shifter for P-FET gate")
-    res(B, "100", f"{f}_PWR", f"{f}_PWR_G")
-    res(B, "10k", f"{f}_PWR_G", "+3V3", "Fan powered while MCU is in reset")
-    part(B, "D_Schottky", "SS14", FP_SMA, {"1": f"{f}_12V", "2": "GND"}, "SS14", "Freewheel diode, fan inductance")
     part(B, "Q_NMOS_GSD", "BSS138", FP_SOT23, {"1": f"{f}_PWM_G", "2": "GND", "3": f"{f}_PWM_OUT"},
          "onsemi BSS138", "Open-drain PWM buffer (fan pulls up to 5 V)")
     res(B, "100", f"{f}_PWM", f"{f}_PWM_G")
@@ -410,11 +375,11 @@ PCB_LAYERS = [
 def pcb():
     layers = "\n".join("    (" + " ".join([str(l[0])] + [f'"{v}"' if i != 1 else v for i, v in enumerate(l[1:])])
                        + ")" for l in PCB_LAYERS)
-    # Board outline 100 x 80 mm with four M3 holes (drawn as Edge.Cuts circles).
+    # Board outline with four M3 holes (drawn as Edge.Cuts circles).
     holes = "\n".join(
-        f'  (gr_circle (center {x} {y}) (end {x + 1.6} {y}) (stroke (width 0.05) (type default))'
+        f'  (gr_circle (center {num(x)} {num(y)}) (end {num(x + 1.6)} {num(y)}) (stroke (width 0.05) (type default))'
         f' (fill none) (layer "Edge.Cuts") (uuid "{uid(f"hole{x}{y}")}"))'
-        for x, y in ((4, 4), (96, 4), (4, 76), (96, 76)))
+        for x, y in HOLES)
     return f"""(kicad_pcb (version 20240108) (generator "gen_kicad") (generator_version "8.0")
   (general (thickness 1.6) (legacy_teardrops no))
   (paper "A4")
@@ -424,7 +389,7 @@ def pcb():
   )
   (setup (pad_to_mask_clearance 0))
   (net 0 "")
-  (gr_rect (start 0 0) (end 100 80) (stroke (width 0.05) (type default)) (fill none) (layer "Edge.Cuts")
+  (gr_rect (start 0 0) (end {BOARD_W} {BOARD_H}) (stroke (width 0.05) (type default)) (fill none) (layer "Edge.Cuts")
     (uuid "{uid('outline')}"))
 {holes}
 )

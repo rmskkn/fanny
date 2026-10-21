@@ -15,14 +15,11 @@
 /* ---- fakes ---- */
 
 static unsigned duties[FAN_COUNT] = { 100, 100, 100, 100 };
-static enum fan_mode modes[FAN_COUNT];
 static int host_seen;
 
 uint32_t millis(void) { return 0; }
 bool fan_set_duty(unsigned ch, unsigned d) { duties[ch] = d; return true; }
-bool fan_set_mode(unsigned ch, enum fan_mode m) { modes[ch] = m; return true; }
 unsigned fan_duty(unsigned ch) { return duties[ch]; }
-enum fan_mode fan_mode(unsigned ch) { return modes[ch]; }
 unsigned tach_rpm(unsigned ch) { return 1200 + 30 * ch; }
 unsigned thermal_ain_raw(unsigned k) { return 2048 + k; }
 unsigned thermal_ain_mv(unsigned k) { return 1650 + k; }
@@ -71,9 +68,9 @@ int main(void)
 	CHECK(strcmp(out, "ok\n") == 0);
 	CHECK(duties[0] == 0 && duties[3] == 0);
 
-	run("  mode   3   dc \n");
+	run("  set   3   70 \n");
 	CHECK(strcmp(out, "ok\n") == 0);
-	CHECK(modes[2] == FAN_MODE_DC && modes[1] == FAN_MODE_PWM);
+	CHECK(duties[2] == 70 && duties[1] == 0);
 
 	host_seen = 0;
 	run("set 5 10\n");
@@ -82,8 +79,8 @@ int main(void)
 	CHECK(strcmp(out, "err duty must be 0-100\n") == 0);
 	run("set 1 -1\n");
 	CHECK(strncmp(out, "err ", 4) == 0);
-	run("mode 1 fast\n");
-	CHECK(strcmp(out, "err mode must be pwm or dc\n") == 0);
+	run("mode 1 pwm\n"); /* removed with the fan supply switch */
+	CHECK(strcmp(out, "err unknown command\n") == 0);
 	run("frobnicate\n");
 	CHECK(strcmp(out, "err unknown command\n") == 0);
 	run("set 1 2 3\n");
@@ -103,9 +100,9 @@ int main(void)
 	CHECK(strcmp(out, "ok\n") == 0);
 
 	run("get\n");
-	CHECK(strstr(out, "fan 2 mode=pwm duty=0 rpm=1230 stall=0\n") != NULL);
-	CHECK(strstr(out, "fan 3 mode=dc") != NULL);
-	CHECK(strstr(out, "fan 4 mode=pwm duty=0 rpm=1290 stall=1\n") != NULL);
+	CHECK(strstr(out, "fan 2 duty=0 rpm=1230 stall=0\n") != NULL);
+	CHECK(strstr(out, "fan 3 duty=70 rpm=1260 stall=0\n") != NULL);
+	CHECK(strstr(out, "fan 4 duty=0 rpm=1290 stall=1\n") != NULL);
 	CHECK(strstr(out, "ain 6 raw=2053 mv=1655\n") != NULL);
 	CHECK(strstr(out, "v12 mv=12050\n") != NULL);
 	CHECK(strstr(out, "mcu temp=-0.5\n") != NULL);

@@ -1,25 +1,18 @@
-/* Per-channel fan state: mode and duty, mapped onto the power and signal PWM. */
+/* Per-channel fan duty, mapped onto the 4-pin fan PWM signal. Fans are powered straight from 12 V. */
 #ifndef FAN_H
 #define FAN_H
 
 #include <stdbool.h>
 
-enum fan_mode {
-	FAN_MODE_PWM, /* 4-pin: supply on (off at 0 %), speed via 25 kHz PWM line */
-	FAN_MODE_DC,  /* 3-pin: supply chopped by the P-MOSFET, PWM line held high */
-};
-
-/* All channels start in PWM mode at 100 %. */
+/* All channels start at 100 %. */
 void fan_init(void);
 
 /* ch is 0-based. Return false on out-of-range arguments. */
 bool fan_set_duty(unsigned ch, unsigned duty);
-bool fan_set_mode(unsigned ch, enum fan_mode mode);
 
 unsigned fan_duty(unsigned ch);
-enum fan_mode fan_mode(unsigned ch);
 
-/* Failsafe: every channel to 100 %, modes kept. */
+/* Failsafe: every channel to 100 %. */
 void fan_force_full(void);
 
 #endif

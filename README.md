@@ -39,12 +39,11 @@ This tree follows the suggested layout with two changes:
 ### Block overview
 
 ```
- 12 V (PSU) ─ F1 PTC ─ D1 TVS ─┬──────────────────── +12V ─────────────────────────┐
-                               │                                                   │ ×4
-           R1 47R ─ D2 13V ─ U1 AMS1117-5.0 ─ D3 SS14 ─ +5V ─┐                     │
-                                                             │  +3V3 (Blue Pill LDO) ─ FB1 ─ +3V3A
-            ┌──────────── Blue Pill module (J2, J3) ─────────┐                     │
- USB int ─ U2 ESD ─ PA11/PA12       TIM2 PA15 PB3 PB10 PB11 ─► BSS138 ─► AO3401A high-side ─► PTC ─► fan +12V
+ 12 V (PSU) ─ F1 PTC ─ D1 TVS ─── +12V ─┬─ F2..F5 1.1 A PTC ─► fan +12V (×4)
+                                        └─ 47k/10k ─► PB0
+ USB (micro-B or J4) ── +5V ── Blue Pill LDO ── +3V3 ─ FB1 ─ +3V3A
+            ┌──────────── Blue Pill module (J2, J3) ─────────┐
+ USB int ─ U1 ESD ─ PA11/PA12
             │                       TIM4 PB6..PB9 (25 kHz) ─► BSS138 open drain ─► fan PWM pin
             │                       EXTI PB12..PB15 ◄─ RC ◄─ 10k pull-up ◄─ fan tach
  sensors ─ 1k + 100n + BAT54S ─► PA0..PA5 (ADC)    PB0 ◄─ 47k/10k ◄─ +12V
@@ -54,13 +53,12 @@ This tree follows the suggested layout with two changes:
 
 | Function | Pins | Peripheral |
 |---|---|---|
-| Fan 1–4 supply switch | PA15, PB3, PB10, PB11 | TIM2 CH1–4 (full remap), 30 Hz |
 | Fan 1–4 PWM signal | PB6, PB7, PB8, PB9 | TIM4 CH1–4, 25 kHz |
 | Fan 1–4 tach | PB12–PB15 | EXTI12–15, falling edge |
 | AIN1–AIN6 | PA0–PA5 | ADC1 IN0–IN5 |
 | 12 V sense | PB0 | ADC1 IN8 |
 | USB | PA11 (D−), PA12 (D+) | USB FS |
-| SWD | PA13, PA14 | Blue Pill 4-pin SWD header; JTAG disabled to free PA15/PB3 |
+| SWD | PA13, PA14 | Blue Pill 4-pin SWD header |
 | Status LED | PC13 | Blue Pill on-board LED, active low |
 | Clock | PD0/PD1 | Blue Pill 8 MHz crystal, PLL to 72 MHz |
 
@@ -83,14 +81,16 @@ Check it against your module before laying out the board.
 
 The module provides the MCU, the 8 MHz crystal, the 3.3 V regulator, the PC13
 LED, the reset button, the BOOT jumpers, the SWD header and the micro-B USB
-connector. The carrier powers the module through its 5V pin, and the module's
-3V3 pin powers the carrier's 3.3 V logic and sensor bias.
+connector. The module runs from USB only: its micro-B connector or the
+carrier's internal USB header (J4), which feeds the module's 5V pin. The 12 V
+input powers only the fans. The module's 3V3 pin powers the carrier's 3.3 V
+logic and sensor bias.
 
 Things to check on the module:
 
 - **D+ pull-up (R10):** USB needs 1.5 kΩ, but many Blue Pills fit 10 kΩ, and
   some hosts then fail to enumerate. Either replace R10, or fit the carrier's
-  R4 (1.8 kΩ, DNP by default). 1.8 kΩ in parallel with 10 kΩ gives 1.5 kΩ.
+  R3 (1.8 kΩ, DNP by default). 1.8 kΩ in parallel with 10 kΩ gives 1.5 kΩ.
 - **MCU:** some modules carry a clone such as CS32F103, CKS32F103 or
   GD32F103 instead of an ST part. The firmware targets the ST part. Clones can
   differ in USB and flash timing.
@@ -99,51 +99,26 @@ Things to check on the module:
 
 ### Fan channel
 
-Each channel drives a standard 4-pin header (1 GND, 2 +12 V, 3 tach, 4 PWM).
-The channel has two control paths, and the firmware selects between them per channel:
+Each channel drives a standard 4-pin header (1 GND, 2 +12 V, 3 tach, 4 PWM)
+and supports 4-pin PWM fans only.
 
-- **`pwm` mode (4-pin fans):** the high-side MOSFET stays fully on. Speed is
-  set by a 25 kHz signal on pin 4. Duty 0 % also switches the supply off,
-  because many 4-pin fans keep turning at 0 % PWM.
-- **`dc` mode (3-pin fans):** the MOSFET chops the 12 V supply at 30 Hz, and
-  the PWM pin is held high.
-
-**High-side switch, AO3401A (P-channel, −30 V, ±12 V V<sub>GS</sub>, ≤52 mΩ at −4.5 V).**
-The source connects to +12 V. The drain feeds fan pin 2 through a per-channel PTC. The 3.3 V MCU cannot
-drive the gate directly, so a BSS138 pulls the gate low through a resistor divider.
-
-**Gate protection.** The AO3401A is rated only ±12 V gate-source, which
-equals the supply voltage. The design therefore never applies the full rail to the gate:
-
-| Part | Value | Role |
-|---|---|---|
-| R<sub>GS</sub> (gate to source) | 4.7 kΩ | Keeps the FET off by default and discharges the gate |
-| R<sub>G</sub> (gate to BSS138 drain) | 4.7 kΩ | Forms a divider with R<sub>GS</sub>: V<sub>GS</sub> = −12 V × 4.7/9.4 = **−6 V** when on. It also limits zener current |
-| D<sub>Z</sub> BZT52C10 (K at source, A at gate) | 10 V | Clamps V<sub>GS</sub> to −10 V when the 12 V rail spikes above ~20 V. Its forward drop clamps positive V<sub>GS</sub> to +0.7 V |
-| D1 SMBJ13A | rail TVS | Limits rail surges seen by V<sub>DS</sub> and by the gate network |
-
-At −6 V the FET is well enhanced, so a 1 A fan dissipates about 50 mW. The
-divider draws 1.3 mA per channel while the fan is on. Gate switching takes
-a few microseconds through 4.7 kΩ, so `dc` mode uses a 30 Hz chopping frequency
-to keep switching loss negligible. Raising the frequency needs a stronger gate driver.
-
-**Channel fuse.** A 1.1 A PTC (Bourns MF-MSMF110/16) sits between the FET drain
-and fan pin 2. A shorted fan or cable trips only its own channel, so the other
+**Supply.** Fan pin 2 connects to +12 V through a 1.1 A PTC (Bourns
+MF-MSMF110/16). There is no supply switch, so a fan always has power while
+12 V is present. A shorted fan or cable trips only its own PTC, so the other
 fans keep running and F1 does not trip.
 
-**Freewheel diode** SS14 is fitted across each fan output. It absorbs the
-inductive kick from the motor and cable when the switch opens.
+**Speed.** The firmware sets speed with a 25 kHz signal on pin 4. Many 4-pin
+fans keep turning at 0 % PWM, at their minimum speed. The board cannot stop
+such a fan.
 
 **PWM signal buffer.** A BSS138 works as an open-drain driver on fan pin 4.
 The fan pulls this pin up internally to ≤5.25 V (Intel 4-wire spec), so the
 MCU pin never sees the fan's voltage. The buffer inverts the signal, and the
 firmware compensates with timer mode PWM2.
 
-**Safe state while the MCU is in reset or unprogrammed:**
-- A 10 kΩ pull-up to 3.3 V on each supply BSS138 gate turns the supply FET on.
-- A 100 kΩ pull-down on each PWM BSS138 gate releases the PWM line, so the fan reads 100 %.
-
-With both, all fans run at full speed before the firmware starts.
+**Safe state.** A 100 kΩ pull-down holds each BSS138 off unless the MCU
+drives it. The PWM line is then released, and a fan runs at 100 % on a
+released line. See [Failsafe behaviour](#failsafe-behaviour).
 
 **Tach input.** The fan's open-collector output has a 10 kΩ pull-up to 3.3 V,
 then 1 kΩ + 1 nF filtering. PB12–PB15 are 5 V tolerant. A fan that pulls its
@@ -165,22 +140,12 @@ that are corrected for the actual supply voltage.
 
 - **12 V input:** screw terminal, then PTC (2.5 A hold), then SMBJ13A TVS.
   With reversed polarity, the TVS conducts and trips the PTC.
-- **Module supply:** an AMS1117-5.0 makes 5 V from +12 V. It feeds the Blue
-  Pill's 5V pin through an SS14 Schottky. The module ties USB VBUS directly to
-  its 5V pin, so the diode keeps a USB host from back-feeding the LDO. With USB
-  plugged in, VBUS (5 V) is above the diode output (about 4.65 V) and powers
-  the module. The board can be programmed over USB alone, without 12 V.
-- **LDO input protection:** the 12 V feed goes through a 47 Ω resistor (1206),
-  and a BZT52C13 zener clamps the LDO input. The TVS lets the rail reach
-  21.5 V during a surge. The resistor and zener keep the LDO input below its
-  15 V limit. The resistor drops about 2.4 V at 50 mA, so the LDO dissipates
-  about 0.23 W.
-- **LDO output capacitor:** 22 µF tantalum. The AMS1117 needs output ESR for
-  stability, and a low-ESR ceramic alone can make it oscillate.
+- **Module supply:** USB only. The board has no 5 V or 3.3 V regulator. The
+  Blue Pill's own LDO makes 3.3 V from USB VBUS.
 - **12 V monitoring:** 47 kΩ/10 kΩ divider to PB0. Full scale is about 18.8 V.
 - **USB:** the Blue Pill's micro-B connector and the carrier's 4-pin header
   (J4) are wired in parallel. Use the header for a cable to an internal
-  motherboard USB 2.0 port. Connect only one of them at a time. U2 protects
+  motherboard USB 2.0 port. Connect only one of them at a time. U1 protects
   the header path against ESD. The firmware pulls D+ low for 10 ms at boot to
   force re-enumeration.
 
@@ -190,8 +155,11 @@ that are corrected for the actual supply voltage.
   PTC. Total current is limited to 2.5 A by F1, so four fans at 1 A cannot all
   run at once. At power-up all fans start at 100 % together. Measure the
   combined inrush with the real fans.
-- **`dc` mode tach:** with the supply chopped, the tach reading is only valid
-  at 100 % duty.
+- **0 % does not stop every fan:** see Fan channel.
+- **12 V sense without USB:** with 12 V present and USB unplugged, the
+  47 kΩ/10 kΩ divider feeds about 2.1 V into the unpowered PB0 pin. The
+  current is about 40 µA, far below the STM32's injection limit.
+- **3-pin fans:** not supported. They run at full speed on these headers.
 - **USB VID/PID:** the firmware uses ST's VCP IDs (0483:5740). Replace them
   before shipping a product.
 
@@ -205,7 +173,7 @@ It writes the following:
   label (netlist-style).
 - `hardware/kicad/fanctl.kicad_sym`: project symbol library. Pin numbers
   match the footprint pads.
-- `hardware/kicad/fan_controller.kicad_pcb`: 100 × 80 mm outline, four M3
+- `hardware/kicad/fan_controller.kicad_pcb`: 75 × 60 mm outline, four M3
   holes, and a `Power` net class (1 mm tracks) for the 12 V and GND nets.
 - `hardware/bom.csv`.
 
@@ -267,27 +235,22 @@ Checked with KiCad 8.0.9 (`kicad/kicad:8.0` Docker image):
 - Every footprint loads from the standard libraries.
 - Every symbol pin number matches a pad in its footprint, and every pad has a pin.
 
-### BOM summary (122 parts, 47 lines, plus the Blue Pill module; full list in `hardware/bom.csv`)
+### BOM summary (84 parts, 39 lines, plus the Blue Pill module; full list in `hardware/bom.csv`)
 
 | Qty | Part | Package | Use | DigiKey |
 |---|---|---|---|---|
 | 1 | STM32F103C8T6 Blue Pill | module | MCU, plugs into J2/J3 | not stocked at DigiKey; buy from module sellers |
-| 4 | AO3401A | SOT-23 | high-side fan switches | [AO3401A](https://www.digikey.com/en/products/result?keywords=AO3401A) |
-| 8 | BSS138 | SOT-23 | gate level shifters, PWM buffers | [BSS138](https://www.digikey.com/en/products/result?keywords=BSS138) |
-| 4 | BZT52C10 | SOD-123 | gate-source clamps | [BZT52C10-7-F](https://www.digikey.com/en/products/result?keywords=BZT52C10-7-F) |
-| 1 | BZT52C13 | SOD-123 | LDO input clamp | [BZT52C13-7-F](https://www.digikey.com/en/products/result?keywords=BZT52C13-7-F) |
-| 5 | SS14 | SMA | freewheel diodes, 5 V OR diode | [SS14](https://www.digikey.com/en/products/result?keywords=SS14) |
+| 4 | BSS138 | SOT-23 | PWM buffers | [BSS138](https://www.digikey.com/en/products/result?keywords=BSS138) |
 | 6 | BAT54S | SOT-23 | analog input clamps | [BAT54S,215](https://www.digikey.com/en/products/result?keywords=BAT54S%2C215) |
 | 1 | SMBJ13A | SMB | 12 V TVS | [SMBJ13A](https://www.digikey.com/en/products/result?keywords=SMBJ13A) |
 | 1 | MF-MSMF250/16X-2 | 1812 | 2.5 A PTC fuse | [MF-MSMF250/16X-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF250%2F16X-2) |
 | 4 | MF-MSMF110/16-2 | 1812 | 1.1 A per-channel PTC fuses | [MF-MSMF110/16-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF110%2F16-2) |
-| 1 | AMS1117-5.0 | SOT-223 | 5 V LDO for the module | [AMS1117-5.0](https://www.digikey.com/en/products/result?keywords=AMS1117-5.0) |
 | 1 | USBLC6-2SC6 | SOT-23-6 | USB ESD | [USBLC6-2SC6](https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6) |
 | 4 | Molex 47053-1000 | 4-pin | fan headers | [0470531000](https://www.digikey.com/en/products/result?keywords=0470531000) |
 | 2 | 1×20 female header | 2.54 mm | Blue Pill socket | [PPTC201LFBN-RC](https://www.digikey.com/en/products/result?keywords=PPTC201LFBN-RC) (Sullins, or any 1×20 socket) |
 | 6 / 1 / 1 | 1×3 / 1×4 headers, 2-pin terminal | 2.54 / 5.08 mm | sensors / USB internal / 12 V | [1715721](https://www.digikey.com/en/products/result?keywords=1715721) (terminal); headers: any 2.54 mm pin header |
 | 6 | test pads | 1.5 mm | +12V, +3V3, GND, NRST, FAN1_PWM, FAN1_TACH | — (PCB pads, not a part) |
-| 66 | resistors, capacitors, ferrite (R4 DNP) | 0603 / 1206 / 3528 | passives | [T491B226K010AT](https://www.digikey.com/en/products/result?keywords=T491B226K010AT) (C4), [BLM18AG601SN1D](https://www.digikey.com/en/products/result?keywords=BLM18AG601SN1D) (FB1); others generic, see `bom.csv` |
+| 47 | resistors, capacitors, ferrite (R3 DNP) | 0603 / 1206 / 6.3 mm | passives | [BLM18AG601SN1D](https://www.digikey.com/en/products/result?keywords=BLM18AG601SN1D) (FB1); others generic, see `bom.csv` |
 
 The MPNs in the BOM are examples. Check stock and second sources before ordering.
 The DigiKey links are keyword searches by MPN, so they still work when DigiKey
@@ -318,8 +281,8 @@ results arrive by DMA.
 | Module | Responsibility |
 |---|---|
 | `Core/main.c` | 72 MHz clock, SysTick, init order, main loop, status LED (Blue Pill PC13) |
-| `App/pwm.c` | TIM2 (supply, 30 Hz) and TIM4 (signal, 25 kHz). Starts timers at 100 % before taking the pins |
-| `App/fan.c` | Per-channel mode and duty; maps them onto the two PWM paths |
+| `App/pwm.c` | TIM4 fan PWM signal, 25 kHz. Starts the timer at 100 % before taking the pins |
+| `App/fan.c` | Per-channel duty, mapped onto the PWM signal |
 | `App/tach.c` | Tach pulse count per 1 s window, converted to RPM (2 pulses/rev) |
 | `App/thermal.c` | ADC1 continuous scan + DMA: AIN1–6, 12 V, MCU temperature, VREFINT. 1 ms IIR filter, mV conversion |
 | `App/safety.c` | IWDG (1 s), host-loss failsafe, stall detection |
@@ -328,14 +291,21 @@ results arrive by DMA.
 
 ### Failsafe behaviour
 
-- After power-up, fans run at 100 % until the host sends its first command.
-- If no valid command arrives for 10 s, all fans return to 100 % and the LED
-  blinks fast. The `watch` command in `fanctl.py` and any control daemon keep
-  the timer from expiring.
-- If the main loop hangs, the watchdog resets the MCU. During reset, the
-  hardware pull-ups keep the fans at full speed.
-- A fan is flagged `stall=1` when its duty is above 0 but its tach reads
-  0 RPM for 3 s. Fans without a tach wire always show this flag.
+All fans run at 100 % whenever the controller is not in control. Fan power
+comes straight from 12 V, so this needs only 12 V present.
+
+| Case | Result |
+|---|---|
+| Power-up, before the host's first command | 100 % |
+| USB unplugged or host powered off | Module unpowered, PWM lines released, 100 % |
+| Module pulled out of its socket | PWM lines released, 100 % |
+| Supply sags below the STM32's reset threshold (about 1.9 V) | MCU held in reset, PWM lines released, 100 % |
+| Firmware hangs | Watchdog (1 s) resets the MCU, PWM lines released during reset, 100 % |
+| No valid command for 10 s, module still powered | Firmware failsafe sets 100 %, LED blinks fast |
+
+`fanctl.py watch` or a control daemon keeps the 10 s timer from expiring.
+A fan is flagged `stall=1` when its duty is above 0 but its tach reads 0 RPM
+for 3 s. Fans without a tach wire always show this flag.
 
 ### Protocol
 
@@ -345,13 +315,11 @@ is one line ending in `\n`, and each reply ends with `ok` or `err <reason>`.
 ```
 > set 2 40          duty 0..100 for fan 1..4 or "all"
 ok
-> mode 3 dc         pwm (4-pin) | dc (3-pin)
-ok
 > get
-fan 1 mode=pwm duty=100 rpm=1590 stall=0
-fan 2 mode=pwm duty=40 rpm=780 stall=0
-fan 3 mode=dc duty=100 rpm=1200 stall=0
-fan 4 mode=pwm duty=100 rpm=0 stall=1
+fan 1 duty=100 rpm=1590 stall=0
+fan 2 duty=40 rpm=780 stall=0
+fan 3 duty=100 rpm=1200 stall=0
+fan 4 duty=100 rpm=0 stall=1
 ain 1 raw=2047 mv=1649
 ...
 v12 mv=12043
@@ -369,7 +337,6 @@ ok
 pip install -r host/requirements.txt
 python3 host/fanctl.py -p /dev/ttyACM0 get
 python3 host/fanctl.py set all 50
-python3 host/fanctl.py mode 3 dc
 python3 host/fanctl.py watch -i 2
 ```
 
@@ -380,7 +347,7 @@ Use the fan number (1–4) in place of `all`. Fan 1 is header J5, and fan 4 is h
 ```sh
 python3 host/fanctl.py set 1 50      # fan 1 to 50 %
 python3 host/fanctl.py set 3 80      # fan 3 to 80 %
-python3 host/fanctl.py set 4 0       # fan 4 off (in pwm mode the supply is cut too)
+python3 host/fanctl.py set 4 0       # fan 4 to 0 % (some fans keep turning slowly)
 python3 host/fanctl.py -p /dev/ttyACM1 set 2 40   # board on another port
 ```
 

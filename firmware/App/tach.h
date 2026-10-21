@@ -17,7 +17,7 @@ static inline unsigned tach_calc_rpm(uint32_t pulses, uint32_t elapsed_ms)
 void tach_init(void);
 /* Call from the main loop; recomputes RPM once per window. */
 void tach_update(uint32_t now_ms);
-/* ch is 0-based. Resolution is 30 RPM. In DC mode below 100 % the reading is not reliable. */
+/* ch is 0-based. Resolution is 30 RPM. */
 unsigned tach_rpm(unsigned ch);
 
 #endif

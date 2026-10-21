@@ -1,7 +1,6 @@
 /*
  * Board pin map. Must match hardware/kicad schematic (see docs in README.md).
  *
- *   FANn power gate  (TIM2 full remap, ~30 Hz): PA15 PB3 PB10 PB11
  *   FANn PWM signal  (TIM4, 25 kHz):           PB6  PB7 PB8  PB9
  *   FANn tach        (EXTI12..15, falling):    PB12 PB13 PB14 PB15
  *   AIN1..AIN6       (ADC1 IN0..IN5):          PA0..PA5

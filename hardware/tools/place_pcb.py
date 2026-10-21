@@ -31,8 +31,7 @@ MODELS_URL = "https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/8.0.9/"
 # Footprints whose library model is missing: borrow a same-size body.
 MODEL_STANDIN = {"Fuse.3dshapes/Fuse_1812_4532Metric.step": "Resistor_SMD.3dshapes/R_1812_4532Metric.step"}
 PCB = g.OUT / f"{g.PROJECT}.kicad_pcb"
-BOARD_W, BOARD_H = 100, 80
-HOLES = ((4, 4), (96, 4), (4, 76), (96, 76))
+BOARD_W, BOARD_H, HOLES = g.BOARD_W, g.BOARD_H, g.HOLES
 GAP = 0.6
 
 # Connectors lie with their pins along X. Angles are KiCad degrees (counter-clockwise).
@@ -40,15 +39,18 @@ ANGLE = {"Conn_01x02": 0, "Conn_01x03": 90, "Conn_01x04": 90, "Fan_4pin": 0,
          "BluePill_A": 270, "BluePill_B": 270}
 
 # Areas (x0, y0, x1, y1) in mm, packed left to right, top to bottom in netlist order.
-AREAS = {"Power": (6, 7, 35, 46), "USB": (6, 48, 35, 53), "Test points": (36, 47, 98, 53),
-         "Analog inputs": (37, 38, 98, 46)}
+AREAS = {"Power": (1, 12.6, 21, 30.4), "USB": (1, 31, 20, 40.9), "Test points": (1, 41.3, 20, 44.2),
+         "Analog inputs": (20, 33.4, 74.5, 44)}
+TERMINAL_X, TERMINAL_Y = 7, 1  # J1, 12 V input, top-left corner clear of the hole
+AIN_X, AIN_Y, AIN_PITCH = 20.5, 29, 9.0  # sensor headers, in a row below the Blue Pill
+FAN_X, FAN_PITCH = 7, 15.25  # four channels between the bottom mounting holes
 for n in range(4):
-    AREAS[f"Fan {n + 1}"] = (8 + 22 * n, 55, 29 + 22 * n, None)  # bottom: fan header top
+    AREAS[f"Fan {n + 1}"] = (FAN_X + FAN_PITCH * n, 44.6, FAN_X + FAN_PITCH * (n + 1) - GAP, None)  # bottom: header
 
 # Blue Pill: rows 15.24 mm apart, USB end towards the right board edge. Viewed with
 # the USB end up, row A is on the right and row B on the left; turned so USB points
 # right, row B is on top.
-BLUEPILL_X, BLUEPILL_Y = 42, 8
+BLUEPILL_X, BLUEPILL_Y = 21.5, 7
 
 
 def mm(v):
@@ -131,9 +133,15 @@ def place(board):
                     move_box_to(fp, (x0 + x1 - (bx1 - bx)) / 2, top)
             pack([(r, f) for r, p, f in items if p.sym != "Fan_4pin"], (x0, y0, x1, top - GAP))
             continue
+        if block == "Power":
+            for ref, p, fp in items:
+                if p.sym == "Conn_01x02":
+                    move_box_to(fp, TERMINAL_X, TERMINAL_Y)
+            pack([(r, f) for r, p, f in items if p.sym != "Conn_01x02"], AREAS[block])
+            continue
         if block == "Analog inputs":
             for k, (ref, p, fp) in enumerate(i for i in items if i[1].sym == "Conn_01x03"):
-                move_box_to(fp, 37 + k * 10.2, 32)
+                move_box_to(fp, AIN_X + k * AIN_PITCH, AIN_Y)
             pack([(r, f) for r, p, f in items if p.sym != "Conn_01x03"], AREAS[block])
             continue
         pack([(r, f) for r, p, f in items], AREAS[block])

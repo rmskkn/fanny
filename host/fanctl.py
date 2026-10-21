@@ -5,7 +5,6 @@ Examples:
     fanctl.py get
     fanctl.py set 2 40
     fanctl.py set all 60
-    fanctl.py mode 3 dc
     fanctl.py watch            # print status every second; keeps failsafe from tripping
 
 The firmware returns all fans to 100 % when it hears nothing for 10 s,
@@ -52,7 +51,7 @@ class FanController:
             fields = {}
             for kv in rest:
                 key, _, value = kv.partition("=")
-                fields[key] = value if key == "mode" else float(value)
+                fields[key] = float(value)
             if index is None:
                 result[name] = fields
             else:
@@ -68,9 +67,6 @@ def main():
     p_set = sub.add_parser("set")
     p_set.add_argument("fan", help="1-4 or all")
     p_set.add_argument("duty", type=int, help="0-100")
-    p_mode = sub.add_parser("mode")
-    p_mode.add_argument("fan", help="1-4 or all")
-    p_mode.add_argument("mode", choices=["pwm", "dc"])
     p_watch = sub.add_parser("watch")
     p_watch.add_argument("-i", "--interval", type=float, default=1.0)
     args = parser.parse_args()
@@ -81,8 +77,6 @@ def main():
             print("\n".join(fc.command("get")))
         elif args.cmd == "set":
             fc.command(f"set {args.fan} {args.duty}")
-        elif args.cmd == "mode":
-            fc.command(f"mode {args.fan} {args.mode}")
         elif args.cmd == "watch":
             while True:
                 print("\n".join(fc.command("get")), end="\n\n", flush=True)

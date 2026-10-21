@@ -3,7 +3,6 @@
  *
  *   get                      status dump, ends with "ok"
  *   set <1-4|all> <0-100>    fan duty in percent
- *   mode <1-4|all> pwm|dc    pwm: 4-pin fan, dc: 3-pin fan (supply chopping)
  *   ping                     keepalive
  *   version
  *   help
