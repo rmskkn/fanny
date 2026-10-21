@@ -1,3 +1,8 @@
 build/
 __pycache__/
 *.kicad_prl
+
+# KiCad editor lock files and local history
+~*.lck
+.history/
+*_drc_violations.json
