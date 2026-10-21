@@ -185,29 +185,31 @@ Checked with KiCad 8.0.9 (`kicad/kicad:8.0` Docker image):
 
 ### BOM summary (136 parts, 53 lines; full list in `hardware/bom.csv`)
 
-| Qty | Part | Package | Use |
-|---|---|---|---|
-| 1 | STM32F103C8T6 | LQFP-48 | MCU |
-| 4 | AO3401A | SOT-23 | high-side fan switches |
-| 8 | BSS138 | SOT-23 | gate level shifters, PWM buffers |
-| 4 | BZT52C10 | SOD-123 | gate-source clamps |
-| 1 | BZT52C13 | SOD-123 | LDO input clamp |
-| 4 | SS14 | SMA | freewheel diodes |
-| 6 | BAT54S | SOT-23 | analog input clamps |
-| 1 | BAT54C | SOT-23 | supply diode-OR |
-| 1 | SMBJ13A | SMB | 12 V TVS |
-| 1 | MF-MSMF250/16X-2 | 1812 | 2.5 A PTC fuse |
-| 4 | MF-MSMF110/16-2 | 1812 | 1.1 A per-channel PTC fuses |
-| 1 | AMS1117-3.3 | SOT-223 | 3.3 V LDO |
-| 1 | USBLC6-2SC6 | SOT-23-6 | USB ESD |
-| 1 | 8 MHz crystal, CL 18 pF | 3225 | HSE |
-| 4 | Molex 47053-1000 | 4-pin | fan headers |
-| 1 | Molex 105017-0001 | micro-B | USB |
-| 6 / 1 / 1 / 1 | 1×3 / 1×4 / 1×5 headers, 2-pin terminal | 2.54 / 5.08 mm | sensors / USB internal / SWD / 12 V |
-| 6 | test pads | 1.5 mm | +12V, +3V3, GND, NRST, FAN1_PWM, FAN1_TACH |
-| 78 | resistors, capacitors, ferrite, LED | 0603 / 1206 / 3528 | passives |
+| Qty | Part | Package | Use | DigiKey |
+|---|---|---|---|---|
+| 1 | STM32F103C8T6 | LQFP-48 | MCU | [STM32F103C8T6](https://www.digikey.com/en/products/result?keywords=STM32F103C8T6) |
+| 4 | AO3401A | SOT-23 | high-side fan switches | [AO3401A](https://www.digikey.com/en/products/result?keywords=AO3401A) |
+| 8 | BSS138 | SOT-23 | gate level shifters, PWM buffers | [BSS138](https://www.digikey.com/en/products/result?keywords=BSS138) |
+| 4 | BZT52C10 | SOD-123 | gate-source clamps | [BZT52C10-7-F](https://www.digikey.com/en/products/result?keywords=BZT52C10-7-F) |
+| 1 | BZT52C13 | SOD-123 | LDO input clamp | [BZT52C13-7-F](https://www.digikey.com/en/products/result?keywords=BZT52C13-7-F) |
+| 4 | SS14 | SMA | freewheel diodes | [SS14](https://www.digikey.com/en/products/result?keywords=SS14) |
+| 6 | BAT54S | SOT-23 | analog input clamps | [BAT54S,215](https://www.digikey.com/en/products/result?keywords=BAT54S%2C215) |
+| 1 | BAT54C | SOT-23 | supply diode-OR | [BAT54C,215](https://www.digikey.com/en/products/result?keywords=BAT54C%2C215) |
+| 1 | SMBJ13A | SMB | 12 V TVS | [SMBJ13A](https://www.digikey.com/en/products/result?keywords=SMBJ13A) |
+| 1 | MF-MSMF250/16X-2 | 1812 | 2.5 A PTC fuse | [MF-MSMF250/16X-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF250%2F16X-2) |
+| 4 | MF-MSMF110/16-2 | 1812 | 1.1 A per-channel PTC fuses | [MF-MSMF110/16-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF110%2F16-2) |
+| 1 | AMS1117-3.3 | SOT-223 | 3.3 V LDO | [AMS1117-3.3](https://www.digikey.com/en/products/result?keywords=AMS1117-3.3) |
+| 1 | USBLC6-2SC6 | SOT-23-6 | USB ESD | [USBLC6-2SC6](https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6) |
+| 1 | 8 MHz crystal, CL 18 pF | 3225 | HSE | [ABM8-8.000MHZ-B2-T](https://www.digikey.com/en/products/result?keywords=ABM8-8.000MHZ-B2-T) |
+| 4 | Molex 47053-1000 | 4-pin | fan headers | [0470531000](https://www.digikey.com/en/products/result?keywords=0470531000) |
+| 1 | Molex 105017-0001 | micro-B | USB | [1050170001](https://www.digikey.com/en/products/result?keywords=1050170001) |
+| 6 / 1 / 1 / 1 | 1×3 / 1×4 / 1×5 headers, 2-pin terminal | 2.54 / 5.08 mm | sensors / USB internal / SWD / 12 V | [1715721](https://www.digikey.com/en/products/result?keywords=1715721) (terminal); headers: any 2.54 mm pin header |
+| 6 | test pads | 1.5 mm | +12V, +3V3, GND, NRST, FAN1_PWM, FAN1_TACH | — (PCB pads, not a part) |
+| 78 | resistors, capacitors, ferrite, LED | 0603 / 1206 / 3528 | passives | [T491B226K010AT](https://www.digikey.com/en/products/result?keywords=T491B226K010AT) (C4), [BLM18AG601SN1D](https://www.digikey.com/en/products/result?keywords=BLM18AG601SN1D) (FB1); others generic, see `bom.csv` |
 
 The MPNs in the BOM are examples. Check stock and second sources before ordering.
+The DigiKey links are keyword searches by MPN, so they still work when DigiKey
+part numbers change. Pick the exact package and reel option from the results.
 
 ## Firmware
 
