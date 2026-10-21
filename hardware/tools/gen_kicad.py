@@ -34,6 +34,11 @@ G = 2.54
 def two_pin(a="~", b="~"):
     return dict(left=[("1", a)], right=[("2", b)], w=2 * G, names=a != "~")
 
+BLUEPILL_A = ["GND", "GND", "3V3", "NRST", "PB11", "PB10", "PB1", "PB0", "PA7", "PA6",
+              "PA5", "PA4", "PA3", "PA2", "PA1", "PA0", "PC15", "PC14", "PC13", "VBAT"]
+BLUEPILL_B = ["PB12", "PB13", "PB14", "PB15", "PA8", "PA9", "PA10", "PA11", "PA12", "PA15",
+              "PB3", "PB4", "PB5", "PB6", "PB7", "PB8", "PB9", "5V", "GND", "3V3"]
+
 SYMBOLS = {
     "R": two_pin(),
     "C": two_pin(),
@@ -46,41 +51,28 @@ SYMBOLS = {
     "D_Schottky": dict(left=[("2", "A")], right=[("1", "K")], w=2 * G, names=True),
     "D_TVS": dict(left=[("2", "A")], right=[("1", "K")], w=2 * G, names=True),
     "LED": dict(left=[("2", "A")], right=[("1", "K")], w=2 * G, names=True),
-    "BAT54C": dict(left=[("1", "A1"), ("2", "A2")], right=[("3", "K")], w=4 * G, names=True),
     "BAT54S": dict(left=[("1", "A1"), ("2", "K2")], right=[("3", "K1A2")], w=4 * G, names=True),
     "Q_PMOS_GSD": dict(left=[("1", "G")], right=[("2", "S"), ("3", "D")], w=4 * G, names=True),
     "Q_NMOS_GSD": dict(left=[("1", "G")], right=[("3", "D"), ("2", "S")], w=4 * G, names=True),
-    "Crystal_GND24": dict(left=[("1", "1"), ("2", "GND")], right=[("3", "2"), ("4", "GND")], w=4 * G, names=True),
-    "AMS1117-3.3": dict(left=[("3", "VI"), ("1", "GND")], right=[("2", "VO")], w=6 * G, names=True),
+    "AMS1117": dict(left=[("3", "VI"), ("1", "GND")], right=[("2", "VO")], w=6 * G, names=True),
     "USBLC6-2SC6": dict(left=[("1", "IO1"), ("3", "IO2"), ("5", "VBUS")],
                         right=[("6", "IO1"), ("4", "IO2"), ("2", "GND")], w=6 * G, names=True),
-    "USB_B_Micro": dict(left=[("1", "VBUS"), ("2", "D-"), ("3", "D+"), ("4", "ID"), ("5", "GND"), ("6", "Shield")],
-                        right=[], w=6 * G, names=True),
     "Fan_4pin": dict(left=[("1", "GND"), ("2", "+12V"), ("3", "Tach"), ("4", "PWM")], right=[], w=6 * G, names=True),
     "Conn_01x02": dict(left=[("1", "1"), ("2", "2")], right=[], w=4 * G, names=True),
     "Conn_01x03": dict(left=[(str(i), str(i)) for i in range(1, 4)], right=[], w=4 * G, names=True),
     "Conn_01x04": dict(left=[(str(i), str(i)) for i in range(1, 5)], right=[], w=4 * G, names=True),
-    "Conn_01x05": dict(left=[(str(i), str(i)) for i in range(1, 6)], right=[], w=4 * G, names=True),
     "TestPoint": dict(left=[("1", "1")], right=[], w=2 * G, names=False),
-    "STM32F103C8Tx": dict(
-        left=[("1", "VBAT"), ("24", "VDD"), ("36", "VDD"), ("48", "VDD"), ("9", "VDDA"),
-              ("8", "VSSA"), ("23", "VSS"), ("35", "VSS"), ("47", "VSS"),
-              ("7", "NRST"), ("44", "BOOT0"), ("5", "PD0-OSC_IN"), ("6", "PD1-OSC_OUT"),
-              ("2", "PC13"), ("3", "PC14"), ("4", "PC15")],
-        right=[("10", "PA0"), ("11", "PA1"), ("12", "PA2"), ("13", "PA3"), ("14", "PA4"), ("15", "PA5"),
-               ("16", "PA6"), ("17", "PA7"), ("29", "PA8"), ("30", "PA9"), ("31", "PA10"), ("32", "PA11"),
-               ("33", "PA12"), ("34", "PA13"), ("37", "PA14"), ("38", "PA15"),
-               ("18", "PB0"), ("19", "PB1"), ("20", "PB2"), ("39", "PB3"), ("40", "PB4"), ("41", "PB5"),
-               ("42", "PB6"), ("43", "PB7"), ("45", "PB8"), ("46", "PB9"), ("21", "PB10"), ("22", "PB11"),
-               ("25", "PB12"), ("26", "PB13"), ("27", "PB14"), ("28", "PB15")],
-        w=12 * G, names=True),
+    # Blue Pill module headers, pin 1 at the USB end of each row; rows are 15.24 mm apart.
+    # With the USB end up and components facing you, row A is on the right, row B on the left.
+    "BluePill_A": dict(left=[(str(i + 1), n) for i, n in enumerate(BLUEPILL_A)], right=[], w=6 * G, names=True),
+    "BluePill_B": dict(left=[(str(i + 1), n) for i, n in enumerate(BLUEPILL_B)], right=[], w=6 * G, names=True),
 }
 
 PREFIX = {"R": "R", "C": "C", "C_Pol": "C", "FerriteBead": "FB", "Polyfuse": "F", "D": "D", "D_Zener": "D",
-          "D_Schottky": "D", "D_TVS": "D", "LED": "D", "BAT54C": "D", "BAT54S": "D", "Q_PMOS_GSD": "Q",
-          "Q_NMOS_GSD": "Q", "Crystal_GND24": "Y", "AMS1117-3.3": "U", "USBLC6-2SC6": "U", "USB_B_Micro": "J",
-          "Fan_4pin": "J", "Conn_01x02": "J", "Conn_01x03": "J", "Conn_01x04": "J", "Conn_01x05": "J",
-          "TestPoint": "TP", "STM32F103C8Tx": "U"}
+          "D_Schottky": "D", "D_TVS": "D", "LED": "D", "BAT54S": "D", "Q_PMOS_GSD": "Q",
+          "Q_NMOS_GSD": "Q", "AMS1117": "U", "USBLC6-2SC6": "U",
+          "Fan_4pin": "J", "Conn_01x02": "J", "Conn_01x03": "J", "Conn_01x04": "J",
+          "TestPoint": "TP", "BluePill_A": "J", "BluePill_B": "J"}
 
 # --------------------------------------------------------------------------
 # Footprints (KiCad 8 standard libraries)
@@ -96,16 +88,13 @@ FP_SOT23 = "Package_TO_SOT_SMD:SOT-23"
 FP_SOD123 = "Diode_SMD:D_SOD-123"
 FP_SMA = "Diode_SMD:D_SMA"
 FP_SMB = "Diode_SMD:D_SMB"
-FP_LED = "LED_SMD:LED_0603_1608Metric"
 FP_PTC = "Fuse:Fuse_1812_4532Metric"
 FP_SOT223 = "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
 FP_SOT236 = "Package_TO_SOT_SMD:SOT-23-6"
-FP_LQFP48 = "Package_QFP:LQFP-48_7x7mm_P0.5mm"
-FP_XTAL = "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm"
 FP_FAN = "Connector:FanPinHeader_1x04_P2.54mm_Vertical"
 FP_TERM = "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
-FP_USB = "Connector_USB:USB_Micro-B_Molex-105017-0001"
 FP_TP = "TestPoint:TestPoint_Pad_D1.5mm"
+FP_SOCKET20 = "Connector_PinSocket_2.54mm:PinSocket_1x20_P2.54mm_Vertical"
 
 
 def fp_header(n):
@@ -130,7 +119,7 @@ def cap(block, value, a, b="GND", fp=FP_C, desc=""):
     part(block, "C", value, fp, {"1": a, "2": b}, desc=desc)
 
 
-# Power input, protection, 3.3 V regulator, 12 V sense
+# Power input, protection, 5 V regulator for the Blue Pill, 12 V sense
 B = "Power"
 part(B, "Conn_01x02", "12V IN", FP_TERM, {"1": "VIN_12V", "2": "GND"}, "Phoenix 1715721", "12 V input from PSU")
 part(B, "Polyfuse", "2.5A", FP_PTC, {"1": "VIN_12V", "2": "+12V"}, "Bourns MF-MSMF250/16X-2", "PTC 2.5 A hold, 16 V")
@@ -139,17 +128,18 @@ part(B, "D_TVS", "SMBJ13A", FP_SMB, {"1": "+12V", "2": "GND"}, "Littelfuse SMBJ1
 part(B, "C_Pol", "100u 25V", FP_CP, {"1": "+12V", "2": "GND"}, desc="Bulk, 12 V rail")
 cap(B, "10u 25V", "+12V", fp=FP_C1206)
 # The TVS clamps up to 21.5 V, above the LDO's 15 V limit. The series resistor and
-# 13 V zener hold VREG_IN below 15 V during surges and take ~1.9 V off the LDO.
-res(B, "47", "+12V", "V12_LDO", "LDO feed; limits zener current, 0.08 W at 40 mA", fp=FP_R1206)
-part(B, "BAT54C", "BAT54C", FP_SOT23, {"1": "VBUS", "2": "V12_LDO", "3": "VREG_IN"}, "Nexperia BAT54C,215",
-     "Diode-OR: MCU runs from USB or 12 V")
+# 13 V zener hold VREG_IN below 15 V during surges and take ~2.4 V off the LDO.
+res(B, "47", "+12V", "VREG_IN", "LDO feed; limits zener current, 0.12 W at 50 mA", fp=FP_R1206)
 part(B, "D_Zener", "BZT52C13", FP_SOD123, {"1": "VREG_IN", "2": "GND"}, "Diodes Inc BZT52C13-7-F",
      "LDO input clamp, 13 V")
 cap(B, "10u 25V", "VREG_IN", fp=FP_C1206)
-part(B, "AMS1117-3.3", "AMS1117-3.3", FP_SOT223, {"1": "GND", "2": "+3V3", "3": "VREG_IN"}, "AMS1117-3.3",
-     "LDO 3.3 V; 15 V max in, ~0.3 W at 12 V in")
-part(B, "C_Pol", "22u 10V", FP_TANT, {"1": "+3V3", "2": "GND"}, "KEMET T491B226K010AT",
+part(B, "AMS1117", "AMS1117-5.0", FP_SOT223, {"1": "GND", "2": "+5V_REG", "3": "VREG_IN"}, "AMS1117-5.0",
+     "LDO 5 V for the Blue Pill; 15 V max in, ~0.23 W at 12 V in")
+part(B, "C_Pol", "22u 10V", FP_TANT, {"1": "+5V_REG", "2": "GND"}, "KEMET T491B226K010AT",
      "Tantalum: AMS1117 needs output ESR for stability")
+# The Blue Pill ties USB VBUS straight to its 5V pin; the diode keeps USB from back-feeding the LDO.
+part(B, "D_Schottky", "SS14", FP_SMA, {"1": "+5V", "2": "+5V_REG"}, "SS14",
+     "OR with USB VBUS; Blue Pill runs from USB or 12 V")
 part(B, "FerriteBead", "600R@100MHz", FP_FB, {"1": "+3V3", "2": "+3V3A"}, "Murata BLM18AG601SN1D", "VDDA filter")
 cap(B, "1u", "+3V3A")
 cap(B, "10n", "+3V3A")
@@ -157,47 +147,30 @@ res(B, "47k", "+12V", "V12_SENSE", "12 V sense divider (top)")
 res(B, "10k", "V12_SENSE", "GND", "12 V sense divider (bottom)")
 cap(B, "100n", "V12_SENSE")
 
-# MCU
+# MCU: Blue Pill module (STM32F103C8T6, 8 MHz crystal, 3.3 V LDO, PC13 LED, reset, BOOT jumpers, SWD)
 B = "MCU"
-mcu = {
-    "1": "+3V3", "24": "+3V3", "36": "+3V3", "48": "+3V3", "9": "+3V3A",
-    "8": "GND", "23": "GND", "35": "GND", "47": "GND",
-    "7": "NRST", "44": "BOOT0", "5": "OSC_IN", "6": "OSC_OUT",
-    "2": "LED_K", "3": None, "4": None,
-    "10": "AIN1", "11": "AIN2", "12": "AIN3", "13": "AIN4", "14": "AIN5", "15": "AIN6",
-    "16": None, "17": None, "29": None, "30": None, "31": None,
-    "32": "USB_DM", "33": "USB_DP", "34": "SWDIO", "37": "SWCLK", "38": "FAN1_PWR",
-    "18": "V12_SENSE", "19": None, "20": "BOOT1", "39": "FAN2_PWR", "40": None, "41": None,
-    "42": "FAN1_PWM", "43": "FAN2_PWM", "45": "FAN3_PWM", "46": "FAN4_PWM",
-    "21": "FAN3_PWR", "22": "FAN4_PWR",
-    "25": "FAN1_TACH", "26": "FAN2_TACH", "27": "FAN3_TACH", "28": "FAN4_TACH",
+bluepill = {
+    "GND": "GND", "3V3": "+3V3", "5V": "+5V", "NRST": "NRST",
+    "PA0": "AIN1", "PA1": "AIN2", "PA2": "AIN3", "PA3": "AIN4", "PA4": "AIN5", "PA5": "AIN6",
+    "PB0": "V12_SENSE", "PA11": "USB_DM", "PA12": "USB_DP",
+    "PA15": "FAN1_PWR", "PB3": "FAN2_PWR", "PB10": "FAN3_PWR", "PB11": "FAN4_PWR",
+    "PB6": "FAN1_PWM", "PB7": "FAN2_PWM", "PB8": "FAN3_PWM", "PB9": "FAN4_PWM",
+    "PB12": "FAN1_TACH", "PB13": "FAN2_TACH", "PB14": "FAN3_TACH", "PB15": "FAN4_TACH",
 }
-part(B, "STM32F103C8Tx", "STM32F103C8T6", FP_LQFP48, mcu, "STMicroelectronics STM32F103C8T6")
-for _ in range(4):
-    cap(B, "100n", "+3V3", desc="VDD/VBAT decoupling, one per pin")
-cap(B, "4u7", "+3V3", fp=FP_C1206)
-part(B, "Crystal_GND24", "8MHz", FP_XTAL, {"1": "OSC_IN", "2": "GND", "3": "OSC_OUT", "4": "GND"},
-     "Abracon ABM8-8.000MHZ-B2-T", "8 MHz, CL 18 pF")
-cap(B, "27p", "OSC_IN", desc="C0G; 2 x (CL - ~4 pF stray)")
-cap(B, "27p", "OSC_OUT", desc="C0G; 2 x (CL - ~4 pF stray)")
-cap(B, "100n", "NRST")
-res(B, "10k", "BOOT0", "GND")
-res(B, "10k", "BOOT1", "GND")
-res(B, "1k", "+3V3", "LED_A")
-part(B, "LED", "green", FP_LED, {"2": "LED_A", "1": "LED_K"}, desc="Status, PC13 sinks")
-part(B, "Conn_01x05", "SWD", fp_header(5), {"1": "+3V3", "2": "SWCLK", "3": "GND", "4": "SWDIO", "5": "NRST"},
-     desc="SWD: 3V3 SWCLK GND SWDIO NRST")
+for row, names in (("A", BLUEPILL_A), ("B", BLUEPILL_B)):
+    part(B, f"BluePill_{row}", f"BluePill {row}", FP_SOCKET20,
+         {str(i + 1): bluepill.get(n) for i, n in enumerate(names)},
+         desc="1x20 female header, 2.54 mm; rows 15.24 mm apart")
 
 # USB
 B = "USB"
-part(B, "USB_B_Micro", "USB micro-B", FP_USB,
-     {"1": "VBUS", "2": "USB_DM", "3": "USB_DP", "4": None, "5": "GND", "6": "GND"}, "Molex 105017-0001")
-part(B, "Conn_01x04", "USB int", fp_header(4), {"1": "VBUS", "2": "USB_DM", "3": "USB_DP", "4": "GND"},
-     desc="Alt. to J: cable to motherboard USB 2.0 header (VBUS D- D+ GND)")
+part(B, "Conn_01x04", "USB int", fp_header(4), {"1": "+5V", "2": "USB_DM", "3": "USB_DP", "4": "GND"},
+     desc="Alt. to Blue Pill micro-B: cable to motherboard USB 2.0 header (VBUS D- D+ GND)")
 part(B, "USBLC6-2SC6", "USBLC6-2SC6", FP_SOT236,
-     {"1": "USB_DP", "6": "USB_DP", "3": "USB_DM", "4": "USB_DM", "5": "VBUS", "2": "GND"},
+     {"1": "USB_DP", "6": "USB_DP", "3": "USB_DM", "4": "USB_DM", "5": "+5V", "2": "GND"},
      "STMicroelectronics USBLC6-2SC6", "USB ESD protection")
-res(B, "1k5", "USB_DP", "+3V3", "USB FS D+ pull-up")
+part(B, "R", "1k8", FP_R, {"1": "USB_DP", "2": "+3V3"},
+     desc="Fit only if the Blue Pill's D+ pull-up (R10) is 10k; 1k8 || 10k = 1k5", dnp=True)
 
 # Fan channels
 for n in range(1, 5):

@@ -8,7 +8,7 @@ The PDFs are not stored in the repository. Download them from the manufacturers:
 | AO3401A | https://www.aosmd.com (search AO3401A) |
 | BSS138 | https://www.onsemi.com/products/discrete-power-modules/mosfets/bss138 |
 | BZT52C10 / BZT52C13 | https://www.diodes.com/part/view/BZT52C10 |
-| BAT54C / BAT54S | https://www.nexperia.com/products/diodes/schottky-diodes-and-rectifiers |
+| BAT54S | https://www.nexperia.com/products/diodes/schottky-diodes-and-rectifiers |
 | SMBJ13A | https://www.littelfuse.com (SMBJ series) |
 | USBLC6-2SC6 | https://www.st.com/en/protections-and-emi-filters/usblc6-2.html |
 | AMS1117 | http://www.advanced-monolithic.com/pdf/ds1117.pdf |
