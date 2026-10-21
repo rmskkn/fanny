@@ -61,6 +61,7 @@ SYMBOLS = {
     "Conn_01x03": dict(left=[(str(i), str(i)) for i in range(1, 4)], right=[], w=4 * G, names=True),
     "Conn_01x04": dict(left=[(str(i), str(i)) for i in range(1, 5)], right=[], w=4 * G, names=True),
     "Conn_01x05": dict(left=[(str(i), str(i)) for i in range(1, 6)], right=[], w=4 * G, names=True),
+    "TestPoint": dict(left=[("1", "1")], right=[], w=2 * G, names=False),
     "STM32F103C8Tx": dict(
         left=[("1", "VBAT"), ("24", "VDD"), ("36", "VDD"), ("48", "VDD"), ("9", "VDDA"),
               ("8", "VSSA"), ("23", "VSS"), ("35", "VSS"), ("47", "VSS"),
@@ -79,15 +80,17 @@ PREFIX = {"R": "R", "C": "C", "C_Pol": "C", "FerriteBead": "FB", "Polyfuse": "F"
           "D_Schottky": "D", "D_TVS": "D", "LED": "D", "BAT54C": "D", "BAT54S": "D", "Q_PMOS_GSD": "Q",
           "Q_NMOS_GSD": "Q", "Crystal_GND24": "Y", "AMS1117-3.3": "U", "USBLC6-2SC6": "U", "USB_B_Micro": "J",
           "Fan_4pin": "J", "Conn_01x02": "J", "Conn_01x03": "J", "Conn_01x04": "J", "Conn_01x05": "J",
-          "STM32F103C8Tx": "U"}
+          "TestPoint": "TP", "STM32F103C8Tx": "U"}
 
 # --------------------------------------------------------------------------
 # Footprints (KiCad 8 standard libraries)
 # --------------------------------------------------------------------------
 FP_R = "Resistor_SMD:R_0603_1608Metric"
+FP_R1206 = "Resistor_SMD:R_1206_3216Metric"
 FP_C = "Capacitor_SMD:C_0603_1608Metric"
 FP_C1206 = "Capacitor_SMD:C_1206_3216Metric"
 FP_CP = "Capacitor_SMD:CP_Elec_6.3x7.7"
+FP_TANT = "Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B"
 FP_FB = "Inductor_SMD:L_0603_1608Metric"
 FP_SOT23 = "Package_TO_SOT_SMD:SOT-23"
 FP_SOD123 = "Diode_SMD:D_SOD-123"
@@ -102,6 +105,7 @@ FP_XTAL = "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm"
 FP_FAN = "Connector:FanPinHeader_1x04_P2.54mm_Vertical"
 FP_TERM = "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
 FP_USB = "Connector_USB:USB_Micro-B_Molex-105017-0001"
+FP_TP = "TestPoint:TestPoint_Pad_D1.5mm"
 
 
 def fp_header(n):
@@ -118,8 +122,8 @@ def part(block, sym, value, fp, pins, mpn="", desc="", dnp=False):
     PARTS.append(Part(block, sym, value, fp, pins, mpn, desc, dnp))
 
 
-def res(block, value, a, b, desc=""):
-    part(block, "R", value, FP_R, {"1": a, "2": b}, desc=desc)
+def res(block, value, a, b, desc="", fp=FP_R):
+    part(block, "R", value, fp, {"1": a, "2": b}, desc=desc)
 
 
 def cap(block, value, a, b="GND", fp=FP_C, desc=""):
@@ -134,12 +138,18 @@ part(B, "D_TVS", "SMBJ13A", FP_SMB, {"1": "+12V", "2": "GND"}, "Littelfuse SMBJ1
      "TVS 13 V standoff; also crowbars reverse polarity into F1")
 part(B, "C_Pol", "100u 25V", FP_CP, {"1": "+12V", "2": "GND"}, desc="Bulk, 12 V rail")
 cap(B, "10u 25V", "+12V", fp=FP_C1206)
-part(B, "BAT54C", "BAT54C", FP_SOT23, {"1": "VBUS", "2": "+12V", "3": "VREG_IN"}, "Nexperia BAT54C,215",
+# The TVS clamps up to 21.5 V, above the LDO's 15 V limit. The series resistor and
+# 13 V zener hold VREG_IN below 15 V during surges and take ~1.9 V off the LDO.
+res(B, "47", "+12V", "V12_LDO", "LDO feed; limits zener current, 0.08 W at 40 mA", fp=FP_R1206)
+part(B, "BAT54C", "BAT54C", FP_SOT23, {"1": "VBUS", "2": "V12_LDO", "3": "VREG_IN"}, "Nexperia BAT54C,215",
      "Diode-OR: MCU runs from USB or 12 V")
+part(B, "D_Zener", "BZT52C13", FP_SOD123, {"1": "VREG_IN", "2": "GND"}, "Diodes Inc BZT52C13-7-F",
+     "LDO input clamp, 13 V")
 cap(B, "10u 25V", "VREG_IN", fp=FP_C1206)
 part(B, "AMS1117-3.3", "AMS1117-3.3", FP_SOT223, {"1": "GND", "2": "+3V3", "3": "VREG_IN"}, "AMS1117-3.3",
-     "LDO 3.3 V; 15 V max in, ~0.4 W at 12 V in")
-cap(B, "22u 10V", "+3V3", fp=FP_C1206)
+     "LDO 3.3 V; 15 V max in, ~0.3 W at 12 V in")
+part(B, "C_Pol", "22u 10V", FP_TANT, {"1": "+3V3", "2": "GND"}, "KEMET T491B226K010AT",
+     "Tantalum: AMS1117 needs output ESR for stability")
 part(B, "FerriteBead", "600R@100MHz", FP_FB, {"1": "+3V3", "2": "+3V3A"}, "Murata BLM18AG601SN1D", "VDDA filter")
 cap(B, "1u", "+3V3A")
 cap(B, "10n", "+3V3A")
@@ -194,10 +204,12 @@ for n in range(1, 5):
     B = f"Fan {n}"
     f = f"FAN{n}"
     # High-side switch with gate protection:
-    #   R_GS/R_G divider limits Vgs to -Vin/2 (-6 V at 12 V), inside IRLML6402's +-12 V rating;
+    #   R_GS/R_G divider limits Vgs to -Vin/2 (-6 V at 12 V), inside AO3401A's +-12 V rating;
     #   the 10 V zener clamps transients on the 12 V rail; R_G limits zener current.
-    part(B, "Q_PMOS_GSD", "IRLML6402", FP_SOT23, {"1": f"{f}_GATE", "2": "+12V", "3": f"{f}_12V"},
-         "Infineon IRLML6402TRPBF", "High-side P-MOSFET, -20 V, -3.7 A")
+    part(B, "Q_PMOS_GSD", "AO3401A", FP_SOT23, {"1": f"{f}_GATE", "2": "+12V", "3": f"{f}_SW_12V"},
+         "Alpha & Omega AO3401A", "High-side P-MOSFET, -30 V, -4 A")
+    part(B, "Polyfuse", "1.1A", FP_PTC, {"1": f"{f}_SW_12V", "2": f"{f}_12V"}, "Bourns MF-MSMF110/16-2",
+         "PTC 1.1 A hold, 16 V; a shorted fan does not trip F1")
     res(B, "4k7", "+12V", f"{f}_GATE", "Gate-source pull-up (P-FET off by default)")
     res(B, "4k7", f"{f}_GATE", f"{f}_DRV", "Gate divider / zener current limit")
     part(B, "D_Zener", "BZT52C10", FP_SOD123, {"1": "+12V", "2": f"{f}_GATE"}, "Diodes Inc BZT52C10-7-F",
@@ -229,6 +241,11 @@ for k in range(1, 7):
     cap(B, "100n", a, desc="ADC anti-alias / sample charge")
     part(B, "BAT54S", "BAT54S", FP_SOT23, {"1": "GND", "2": "+3V3A", "3": a}, "Nexperia BAT54S,215",
          "Clamp to 0..3.3 V (analog pins are not 5 V tolerant)")
+
+# Test points (last, so they do not shift other references)
+B = "Test points"
+for net in ("+12V", "+3V3", "GND", "NRST", "FAN1_PWM", "FAN1_TACH"):
+    part(B, "TestPoint", net, FP_TP, {"1": net}, desc="Probe pad")
 
 # --------------------------------------------------------------------------
 # Reference assignment and checks

@@ -37,10 +37,10 @@ This tree follows the suggested layout with two changes:
 ```
  12 V (PSU) ─ F1 PTC ─ D1 TVS ─┬─────────────── +12V ──────────────┐
                                │                                   │ ×4
- USB VBUS ── D2 BAT54C (OR) ───┴─ U1 AMS1117-3.3 ─ +3V3 ─ FB1 ─ +3V3A
+ USB VBUS ── D2 BAT54C (OR) ─ R1 47R ┴─ D3 13V ─ U1 AMS1117-3.3 ─ +3V3 ─ FB1 ─ +3V3A
                                                                    │
             ┌──────────── STM32F103C8T6 (U2) ─────────────┐        │
- USB ─ U3 ESD ─ PA11/PA12           TIM2 PA15 PB3 PB10 PB11 ─► BSS138 ─► IRLML6402 high-side ─► fan +12V
+ USB ─ U3 ESD ─ PA11/PA12           TIM2 PA15 PB3 PB10 PB11 ─► BSS138 ─► AO3401A high-side ─► PTC ─► fan +12V
             │                       TIM4 PB6..PB9 (25 kHz) ─► BSS138 open drain ─► fan PWM pin
             │                       EXTI PB12..PB15 ◄─ RC ◄─ 10k pull-up ◄─ fan tach
  sensors ─ 1k + 100n + BAT54S ─► PA0..PA5 (ADC)    PB0 ◄─ 47k/10k ◄─ +12V
@@ -71,11 +71,11 @@ The channel has two control paths, and the firmware selects between them per cha
 - **`dc` mode (3-pin fans):** the MOSFET chops the 12 V supply at 30 Hz, and
   the PWM pin is held high.
 
-**High-side switch, IRLML6402 (P-channel, −20 V, ±12 V V<sub>GS</sub>, 65 mΩ at −4.5 V).**
-The source connects to +12 V and the drain to fan pin 2. The 3.3 V MCU cannot
+**High-side switch, AO3401A (P-channel, −30 V, ±12 V V<sub>GS</sub>, ≤52 mΩ at −4.5 V).**
+The source connects to +12 V. The drain feeds fan pin 2 through a per-channel PTC. The 3.3 V MCU cannot
 drive the gate directly, so a BSS138 pulls the gate low through a resistor divider.
 
-**Gate protection.** The IRLML6402 is rated only ±12 V gate-source, which
+**Gate protection.** The AO3401A is rated only ±12 V gate-source, which
 equals the supply voltage. The design therefore never applies the full rail to the gate:
 
 | Part | Value | Role |
@@ -85,10 +85,14 @@ equals the supply voltage. The design therefore never applies the full rail to t
 | D<sub>Z</sub> BZT52C10 (K at source, A at gate) | 10 V | Clamps V<sub>GS</sub> to −10 V when the 12 V rail spikes above ~20 V. Its forward drop clamps positive V<sub>GS</sub> to +0.7 V |
 | D1 SMBJ13A | rail TVS | Limits rail surges seen by V<sub>DS</sub> and by the gate network |
 
-At −6 V the FET is well enhanced, so a 1 A fan dissipates about 65 mW. The
+At −6 V the FET is well enhanced, so a 1 A fan dissipates about 50 mW. The
 divider draws 1.3 mA per channel while the fan is on. Gate switching takes
 a few microseconds through 4.7 kΩ, so `dc` mode uses a 30 Hz chopping frequency
 to keep switching loss negligible. Raising the frequency needs a stronger gate driver.
+
+**Channel fuse.** A 1.1 A PTC (Bourns MF-MSMF110/16) sits between the FET drain
+and fan pin 2. A shorted fan or cable trips only its own channel, so the other
+fans keep running and F1 does not trip.
 
 **Freewheel diode** SS14 is fitted across each fan output. It absorbs the
 inductive kick from the motor and cable when the switch opens.
@@ -126,7 +130,12 @@ that are corrected for the actual supply voltage.
   With reversed polarity, the TVS conducts and trips the PTC.
 - **MCU supply:** a BAT54C diode-OR of USB VBUS and +12 V feeds an
   AMS1117-3.3. The board can be programmed over USB alone, without 12 V.
-  At 12 V in, the LDO dissipates about 0.4 W, which the SOT-223 package handles.
+  The 12 V branch goes through a 47 Ω resistor (1206), and a BZT52C13 zener
+  clamps the LDO input. The TVS lets the rail reach 21.5 V during a surge.
+  The resistor and zener keep the LDO input below its 15 V limit. The resistor
+  also drops about 1.9 V at 40 mA, so the LDO dissipates about 0.3 W.
+- **LDO output capacitor:** 22 µF tantalum. The AMS1117 needs output ESR for
+  stability, and a low-ESR ceramic alone can make it oscillate.
 - **12 V monitoring:** 47 kΩ/10 kΩ divider to PB0. Full scale is about 18.8 V.
 - **USB:** micro-B connector and a 4-pin header wired in parallel. Use the
   header for a cable to an internal motherboard USB 2.0 port. A fixed 1.5 kΩ
@@ -134,11 +143,10 @@ that are corrected for the actual supply voltage.
 
 ### Known limits
 
-- **TVS clamp vs. V<sub>DS</sub>:** the SMBJ13A clamps at up to 21.5 V at full
-  rated surge current, slightly above the IRLML6402's 20 V V<sub>DS</sub>. A
-  PSU 12 V rail does not produce surges of that size. For harsh supplies,
-  use a 30 V P-FET such as the AO3401A or DMP3098L and change the zener to match.
-- **Current:** fan headers are rated 1 A each. Total current is limited to 2.5 A by F1.
+- **Current:** fan headers are rated 1 A each, and each channel has a 1.1 A
+  PTC. Total current is limited to 2.5 A by F1, so four fans at 1 A cannot all
+  run at once. At power-up all fans start at 100 % together. Measure the
+  combined inrush with the real fans.
 - **`dc` mode tach:** with the supply chopped, the tach reading is only valid
   at 100 % duty.
 - **USB VID/PID:** the firmware uses ST's VCP IDs (0483:5740). Replace them
@@ -150,7 +158,7 @@ that are corrected for the actual supply voltage.
 It writes the following:
 
 - `hardware/kicad/fan_controller.kicad_sch`: one A1 sheet, grouped by block
-  (Power, MCU, USB, Fan 1–4, Analog inputs). Each pin connects through a net
+  (Power, MCU, USB, Fan 1–4, Analog inputs, Test points). Each pin connects through a net
   label (netlist-style).
 - `hardware/kicad/fanctl.kicad_sym`: project symbol library. Pin numbers
   match the footprint pads.
@@ -175,26 +183,29 @@ Checked with KiCad 8.0.9 (`kicad/kicad:8.0` Docker image):
 - Every footprint loads from the standard libraries.
 - Every symbol pin number matches a pad in its footprint, and every pad has a pin.
 
-### BOM summary (124 parts, 44 lines; full list in `hardware/bom.csv`)
+### BOM summary (136 parts, 53 lines; full list in `hardware/bom.csv`)
 
 | Qty | Part | Package | Use |
 |---|---|---|---|
 | 1 | STM32F103C8T6 | LQFP-48 | MCU |
-| 4 | IRLML6402 | SOT-23 | high-side fan switches |
+| 4 | AO3401A | SOT-23 | high-side fan switches |
 | 8 | BSS138 | SOT-23 | gate level shifters, PWM buffers |
 | 4 | BZT52C10 | SOD-123 | gate-source clamps |
+| 1 | BZT52C13 | SOD-123 | LDO input clamp |
 | 4 | SS14 | SMA | freewheel diodes |
 | 6 | BAT54S | SOT-23 | analog input clamps |
 | 1 | BAT54C | SOT-23 | supply diode-OR |
 | 1 | SMBJ13A | SMB | 12 V TVS |
 | 1 | MF-MSMF250/16X-2 | 1812 | 2.5 A PTC fuse |
+| 4 | MF-MSMF110/16-2 | 1812 | 1.1 A per-channel PTC fuses |
 | 1 | AMS1117-3.3 | SOT-223 | 3.3 V LDO |
 | 1 | USBLC6-2SC6 | SOT-23-6 | USB ESD |
 | 1 | 8 MHz crystal, CL 18 pF | 3225 | HSE |
 | 4 | Molex 47053-1000 | 4-pin | fan headers |
 | 1 | Molex 105017-0001 | micro-B | USB |
 | 6 / 1 / 1 / 1 | 1×3 / 1×4 / 1×5 headers, 2-pin terminal | 2.54 / 5.08 mm | sensors / USB internal / SWD / 12 V |
-| 61 | resistors, capacitors, ferrite, LED | 0603 / 1206 | passives |
+| 6 | test pads | 1.5 mm | +12V, +3V3, GND, NRST, FAN1_PWM, FAN1_TACH |
+| 78 | resistors, capacitors, ferrite, LED | 0603 / 1206 / 3528 | passives |
 
 The MPNs in the BOM are examples. Check stock and second sources before ordering.
 
