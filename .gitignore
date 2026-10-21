@@ -6,3 +6,4 @@ __pycache__/
 ~*.lck
 .history/
 *_drc_violations.json
+.mcp-backups/
