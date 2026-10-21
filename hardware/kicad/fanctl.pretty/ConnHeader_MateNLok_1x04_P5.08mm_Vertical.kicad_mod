@@ -5,6 +5,8 @@
   (layer "F.Cu")
   (descr "TE Connectivity 350424-1, 4-circuit Mate-N-Lok PCB pin header, 0.200in (5.08mm) pitch, shrouded/polarized, 12A/250VAC per pin")
   (tags "connector power header mate-n-lok TE 350424")
+  (attr through_hole)
+  (duplicate_pad_numbers_are_jumpers no)
 
   (property "Reference" "REF**" (at 7.62 -6.5 0)
     (layer "F.SilkS")
@@ -54,6 +56,7 @@
     (size 2.5 2.5)
     (drill 1.78)
     (layers "*.Cu" "*.Mask")
+    (remove_unused_layers no)
     (roundrect_rratio 0.25)
     (uuid "279d76d5-562d-4980-9032-286276e0e5e7")
   )
@@ -63,6 +66,7 @@
     (size 2.5 2.5)
     (drill 1.78)
     (layers "*.Cu" "*.Mask")
+    (remove_unused_layers no)
     (uuid "138289de-4a0e-410e-b32d-8e998d50beff")
   )
 
@@ -71,6 +75,7 @@
     (size 2.5 2.5)
     (drill 1.78)
     (layers "*.Cu" "*.Mask")
+    (remove_unused_layers no)
     (uuid "f943db08-2f7e-4768-bca5-2bf408596ed9")
   )
 
@@ -79,6 +84,7 @@
     (size 2.5 2.5)
     (drill 1.78)
     (layers "*.Cu" "*.Mask")
+    (remove_unused_layers no)
     (uuid "61fd23ef-a842-437f-974d-4a3b816ca976")
   )
 
