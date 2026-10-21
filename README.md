@@ -1,6 +1,6 @@
 # STM32F103 PWM fan controller
 
-![PCB placement, top view](hardware/pcb_top.png)
+![PCB 3D view](hardware/pcb_3d.png)
 
 USB-controlled controller for four 12 V PC fans and six analog sensor inputs.
 It is a carrier board for an STM32F103C8T6 "Blue Pill" module, which shows up
@@ -18,7 +18,8 @@ stm32-fan-controller/
 │   ├── kicad/         KiCad 8 project (schematic, symbol lib, board outline)
 │   ├── tools/         gen_kicad.py (KiCad files, bom.csv), place_pcb.py (placement, 3D)
 │   ├── bom.csv        bill of materials (generated)
-│   ├── pcb_top.png    top view of the placed board
+│   ├── pcb_3d.png     3D render of the placed board
+│   ├── pcb_top.png    placement plot, top view
 │   └── datasheets/    links to the key datasheets
 └── host/              fanctl.py command-line client (pyserial)
 ```
@@ -240,6 +241,16 @@ Every footprint is from the standard KiCad 8 libraries. Workflow:
 
 Once you start editing the schematic or the board by hand in KiCad, stop
 running the scripts, because they overwrite the files.
+
+![PCB placement, top view](hardware/pcb_top.png)
+
+To refresh `hardware/pcb_3d.png` (KiCad 8's CLI cannot render, so this uses KiCad 9):
+
+```sh
+docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp -v "$PWD/hardware":/w -w /w/kicad kicad/kicad:9.0 \
+    kicad-cli pcb render --side top --rotate '-40,0,-30' --zoom 0.9 --quality high \
+    --background opaque -w 1600 -h 1100 -o /w/pcb_3d.png fan_controller.kicad_pcb
+```
 
 To refresh `hardware/pcb_top.png`:
 
