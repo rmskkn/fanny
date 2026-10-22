@@ -8,7 +8,13 @@
 /* Timer clock is 72 MHz for TIM4 (APB1 x2). */
 #define SIGNAL_PERIOD (72000000u / 25000u)        /* 25 kHz per Intel 4-wire fan spec */
 
-static const enum tim_oc_id oc[FAN_COUNT] = { TIM_OC1, TIM_OC2, TIM_OC3, TIM_OC4 };
+/*
+ * TIM4_CH1 (PB6) and TIM4_CH3 (PB8) are crossed on the PCB: PB6 drives the
+ * FAN3 header and PB8 drives the FAN1 header. This array maps fan index
+ * (0-based, fan N = index N-1) to the TIM4 channel that actually reaches
+ * that fan's header; see hardware/kicad schematic nets FANn_PWM_OUT.
+ */
+static const enum tim_oc_id oc[FAN_COUNT] = { TIM_OC3, TIM_OC2, TIM_OC1, TIM_OC4 };
 
 void pwm_init(void)
 {
