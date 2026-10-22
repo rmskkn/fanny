@@ -15,7 +15,7 @@ stm32-fan-controller/
 │   ├── App/           fan, pwm, tach, protocol, thermal (analog), safety
 │   └── tests/         host-side unit tests (`make test`)
 ├── hardware/
-│   ├── kicad/         KiCad 8 project (schematic, symbol lib, board outline)
+│   ├── kicad/         KiCad 10 project (schematic, symbol lib, board outline)
 │   ├── tools/         gen_kicad.py (KiCad files, bom.csv), place_pcb.py (placement, 3D)
 │   ├── bom.csv        bill of materials (generated)
 │   ├── pcb_3d.png     3D render of the placed board
@@ -39,11 +39,10 @@ This tree follows the suggested layout with two changes:
 ### Block overview
 
 ```
- 12 V (PSU) ─ F1 PTC ─ D1 TVS ─── +12V ─┬─ F2..F5 1.1 A PTC ─► fan +12V (×4)
-                                        └─ 47k/10k ─► PB0
- USB (micro-B or J4) ── +5V ── Blue Pill LDO ── +3V3 ─ FB1 ─ +3V3A
+ 12 V (PSU) ─ J1 Mate-N-Lok ─ F1 PTC ─ D1 TVS ── +12V ─┬─ F2..F5 1.1 A PTC ─► fan +12V (×4)
+                                                        └─ 47k/10k ─► PB0
+ USB (Blue Pill micro-B only) ── +5V ── Blue Pill LDO ── +3V3 ─ FB1 ─ +3V3A
             ┌──────────── Blue Pill module (J2, J3) ─────────┐
- USB int ─ U1 ESD ─ PA11/PA12
             │                       TIM4 PB6..PB9 (25 kHz) ─► BSS138 open drain ─► fan PWM pin
             │                       EXTI PB12..PB15 ◄─ RC ◄─ 10k pull-up ◄─ fan tach
  sensors ─ 1k + 100n + BAT54S ─► PA0..PA5 (ADC)    PB0 ◄─ 47k/10k ◄─ +12V
@@ -81,16 +80,15 @@ Check it against your module before laying out the board.
 
 The module provides the MCU, the 8 MHz crystal, the 3.3 V regulator, the PC13
 LED, the reset button, the BOOT jumpers, the SWD header and the micro-B USB
-connector. The module runs from USB only: its micro-B connector or the
-carrier's internal USB header (J4), which feeds the module's 5V pin. The 12 V
-input powers only the fans. The module's 3V3 pin powers the carrier's 3.3 V
-logic and sensor bias.
+connector. The module runs from USB only, through its own micro-B connector —
+the carrier has no USB connector or wiring of its own. The 12 V input powers
+only the fans. The module's 3V3 pin powers the carrier's 3.3 V logic and
+sensor bias.
 
 Things to check on the module:
 
 - **D+ pull-up (R10):** USB needs 1.5 kΩ, but many Blue Pills fit 10 kΩ, and
-  some hosts then fail to enumerate. Either replace R10, or fit the carrier's
-  R3 (1.8 kΩ, DNP by default). 1.8 kΩ in parallel with 10 kΩ gives 1.5 kΩ.
+  some hosts then fail to enumerate. Replace R10 with 1.5 kΩ if needed.
 - **MCU:** some modules carry a clone such as CS32F103, CKS32F103 or
   GD32F103 instead of an ST part. The firmware targets the ST part. Clones can
   differ in USB and flash timing.
@@ -143,11 +141,9 @@ that are corrected for the actual supply voltage.
 - **Module supply:** USB only. The board has no 5 V or 3.3 V regulator. The
   Blue Pill's own LDO makes 3.3 V from USB VBUS.
 - **12 V monitoring:** 47 kΩ/10 kΩ divider to PB0. Full scale is about 18.8 V.
-- **USB:** the Blue Pill's micro-B connector and the carrier's 4-pin header
-  (J4) are wired in parallel. Use the header for a cable to an internal
-  motherboard USB 2.0 port. Connect only one of them at a time. U1 protects
-  the header path against ESD. The firmware pulls D+ low for 10 ms at boot to
-  force re-enumeration.
+- **USB:** Blue Pill micro-B connector only; the carrier has no USB
+  connector, header or ESD protection of its own. The firmware pulls D+ low
+  for 10 ms at boot to force host re-enumeration.
 
 ### Known limits
 
@@ -169,7 +165,7 @@ that are corrected for the actual supply voltage.
 It writes the following:
 
 - `hardware/kicad/fan_controller.kicad_sch`: one A1 sheet, grouped by block
-  (Power, MCU, USB, Fan 1–4, Analog inputs, Test points). Each pin connects through a net
+  (Power, MCU, Fan 1–4, Analog inputs, Test points). Each pin connects through a net
   label (netlist-style).
 - `hardware/kicad/fanctl.kicad_sym`: project symbol library. Pin numbers
   match the footprint pads.
@@ -189,11 +185,11 @@ Every footprint on the board points to its model as
 `${KIPRJMOD}/3dmodels/<library>.3dshapes/<name>.step`. KiCad resolves
 `${KIPRJMOD}` to the project folder, so the 3D viewer and STEP export use
 these files without the KiCad 3D library installed. A footprint added later
-in the KiCad GUI keeps its library path (`${KICAD8_3DMODEL_DIR}/…`). To use a
+in the KiCad GUI keeps its library path (`${KICAD10_3DMODEL_DIR}/…`). To use a
 local copy, put the `.step` file under `3dmodels/` and change the path in
 the footprint's 3D Models tab.
 
-Every footprint is from the standard KiCad 8 libraries. Workflow:
+Every footprint is from the standard KiCad 10 libraries. Workflow:
 
 1. Change parts or nets in `gen_kicad.py`, then run `python3 hardware/tools/gen_kicad.py`.
    The script refuses to generate output when a net has only one part, or
@@ -201,7 +197,7 @@ Every footprint is from the standard KiCad 8 libraries. Workflow:
 2. Place the board and export the 3D model:
    ```sh
    docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp -v "$PWD":/w -w /w \
-       kicad/kicad:8.0 python3 hardware/tools/place_pcb.py
+       kicad/kicad:10.0 python3 hardware/tools/place_pcb.py
    ```
    The script refuses to run on a board that already has footprints, and it
    stops when parts overlap, leave the board, or come near a mounting hole.
@@ -210,32 +206,48 @@ Every footprint is from the standard KiCad 8 libraries. Workflow:
 Once you start editing the schematic or the board by hand in KiCad, stop
 running the scripts, because they overwrite the files.
 
+**Known gap:** the board and schematic were hand-edited after the last
+`gen_kicad.py` run (12 V input swapped to the Mate-N-Lok connector below, and
+the carrier's USB header/ESD/pull-up resistor removed). `gen_kicad.py` and
+`hardware/bom.csv` still generate the old 2-pin terminal-block J1 plus the
+removed USB parts. Don't rerun `gen_kicad.py` until it's updated to match, or
+it will regenerate parts that are no longer on the board.
+
 ![PCB placement, top view](hardware/pcb_top.png)
 
-To refresh `hardware/pcb_3d.png` (KiCad 8's CLI cannot render, so this uses KiCad 9):
+To refresh `hardware/pcb_3d.png`:
 
 ```sh
-docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp -v "$PWD/hardware":/w -w /w/kicad kicad/kicad:9.0 \
-    kicad-cli pcb render --side top --rotate '-40,0,-30' --zoom 0.9 --quality high \
-    --background opaque -w 1600 -h 1100 -o /w/pcb_3d.png fan_controller.kicad_pcb
+docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp -v "$PWD/hardware":/w -w /w/kicad kicad/kicad:10.0 \
+    kicad-cli pcb render --side top --rotate '-20,0,350' --zoom 0.75 --perspective --floor \
+    --background transparent --quality high -w 480 -h 500 -o /w/pcb_3d.png fan_controller.kicad_pcb
 ```
 
 To refresh `hardware/pcb_top.png`:
 
 ```sh
-docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp -v "$PWD":/w -w /w kicad/kicad:8.0 \
+docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp -v "$PWD":/w -w /w kicad/kicad:10.0 \
     kicad-cli pcb export svg --layers Edge.Cuts,F.Cu,F.SilkS,F.Fab --exclude-drawing-sheet \
     --page-size-mode 2 -o top.svg hardware/kicad/fan_controller.kicad_pcb
 rsvg-convert -w 1400 -b white top.svg -o hardware/pcb_top.png && rm top.svg
 ```
 
-Checked with KiCad 8.0.9 (`kicad/kicad:8.0` Docker image):
+Checked with KiCad 10.0.7:
 
-- `kicad-cli sch erc --severity-all` reports 0 errors and 0 warnings.
-- Every footprint loads from the standard libraries.
+- `kicad-cli sch erc --severity-all` reports 0 errors, 3 warnings (pre-existing
+  single-pin net-label notices).
+- `kicad-cli pcb drc --severity-all` reports 0 errors, 14 warnings (silkscreen
+  clearance between adjacent parts in the densest rows; cosmetic, not a fab
+  blocker).
+- Every footprint loads from the standard libraries and matches its library
+  copy.
 - Every symbol pin number matches a pad in its footprint, and every pad has a pin.
 
-### BOM summary (84 parts, 39 lines, plus the Blue Pill module; full list in `hardware/bom.csv`)
+### BOM summary (plus the Blue Pill module)
+
+`hardware/bom.csv` is stale (see the known gap above — it still lists the old
+2-pin terminal-block J1 and the removed USB header/ESD parts). This table
+reflects the board as built:
 
 | Qty | Part | Package | Use | DigiKey |
 |---|---|---|---|---|
@@ -245,12 +257,12 @@ Checked with KiCad 8.0.9 (`kicad/kicad:8.0` Docker image):
 | 1 | SMBJ13A | SMB | 12 V TVS | [SMBJ13A](https://www.digikey.com/en/products/result?keywords=SMBJ13A) |
 | 1 | MF-MSMF250/16X-2 | 1812 | 2.5 A PTC fuse | [MF-MSMF250/16X-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF250%2F16X-2) |
 | 4 | MF-MSMF110/16-2 | 1812 | 1.1 A per-channel PTC fuses | [MF-MSMF110/16-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF110%2F16-2) |
-| 1 | USBLC6-2SC6 | SOT-23-6 | USB ESD | [USBLC6-2SC6](https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6) |
 | 4 | Molex 47053-1000 | 4-pin | fan headers | [0470531000](https://www.digikey.com/en/products/result?keywords=0470531000) |
 | 2 | 1×20 female header | 2.54 mm | Blue Pill socket | [PPTC201LFBN-RC](https://www.digikey.com/en/products/result?keywords=PPTC201LFBN-RC) (Sullins, or any 1×20 socket) |
-| 6 / 1 / 1 | 1×3 / 1×4 headers, 2-pin terminal | 2.54 / 5.08 mm | sensors / USB internal / 12 V | [1715721](https://www.digikey.com/en/products/result?keywords=1715721) (terminal); headers: any 2.54 mm pin header |
+| 1 | TE Connectivity 350424-1 | 4-pin, 5.08 mm | 12 V input, Mate-N-Lok | [350424-1](https://www.digikey.com/en/products/result?keywords=350424-1) |
+| 6 | 1×3 headers | 2.54 mm | sensor inputs | any 2.54 mm pin header |
 | 6 | test pads | 1.5 mm | +12V, +3V3, GND, NRST, FAN1_PWM, FAN1_TACH | — (PCB pads, not a part) |
-| 47 | resistors, capacitors, ferrite (R3 DNP) | 0603 / 1206 / 6.3 mm | passives | [BLM18AG601SN1D](https://www.digikey.com/en/products/result?keywords=BLM18AG601SN1D) (FB1); others generic, see `bom.csv` |
+| — | resistors, capacitors, ferrite | 0603 / 1206 / 6.3 mm | passives | [BLM18AG601SN1D](https://www.digikey.com/en/products/result?keywords=BLM18AG601SN1D) (FB1); others generic, see `bom.csv` (minus the stale USB-section rows) |
 
 The MPNs in the BOM are examples. Check stock and second sources before ordering.
 The DigiKey links are keyword searches by MPN, so they still work when DigiKey
