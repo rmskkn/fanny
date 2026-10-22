@@ -10,4 +10,5 @@ https://www.kicad.org/libraries/license/
 `Resistor_SMD.3dshapes/R_1812_4532Metric.step`, because the library has no
 model for that fuse footprint.
 
-`hardware/tools/place_pcb.py` downloads any model that is missing here.
+A footprint's 3D Models tab points here (`${KIPRJMOD}/3dmodels/...`); add a
+missing model by copying its `.step` file from the KiCad library above.

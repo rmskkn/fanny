@@ -1,4 +1,4 @@
-# STM32F103 PWM fan controller
+# Fanny — a versatile USB PWM fan controller
 
 ![PCB 3D view](hardware/pcb_3d.png)
 
@@ -15,9 +15,8 @@ stm32-fan-controller/
 │   ├── App/           fan, pwm, tach, protocol, thermal (analog), safety
 │   └── tests/         host-side unit tests (`make test`)
 ├── hardware/
-│   ├── kicad/         KiCad 10 project (schematic, symbol lib, board outline)
-│   ├── tools/         gen_kicad.py (KiCad files, bom.csv), place_pcb.py (placement, 3D)
-│   ├── bom.csv        bill of materials (generated)
+│   ├── kicad/         KiCad 10 project (schematic, symbol lib, board outline) — source of truth, hand-edited
+│   ├── bom.csv        bill of materials
 │   ├── pcb_3d.png     3D render of the placed board
 │   ├── pcb_top.png    placement plot, top view
 │   └── datasheets/    links to the key datasheets
@@ -176,8 +175,8 @@ that are corrected for the actual supply voltage.
 
 ## KiCad project
 
-`hardware/tools/gen_kicad.py` is the single source of truth for the netlist.
-It writes the following:
+The KiCad files are the source of truth: edit them directly in the KiCad
+GUI.
 
 - `hardware/kicad/fan_controller.kicad_sch`: one A1 sheet, grouped by block
   (Power, MCU, Fan 1–4, Analog inputs, Test points). Each pin connects through a net
@@ -188,13 +187,9 @@ It writes the following:
   holes, and a `Power` net class (1 mm tracks) for the 12 V and GND nets.
 - `hardware/bom.csv`.
 
-`hardware/tools/place_pcb.py` runs in KiCad's Python (`pcbnew`). It places
-every footprint by block on the board and assigns its nets. The board is
-placed but not routed. It then downloads the 3D models it needs into
-`hardware/kicad/3dmodels/` and writes the 3D model as
-`fan_controller.step` and `fan_controller.glb`. The Blue Pill module has no
-3D model, so only its two sockets appear. The models are committed, so the
-script downloads only models for footprints that are new.
+The 3D model (`fan_controller.step`, `fan_controller.glb`) lives under
+`hardware/kicad/3dmodels/` and is committed. The Blue Pill module has no 3D
+model, so only its two sockets appear.
 
 Every footprint on the board points to its model as
 `${KIPRJMOD}/3dmodels/<library>.3dshapes/<name>.step`. KiCad resolves
@@ -204,22 +199,11 @@ in the KiCad GUI keeps its library path (`${KICAD10_3DMODEL_DIR}/…`). To use a
 local copy, put the `.step` file under `3dmodels/` and change the path in
 the footprint's 3D Models tab.
 
-Every footprint is from the standard KiCad 10 libraries. Workflow:
+Every footprint is from the standard KiCad 10 libraries.
 
-1. Change parts or nets in `gen_kicad.py`, then run `python3 hardware/tools/gen_kicad.py`.
-   The script refuses to generate output when a net has only one part, or
-   when a part's pins do not match its symbol.
-2. Place the board and export the 3D model:
-   ```sh
-   docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp -v "$PWD":/w -w /w \
-       kicad/kicad:10.0 python3 hardware/tools/place_pcb.py
-   ```
-   The script refuses to run on a board that already has footprints, and it
-   stops when parts overlap, leave the board, or come near a mounting hole.
-3. Open `fan_controller.kicad_pro`. Run ERC, adjust the placement, then route.
-
-Once you start editing the schematic or the board by hand in KiCad, stop
-running the scripts, because they overwrite the files.
+Workflow: open `fan_controller.kicad_pro`, change the schematic and/or
+board, run ERC/DRC, then route. Re-export the BOM (`hardware/bom.csv`) and
+the renders below after a change that affects them.
 
 To refresh `hardware/pcb_3d.png`:
 

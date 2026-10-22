@@ -8,7 +8,7 @@
 	)
 	(paper "A4")
 	(title_block
-		(title "STM32F103 PWM fan controller")
+		(title "Fanny - versatile USB PWM fan controller")
 		(rev "1.0")
 	)
 	(layers
