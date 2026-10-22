@@ -122,6 +122,21 @@ released line. See [Failsafe behaviour](#failsafe-behaviour).
 then 1 kΩ + 1 nF filtering. PB12–PB15 are 5 V tolerant. A fan that pulls its
 tach output to 12 V internally (outside the spec) would need an extra clamp.
 
+### Compatibility
+
+Verified against the [Intel 4-wire PWM fan spec rev 1.2](https://www.konilabs.net/docs/standards/fan/intel_4wire_pwm_fans_specs_rev1_2.pdf):
+
+| Spec requirement | Board implementation | Status |
+|---|---|---|
+| Pinout: 1 GND, 2 +12 V, 3 tach, 4 PWM | `Fan_4pin` header wired in that order | Match |
+| PWM: open-drain/collector, fan pulls up internally | BSS138 open-drain buffer, MCU only sinks | Match |
+| PWM frequency: 21–28 kHz target (25 kHz nominal) | TIM4 at 72 MHz / 2880 = 25.000 kHz exact | Match |
+| PWM line released = fan runs full speed (fail-safe) | 100 kΩ pull-down holds buffer off until firmware drives it | Match |
+| Tach: open-collector, pulled up, 2 pulses/rev | 10 kΩ pull-up to 3.3 V, `TACH_PULSES_PER_REV = 2` in firmware | Match |
+| Tach pull-up rail ≤ 5 V tolerant input | Pulled to 3.3 V; PB12–PB15 are 5 V tolerant | Match |
+
+See [Fan channel](#fan-channel) above for the per-pin circuit detail.
+
 ### Analog inputs (AIN1–AIN6)
 
 Each input is a 3-pin header: 3V3A, SIG, GND. The conditioning chain is:
@@ -380,3 +395,12 @@ not permitted without a separate written license from the copyright holder.
 
 `firmware/Drivers/libopencm3` is a submodule under its own license (LGPL-3.0)
 and is not covered by the above.
+
+## TODO
+
+1. **3-pin fan motor-side PWM.** Current PWM buffer (BSS138 on pin 4) switches
+   only the fan's signal pin, not motor current. A 3-pin fan has no PWM input;
+   speed control would need the GND (or +12 V) return routed through a power
+   MOSFET sized for motor current, plus a flyback diode across the motor for
+   inductive kickback. Neither is present on this board revision — a 3-pin fan
+   wired to the existing header always runs at full speed.
