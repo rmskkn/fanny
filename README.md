@@ -206,15 +206,6 @@ Every footprint is from the standard KiCad 10 libraries. Workflow:
 Once you start editing the schematic or the board by hand in KiCad, stop
 running the scripts, because they overwrite the files.
 
-**Known gap:** the board and schematic were hand-edited after the last
-`gen_kicad.py` run (12 V input swapped to the Mate-N-Lok connector below, and
-the carrier's USB header/ESD/pull-up resistor removed). `gen_kicad.py` and
-`hardware/bom.csv` still generate the old 2-pin terminal-block J1 plus the
-removed USB parts. Don't rerun `gen_kicad.py` until it's updated to match, or
-it will regenerate parts that are no longer on the board.
-
-![PCB placement, top view](hardware/pcb_top.png)
-
 To refresh `hardware/pcb_3d.png`:
 
 ```sh
