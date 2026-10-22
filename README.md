@@ -364,3 +364,19 @@ The `FanController` class in `fanctl.py` can be imported to build a control
 daemon, for example one that maps an NTC reading from `ain` to a fan duty.
 For a 10 kΩ NTC on the 10 kΩ bias resistor, the resistance is
 R<sub>NTC</sub> = 10 kΩ × mV / (VDDA − mV).
+
+## License
+
+Copyright © 2026 Roman Skakun.
+
+This project — hardware design files, firmware, and host tool — is licensed
+under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](LICENSE)
+(CC BY-NC-SA 4.0).
+
+You may build, modify, and share this design for personal and other
+non-commercial purposes, with attribution, and under the same license.
+Commercial use — including selling assembled boards, bare PCBs, or kits — is
+not permitted without a separate written license from the copyright holder.
+
+`firmware/Drivers/libopencm3` is a submodule under its own license (LGPL-3.0)
+and is not covered by the above.
