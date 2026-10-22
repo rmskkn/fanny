@@ -380,6 +380,32 @@ daemon, for example one that maps an NTC reading from `ain` to a fan duty.
 For a 10 kΩ NTC on the 10 kΩ bias resistor, the resistance is
 R<sub>NTC</sub> = 10 kΩ × mV / (VDDA − mV).
 
+### Fan control daemon
+
+`host/fancontrold.py` is that daemon. It reads an INI config
+(`host/fancontrol.conf.example`) that sets each of the four channels to
+either a constant duty or a temperature curve driven by one AIN input, and
+every cycle re-sends each managed channel's duty, which doubles as the ping
+that holds off the firmware's 10 s failsafe. A channel with no `[fanN]`
+section is left alone.
+
+```sh
+cp host/fancontrol.conf.example ~/.config/fancontrol.conf
+# edit ~/.config/fancontrol.conf for your sensors and curves
+python3 host/fancontrold.py                 # foreground, Ctrl-C to stop
+```
+
+To run it as a systemd user service:
+
+```sh
+mkdir -p ~/.config/systemd/user
+cp host/systemd/fancontrold.service ~/.config/systemd/user/
+# edit ExecStart in that file to this repo's checkout path
+systemctl --user daemon-reload
+systemctl --user enable --now fancontrold.service
+loginctl enable-linger "$USER"   # only if the board must run with no user session logged in
+```
+
 ## License
 
 Copyright © 2026 Roman Skakun.

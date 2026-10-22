@@ -1,0 +1,23 @@
+# fancontrold config. Install to ~/.config/fancontrol.conf (or pass -c).
+
+[daemon]
+# port = /dev/ttyACM0   # uncomment to override the board's default port
+interval = 2.0
+
+# Each [fanN] section manages one channel (N = 1-4). A channel with no
+# section is left alone: fancontrold neither reads it nor sets its duty.
+
+[fan1]
+mode = curve
+sensor = 1              # AIN1, a 10 k NTC on the board's divider
+curve = 30:20, 40:35, 50:55, 60:75, 70:100   # TEMP_C:DUTY_PCT pairs
+# NTC constants, defaults shown (10 k NTC, beta 3950, rated at 25 C)
+ntc_r25 = 10000
+ntc_beta = 3950
+t25 = 25
+
+[fan2]
+mode = constant
+duty = 40
+
+# fan3, fan4 intentionally unmanaged in this example.

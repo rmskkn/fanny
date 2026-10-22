@@ -1,0 +1,12 @@
+[Unit]
+Description=STM32 fan controller daemon (temperature-based PWM)
+After=dev-ttyACM0.device
+
+[Service]
+# Edit this path to where this repo is checked out.
+ExecStart=/path/to/fanny/host/fancontrold.py -c %h/.config/fancontrol.conf
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
