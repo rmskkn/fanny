@@ -383,11 +383,27 @@ R<sub>NTC</sub> = 10 kΩ × mV / (VDDA − mV).
 ### Fan control daemon
 
 `host/fancontrold.py` is that daemon. It reads an INI config
-(`host/fancontrol.conf.example`) that sets each of the four channels to
-either a constant duty or a temperature curve driven by one AIN input, and
-every cycle re-sends each managed channel's duty, which doubles as the ping
-that holds off the firmware's 10 s failsafe. A channel with no `[fanN]`
-section is left alone.
+(`host/fancontrol.conf.example`) that sets each of the four channels to a
+constant duty, a temperature curve driven by one AIN input, or a curve
+driven by an NVIDIA GPU's temperature (`sensor = gpuN`, read via
+`nvidia-smi`, using the max of core and memory temperature). Every cycle it
+re-sends each managed channel's duty, which doubles as the ping that holds
+off the firmware's 10 s failsafe. A channel with no `[fanN]` section is left
+alone. `nvidia-smi` must be on `PATH`; no extra Python dependency is needed.
+
+For a `gpuN` sensor, install the proprietary NVIDIA driver, which provides
+`nvidia-smi`:
+
+```sh
+# Arch
+sudo pacman -S nvidia nvidia-utils
+
+# Ubuntu 24.04
+sudo apt install nvidia-driver-550
+```
+
+Reboot machine to load nvidia modules.
+Verify with `nvidia-smi --query-gpu=index,temperature.gpu,temperature.memory --format=csv`.
 
 ```sh
 cp host/fancontrol.conf.example ~/.config/fancontrol.conf

@@ -8,16 +8,23 @@ interval = 2.0
 # section is left alone: fancontrold neither reads it nor sets its duty.
 
 [fan1]
+# ch0: driven by an NVIDIA GPU's temperature via `nvidia-smi` (requires the
+# nvidia-smi binary and driver on PATH; no extra Python dependency).
+mode = curve
+sensor = gpu0           # nvidia-smi GPU index 0; max(core, memory) temp
+curve = 40:20, 55:40, 65:65, 75:100   # TEMP_C:DUTY_PCT pairs
+
+[fan2]
 mode = curve
 sensor = 1              # AIN1, a 10 k NTC on the board's divider
-curve = 30:20, 40:35, 50:55, 60:75, 70:100   # TEMP_C:DUTY_PCT pairs
+curve = 30:20, 40:35, 50:55, 60:75, 70:100
 # NTC constants, defaults shown (10 k NTC, beta 3950, rated at 25 C)
 ntc_r25 = 10000
 ntc_beta = 3950
 t25 = 25
 
-[fan2]
+[fan3]
 mode = constant
 duty = 40
 
-# fan3, fan4 intentionally unmanaged in this example.
+# fan4 intentionally unmanaged in this example.
