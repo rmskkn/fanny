@@ -3966,6 +3966,78 @@
 		(color 0 0 0 0)
 		(uuid "f69d5fd3-fc81-4b44-8628-b20d970eb388")
 	)
+	(junction
+		(at 279.4 88.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6654d933-c145-467c-b0e9-50a0c35c7dff")
+	)
+	(junction
+		(at 289.56 95.25)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7f4345e7-923e-4209-96e9-97a60b8c0ef2")
+	)
+	(junction
+		(at 292.1 95.25)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "31daca81-a78b-4f3c-9049-949034563b96")
+	)
+	(junction
+		(at 292.1 119.38)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e29e909e-d816-4b36-892f-4d2df97edb5a")
+	)
+	(junction
+		(at 368.3 88.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "84e3a9a4-e910-464f-a342-2bc7248936db")
+	)
+	(junction
+		(at 368.3 114.3)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "957e5bba-5e0a-453a-be09-0881aa6b1a00")
+	)
+	(junction
+		(at 381 119.38)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1ff6dabc-26a9-44a6-91ce-482dd14a68a3")
+	)
+	(junction
+		(at 457.2 88.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "94357077-e45b-415d-9938-ea529e58c2f2")
+	)
+	(junction
+		(at 457.2 114.3)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "63ab023f-4e97-4f57-90c5-ce33c614d680")
+	)
+	(junction
+		(at 469.9 119.38)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5e221314-55f7-4702-95bd-070ee03521b2")
+	)
+	(junction
+		(at 546.1 88.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4cdc9a40-27d2-457f-a789-13f6dd45e9b0")
+	)
+	(junction
+		(at 558.8 119.38)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c02c24df-1e6d-4f50-b9a2-deef59372190")
+	)
 	(no_connect
 		(at 91.44 135.89)
 		(uuid "036e3977-80c2-515b-b041-1418593c4819")
@@ -6574,7 +6646,7 @@
 		)
 		(uuid "ff940371-6bb7-48ab-9016-955a523ceb8e")
 	)
-	(label "+12V_F3"
+	(global_label "+12V_F3"
 		(at 477.52 205.74 270)
 		(effects
 			(font
@@ -6584,7 +6656,7 @@
 		)
 		(uuid "013b2eeb-6c69-4fbc-acbc-ae1691632d0e")
 	)
-	(label "FAN3_GATE"
+	(global_label "FAN3_GATE"
 		(at 469.9 175.26 180)
 		(effects
 			(font
@@ -6594,7 +6666,7 @@
 		)
 		(uuid "03f19131-8a56-47ba-b739-609930794fa1")
 	)
-	(label "AIN6"
+	(global_label "AIN6"
 		(at 647.7 449.58 180)
 		(effects
 			(font
@@ -6604,7 +6676,7 @@
 		)
 		(uuid "0445dd6f-883a-5d91-8492-dd07ef747c1d")
 	)
-	(label "VIN_12V"
+	(global_label "VIN_12V"
 		(at 22.86 44.45 180)
 		(effects
 			(font
@@ -6614,7 +6686,7 @@
 		)
 		(uuid "0553646f-bf77-41a4-9738-f0d8ba967738")
 	)
-	(label "AIN2"
+	(global_label "AIN2"
 		(at 657.86 149.86 0)
 		(effects
 			(font
@@ -6624,7 +6696,7 @@
 		)
 		(uuid "07dcaa9f-1bc1-5d45-9496-7e39aa1550a8")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 261.62 180)
 		(effects
 			(font
@@ -6634,7 +6706,7 @@
 		)
 		(uuid "07f08d80-a190-57e0-89a0-77b83ea5aa8f")
 	)
-	(label "+12V_F4"
+	(global_label "+12V_F4"
 		(at 566.42 205.74 270)
 		(effects
 			(font
@@ -6644,7 +6716,7 @@
 		)
 		(uuid "07f3e145-1d3b-4e88-ad57-30dbb176c7a9")
 	)
-	(label "AIN2"
+	(global_label "AIN2"
 		(at 647.7 162.56 180)
 		(effects
 			(font
@@ -6654,7 +6726,7 @@
 		)
 		(uuid "08a52006-5799-58aa-8990-ac9042a46413")
 	)
-	(label "FAN4_BASE"
+	(global_label "FAN4_BASE"
 		(at 558.8 200.66 180)
 		(effects
 			(font
@@ -6664,7 +6736,7 @@
 		)
 		(uuid "0b21b64e-caba-4e2c-9999-cdc6288b0fa0")
 	)
-	(label "AIN1_IN"
+	(global_label "AIN1_IN"
 		(at 647.7 76.2 180)
 		(effects
 			(font
@@ -6674,7 +6746,7 @@
 		)
 		(uuid "0dab2006-bc63-5395-b6d5-b8c3dcfda23f")
 	)
-	(label "+12V_F3"
+	(global_label "+12V_F3"
 		(at 482.6 45.72 0)
 		(effects
 			(font
@@ -6684,7 +6756,7 @@
 		)
 		(uuid "0e3944c1-887c-4564-b69f-89b56ebf72aa")
 	)
-	(label "FAN1_RB_INV"
+	(global_label "FAN1_RB_INV"
 		(at 302.26 226.06 0)
 		(effects
 			(font
@@ -6694,7 +6766,7 @@
 		)
 		(uuid "11725825-0a05-47cd-bbec-dca4b4b771e5")
 	)
-	(label "FAN2_RB_INV"
+	(global_label "FAN2_RB_INV"
 		(at 391.16 226.06 0)
 		(effects
 			(font
@@ -6704,7 +6776,7 @@
 		)
 		(uuid "12663475-a32b-441d-8e9d-6d802245b9c0")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 25.4 137.16 180)
 		(effects
 			(font
@@ -6714,7 +6786,7 @@
 		)
 		(uuid "14b28a66-f332-5ec7-bf70-a9b5232d5cf8")
 	)
-	(label "FAN2_12V"
+	(global_label "FAN2_12V"
 		(at 421.64 143.51 180)
 		(effects
 			(font
@@ -6724,7 +6796,7 @@
 		)
 		(uuid "14f07cdb-92fe-52df-afe6-4eefb6605b79")
 	)
-	(label "+12V_F1"
+	(global_label "+12V_F1"
 		(at 302.26 45.72 0)
 		(effects
 			(font
@@ -6734,7 +6806,7 @@
 		)
 		(uuid "153d29ad-d749-4697-baaf-dbf900895376")
 	)
-	(label "FAN3_DCEN"
+	(global_label "FAN3_DCEN"
 		(at 467.36 275.59 180)
 		(effects
 			(font
@@ -6744,7 +6816,7 @@
 		)
 		(uuid "159ba7bc-a594-4d95-ae93-64c3bc30e3dc")
 	)
-	(label "AIN4_IN"
+	(global_label "AIN4_IN"
 		(at 647.7 292.1 180)
 		(effects
 			(font
@@ -6754,7 +6826,7 @@
 		)
 		(uuid "17f96437-cca5-5f02-b6a7-5e496f774d8c")
 	)
-	(label "AIN4"
+	(global_label "AIN4"
 		(at 647.7 304.8 180)
 		(effects
 			(font
@@ -6764,7 +6836,7 @@
 		)
 		(uuid "199623f0-cf5c-51ac-b7fe-8131b833458f")
 	)
-	(label "AIN2_IN"
+	(global_label "AIN2_IN"
 		(at 647.7 149.86 180)
 		(effects
 			(font
@@ -6774,7 +6846,7 @@
 		)
 		(uuid "1a1643fb-6cd2-5553-8d5d-f45c4eb10398")
 	)
-	(label "FAN1_PWM_OUT"
+	(global_label "FAN1_PWM_OUT"
 		(at 304.8 59.69 0)
 		(effects
 			(font
@@ -6784,7 +6856,7 @@
 		)
 		(uuid "1d84799b-6afd-53a8-80cf-d763252d4e26")
 	)
-	(label "AIN4"
+	(global_label "AIN4"
 		(at 109.22 74.93 180)
 		(effects
 			(font
@@ -6794,7 +6866,7 @@
 		)
 		(uuid "1d9f5d4e-f018-5665-91c8-1d1240ee0855")
 	)
-	(label "FAN3_PWM"
+	(global_label "FAN3_PWM"
 		(at 109.22 143.51 180)
 		(effects
 			(font
@@ -6804,7 +6876,7 @@
 		)
 		(uuid "1e2e5073-85b2-5bc3-974f-1bf6d5061fbb")
 	)
-	(label "AIN5_IN"
+	(global_label "AIN5_IN"
 		(at 645.16 337.82 180)
 		(effects
 			(font
@@ -6814,7 +6886,7 @@
 		)
 		(uuid "218b9ddd-f9d9-55a9-99a1-adb5bd4c3158")
 	)
-	(label "FAN1_DCEN"
+	(global_label "FAN1_DCEN"
 		(at 289.56 275.59 180)
 		(effects
 			(font
@@ -6824,7 +6896,7 @@
 		)
 		(uuid "22993676-72b5-4bcf-847f-a22273a7affa")
 	)
-	(label "+3V3"
+	(global_label "+3V3"
 		(at 568.96 101.6 0)
 		(effects
 			(font
@@ -6834,7 +6906,7 @@
 		)
 		(uuid "23cc927e-1bcc-545c-9941-1693a5f1d4e7")
 	)
-	(label "+12V"
+	(global_label "+12V"
 		(at 25.4 149.86 180)
 		(effects
 			(font
@@ -6844,7 +6916,7 @@
 		)
 		(uuid "28562aab-351b-5842-8659-659773400b70")
 	)
-	(label "FAN4_DCEN"
+	(global_label "FAN4_DCEN"
 		(at 556.26 275.59 180)
 		(effects
 			(font
@@ -6854,7 +6926,7 @@
 		)
 		(uuid "2b74f7a5-357d-40c4-9afb-175bda24bbf0")
 	)
-	(label "AIN4_IN"
+	(global_label "AIN4_IN"
 		(at 647.7 279.4 180)
 		(effects
 			(font
@@ -6864,7 +6936,7 @@
 		)
 		(uuid "2f26262d-fbed-50a0-abee-78aedd3e9044")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 657.86 279.4 0)
 		(effects
 			(font
@@ -6874,7 +6946,7 @@
 		)
 		(uuid "2f935491-3b30-5762-9be6-34aff9f5e6e7")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 392.43 180)
 		(effects
 			(font
@@ -6884,7 +6956,7 @@
 		)
 		(uuid "2fb8408c-67e6-5e44-aee3-0481f3ada592")
 	)
-	(label "AIN3"
+	(global_label "AIN3"
 		(at 647.7 233.68 180)
 		(effects
 			(font
@@ -6894,7 +6966,7 @@
 		)
 		(uuid "3557b1b6-9ae9-506c-b520-9671f6297d21")
 	)
-	(label "AIN5"
+	(global_label "AIN5"
 		(at 657.86 365.76 0)
 		(effects
 			(font
@@ -6904,7 +6976,7 @@
 		)
 		(uuid "37a0ab97-516a-5259-a529-bff35bd14c1e")
 	)
-	(label "AIN3"
+	(global_label "AIN3"
 		(at 109.22 77.47 180)
 		(effects
 			(font
@@ -6914,7 +6986,7 @@
 		)
 		(uuid "382b5a08-8ca4-5a52-b8fb-3674cf31050c")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 406.4 180)
 		(effects
 			(font
@@ -6924,7 +6996,7 @@
 		)
 		(uuid "38c6c383-1904-5e05-bbb0-db78fbb96f94")
 	)
-	(label "AIN2"
+	(global_label "AIN2"
 		(at 109.22 80.01 180)
 		(effects
 			(font
@@ -6934,7 +7006,7 @@
 		)
 		(uuid "3abda9bd-c20e-5a9d-bca3-34d49fc4a5d8")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 463.55 180)
 		(effects
 			(font
@@ -6944,7 +7016,7 @@
 		)
 		(uuid "41aee1da-61c8-5d9b-9383-c77ecc6da7bd")
 	)
-	(label "AIN1"
+	(global_label "AIN1"
 		(at 109.22 82.55 180)
 		(effects
 			(font
@@ -6954,7 +7026,7 @@
 		)
 		(uuid "424c2eeb-ccf1-50dd-9594-544c88a491fc")
 	)
-	(label "AIN3"
+	(global_label "AIN3"
 		(at 657.86 220.98 0)
 		(effects
 			(font
@@ -6964,7 +7036,7 @@
 		)
 		(uuid "42e2930a-d421-5766-a7e2-2fd1e536c4b7")
 	)
-	(label "AIN6"
+	(global_label "AIN6"
 		(at 109.22 69.85 180)
 		(effects
 			(font
@@ -6974,7 +7046,7 @@
 		)
 		(uuid "44a64bed-72f0-5f02-afad-fe6ad2e276f4")
 	)
-	(label "+12V_F4"
+	(global_label "+12V_F4"
 		(at 571.5 45.72 0)
 		(effects
 			(font
@@ -6984,7 +7056,7 @@
 		)
 		(uuid "490e4e27-4b73-4558-b6d8-886d2b86f54b")
 	)
-	(label "AIN6_IN"
+	(global_label "AIN6_IN"
 		(at 647.7 436.88 180)
 		(effects
 			(font
@@ -6994,7 +7066,7 @@
 		)
 		(uuid "4a43f9cb-3b3d-53a5-bc90-45e62f102c40")
 	)
-	(label "FAN1_PWM"
+	(global_label "FAN1_PWM"
 		(at 109.22 138.43 180)
 		(effects
 			(font
@@ -7004,7 +7076,7 @@
 		)
 		(uuid "4a54f167-69b1-5596-870b-0edadba49e94")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 179.07 180)
 		(effects
 			(font
@@ -7014,7 +7086,7 @@
 		)
 		(uuid "4c4b68e9-4c0f-5026-a6b8-e103e4f29601")
 	)
-	(label "AIN2_IN"
+	(global_label "AIN2_IN"
 		(at 645.16 121.92 180)
 		(effects
 			(font
@@ -7024,7 +7096,7 @@
 		)
 		(uuid "4ecd1866-097f-5687-8f06-710a979ce27c")
 	)
-	(label "FAN1_GATE"
+	(global_label "FAN1_GATE"
 		(at 292.1 175.26 180)
 		(effects
 			(font
@@ -7034,7 +7106,7 @@
 		)
 		(uuid "52c25231-7c95-4df6-87ac-f7830c5a0c1b")
 	)
-	(label "AIN3"
+	(global_label "AIN3"
 		(at 660.4 247.65 0)
 		(effects
 			(font
@@ -7044,7 +7116,7 @@
 		)
 		(uuid "537fe381-fb6d-5e3e-b0c1-b55391d549bf")
 	)
-	(label "FAN4_RB_INV"
+	(global_label "FAN4_RB_INV"
 		(at 568.96 226.06 0)
 		(effects
 			(font
@@ -7054,7 +7126,7 @@
 		)
 		(uuid "54dc61b1-c942-491d-9a8c-0490bb636043")
 	)
-	(label "FAN3_BASE"
+	(global_label "FAN3_BASE"
 		(at 469.9 200.66 180)
 		(effects
 			(font
@@ -7064,7 +7136,7 @@
 		)
 		(uuid "55a1c9c9-8ca0-4388-be0d-6dcae38d2b1a")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 250.19 180)
 		(effects
 			(font
@@ -7074,7 +7146,7 @@
 		)
 		(uuid "583fd7f7-0f4d-551e-8fbc-26c48660feb5")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 35.56 111.76 0)
 		(effects
 			(font
@@ -7084,7 +7156,7 @@
 		)
 		(uuid "58e2bd8d-686d-5f27-aa47-4ca25aa44faf")
 	)
-	(label "+12V"
+	(global_label "+12V"
 		(at 25.4 86.36 180)
 		(effects
 			(font
@@ -7094,7 +7166,7 @@
 		)
 		(uuid "59347ab1-61e2-5978-8dd3-c6677e34729c")
 	)
-	(label "AIN5_IN"
+	(global_label "AIN5_IN"
 		(at 647.7 353.06 180)
 		(effects
 			(font
@@ -7104,7 +7176,7 @@
 		)
 		(uuid "5a2682f1-6c83-5a6b-8529-084656ce82a1")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 105.41 180)
 		(effects
 			(font
@@ -7114,7 +7186,7 @@
 		)
 		(uuid "5b337b1e-cba5-5925-a551-9e549ba332aa")
 	)
-	(label "AIN3_IN"
+	(global_label "AIN3_IN"
 		(at 645.16 193.04 180)
 		(effects
 			(font
@@ -7124,7 +7196,7 @@
 		)
 		(uuid "5b71de9f-a3ae-505f-8f7f-d9e54e3e111a")
 	)
-	(label "AIN6_IN"
+	(global_label "AIN6_IN"
 		(at 647.7 424.18 180)
 		(effects
 			(font
@@ -7134,7 +7206,7 @@
 		)
 		(uuid "609fc9ae-b885-59a0-9b5d-5584b8de011c")
 	)
-	(label "VIN_12V"
+	(global_label "VIN_12V"
 		(at 25.4 60.96 180)
 		(effects
 			(font
@@ -7144,7 +7216,7 @@
 		)
 		(uuid "63387b67-ad92-5944-8f74-198aed6e2bbd")
 	)
-	(label "FAN3_PWM_OUT"
+	(global_label "FAN3_PWM_OUT"
 		(at 482.6 59.69 0)
 		(effects
 			(font
@@ -7154,7 +7226,7 @@
 		)
 		(uuid "649b1649-f207-561c-a335-490a9069b5fb")
 	)
-	(label "AIN6"
+	(global_label "AIN6"
 		(at 660.4 461.01 0)
 		(effects
 			(font
@@ -7164,7 +7236,7 @@
 		)
 		(uuid "6510248a-c182-5579-ac5c-5a8a29345b5e")
 	)
-	(label "AIN4_IN"
+	(global_label "AIN4_IN"
 		(at 645.16 264.16 180)
 		(effects
 			(font
@@ -7174,7 +7246,7 @@
 		)
 		(uuid "6a43ba24-4e94-52bb-9388-3e905502b1c3")
 	)
-	(label "+12V"
+	(global_label "+12V"
 		(at 35.56 60.96 0)
 		(effects
 			(font
@@ -7184,7 +7256,7 @@
 		)
 		(uuid "6b0d8e41-4ad8-5d4f-baa5-09d4ef04f72d")
 	)
-	(label "AIN3_IN"
+	(global_label "AIN3_IN"
 		(at 647.7 220.98 180)
 		(effects
 			(font
@@ -7194,7 +7266,7 @@
 		)
 		(uuid "706b5d11-a8d1-5b42-98fc-6240f36b822d")
 	)
-	(label "AIN2"
+	(global_label "AIN2"
 		(at 660.4 176.53 0)
 		(effects
 			(font
@@ -7204,7 +7276,7 @@
 		)
 		(uuid "7740d1c1-9b88-54e8-8d88-0a05775bdd45")
 	)
-	(label "AIN4"
+	(global_label "AIN4"
 		(at 657.86 292.1 0)
 		(effects
 			(font
@@ -7214,7 +7286,7 @@
 		)
 		(uuid "7e528d1e-760a-5d34-95a7-681ec0c65f44")
 	)
-	(label "+3V3"
+	(global_label "+3V3"
 		(at 109.22 49.53 180)
 		(effects
 			(font
@@ -7224,7 +7296,7 @@
 		)
 		(uuid "7ee685bf-2723-521d-9b69-6f3de7a2f11f")
 	)
-	(label "V12_SENSE"
+	(global_label "V12_SENSE"
 		(at 109.22 62.23 180)
 		(effects
 			(font
@@ -7234,7 +7306,7 @@
 		)
 		(uuid "81e1f101-19cd-5947-bf19-df227b3fca55")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 119.38 180)
 		(effects
 			(font
@@ -7244,7 +7316,7 @@
 		)
 		(uuid "85777db6-2df1-5866-acc2-5dbb6c811de7")
 	)
-	(label "AIN6"
+	(global_label "AIN6"
 		(at 657.86 436.88 0)
 		(effects
 			(font
@@ -7254,7 +7326,7 @@
 		)
 		(uuid "865b3f40-ae7a-536b-a6ae-7d1ef47cc1df")
 	)
-	(label "+12V"
+	(global_label "+12V"
 		(at 469.9 45.72 180)
 		(effects
 			(font
@@ -7264,7 +7336,7 @@
 		)
 		(uuid "87c66913-588f-5ff2-acaa-67b28b32973e")
 	)
-	(label "+12V"
+	(global_label "+12V"
 		(at 558.8 45.72 180)
 		(effects
 			(font
@@ -7274,7 +7346,7 @@
 		)
 		(uuid "892cbda4-47d0-576a-b6c2-eaa90a9692dd")
 	)
-	(label "AIN5"
+	(global_label "AIN5"
 		(at 647.7 378.46 180)
 		(effects
 			(font
@@ -7284,7 +7356,7 @@
 		)
 		(uuid "8a166748-71b4-5cba-af39-f1c8a0ba99cc")
 	)
-	(label "V12_SENSE"
+	(global_label "V12_SENSE"
 		(at 25.4 162.56 180)
 		(effects
 			(font
@@ -7294,7 +7366,7 @@
 		)
 		(uuid "8d3acf5b-b5ae-5dc0-959f-34a0c51b98cd")
 	)
-	(label "FAN3_RB_INV"
+	(global_label "FAN3_RB_INV"
 		(at 480.06 226.06 0)
 		(effects
 			(font
@@ -7304,7 +7376,7 @@
 		)
 		(uuid "8ff12cc7-8acf-442e-8dc0-0ad961fb4915")
 	)
-	(label "FAN2_DCEN"
+	(global_label "FAN2_DCEN"
 		(at 378.46 275.59 180)
 		(effects
 			(font
@@ -7314,7 +7386,7 @@
 		)
 		(uuid "926fd9a3-2779-46d0-b5b6-e1e04ca0d7cc")
 	)
-	(label "FAN4_12V"
+	(global_label "FAN4_12V"
 		(at 601.98 140.97 180)
 		(effects
 			(font
@@ -7324,7 +7396,7 @@
 		)
 		(uuid "93153d9b-569c-539e-9296-0f45ff552315")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 657.86 208.28 0)
 		(effects
 			(font
@@ -7334,7 +7406,7 @@
 		)
 		(uuid "9484ced2-cd9f-5105-8e08-c914306a42bd")
 	)
-	(label "V12_SENSE"
+	(global_label "V12_SENSE"
 		(at 25.4 175.26 180)
 		(effects
 			(font
@@ -7344,7 +7416,7 @@
 		)
 		(uuid "95115aa3-feab-5bd9-8e4b-45588d051bb8")
 	)
-	(label "FAN4_GATE"
+	(global_label "FAN4_GATE"
 		(at 558.8 175.26 180)
 		(effects
 			(font
@@ -7354,7 +7426,7 @@
 		)
 		(uuid "988a9251-e798-48b3-b2d6-fd6cd3c2668d")
 	)
-	(label "AIN2_IN"
+	(global_label "AIN2_IN"
 		(at 647.7 137.16 180)
 		(effects
 			(font
@@ -7364,7 +7436,7 @@
 		)
 		(uuid "9d3eeff7-8b36-50e4-96a4-4ad37a0b2ff4")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 335.28 180)
 		(effects
 			(font
@@ -7374,7 +7446,7 @@
 		)
 		(uuid "9e8ca32f-fc36-58f7-b36c-35499054065e")
 	)
-	(label "FAN2_BASE"
+	(global_label "FAN2_BASE"
 		(at 381 200.66 180)
 		(effects
 			(font
@@ -7384,7 +7456,7 @@
 		)
 		(uuid "a9aef530-a529-4f72-99c2-1fa5a0cf2705")
 	)
-	(label "FAN4_PWM_OUT"
+	(global_label "FAN4_PWM_OUT"
 		(at 571.5 59.69 0)
 		(effects
 			(font
@@ -7394,7 +7466,7 @@
 		)
 		(uuid "abd821f7-a416-5dbd-9fe4-ef21d7dcd7da")
 	)
-	(label "AIN1"
+	(global_label "AIN1"
 		(at 660.4 102.87 0)
 		(effects
 			(font
@@ -7404,7 +7476,7 @@
 		)
 		(uuid "ac76ae2d-80e2-5e5e-bf93-d08bc58191a6")
 	)
-	(label "+3V3"
+	(global_label "+3V3"
 		(at 25.4 111.76 180)
 		(effects
 			(font
@@ -7414,7 +7486,7 @@
 		)
 		(uuid "acd89409-4f48-52d7-9eb6-31f281a04c80")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 657.86 424.18 0)
 		(effects
 			(font
@@ -7424,7 +7496,7 @@
 		)
 		(uuid "b0853ecf-4acc-522b-869b-b42774b8e6f4")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 657.86 137.16 0)
 		(effects
 			(font
@@ -7434,7 +7506,7 @@
 		)
 		(uuid "b11a0897-de37-58ee-be39-abf6d739c2b8")
 	)
-	(label "AIN3_IN"
+	(global_label "AIN3_IN"
 		(at 647.7 208.28 180)
 		(effects
 			(font
@@ -7444,7 +7516,7 @@
 		)
 		(uuid "b25969ff-9009-5409-8dc6-49cdf1f4b997")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 190.5 180)
 		(effects
 			(font
@@ -7454,7 +7526,7 @@
 		)
 		(uuid "b8dc2f26-a4c3-5747-a19f-729a357cc98e")
 	)
-	(label "+5V"
+	(global_label "+5V"
 		(at 109.22 148.59 180)
 		(effects
 			(font
@@ -7464,7 +7536,7 @@
 		)
 		(uuid "bd1ae192-f8c6-5449-a0a6-f0cf1a1d927c")
 	)
-	(label "+3V3"
+	(global_label "+3V3"
 		(at 480.06 101.6 0)
 		(effects
 			(font
@@ -7474,7 +7546,7 @@
 		)
 		(uuid "bef8a8e2-9cdc-5e56-853e-12d02f24c09c")
 	)
-	(label "FAN2_PWM_G"
+	(global_label "FAN2_PWM_G"
 		(at 378.46 59.69 180)
 		(effects
 			(font
@@ -7484,7 +7556,7 @@
 		)
 		(uuid "c2485fc3-4244-52e1-8cb2-9bef2ad4df96")
 	)
-	(label "+3V3"
+	(global_label "+3V3"
 		(at 391.16 101.6 0)
 		(effects
 			(font
@@ -7494,7 +7566,7 @@
 		)
 		(uuid "c2ee85b3-9898-549f-8e55-bfe1e985205c")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 45.72 180)
 		(effects
 			(font
@@ -7504,7 +7576,7 @@
 		)
 		(uuid "c3a826c3-b566-58cd-889a-78a080dd1ed4")
 	)
-	(label "+12V_F2"
+	(global_label "+12V_F2"
 		(at 393.7 45.72 0)
 		(effects
 			(font
@@ -7514,7 +7586,7 @@
 		)
 		(uuid "c3a9214f-0bee-4970-b591-aab852798de8")
 	)
-	(label "AIN5"
+	(global_label "AIN5"
 		(at 660.4 389.89 0)
 		(effects
 			(font
@@ -7524,7 +7596,7 @@
 		)
 		(uuid "c4978e7c-438a-5769-a647-d8479564a7ac")
 	)
-	(label "+3V3"
+	(global_label "+3V3"
 		(at 109.22 153.67 180)
 		(effects
 			(font
@@ -7534,7 +7606,7 @@
 		)
 		(uuid "c72e2e1f-afbb-5429-8bde-8b7d80ebe3b9")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 657.86 63.5 0)
 		(effects
 			(font
@@ -7544,7 +7616,7 @@
 		)
 		(uuid "c78a928b-2b5e-59bb-a7c9-df05efcd6879")
 	)
-	(label "FAN4_PWM_G"
+	(global_label "FAN4_PWM_G"
 		(at 556.26 59.69 180)
 		(effects
 			(font
@@ -7554,7 +7626,7 @@
 		)
 		(uuid "c911290e-67bf-5c1d-892e-51e2d3216ead")
 	)
-	(label "FAN3_12V"
+	(global_label "FAN3_12V"
 		(at 509.27 143.51 180)
 		(effects
 			(font
@@ -7564,7 +7636,7 @@
 		)
 		(uuid "cab259cb-7d04-5d0f-95d0-fee97ad88610")
 	)
-	(label "FAN2_PWM"
+	(global_label "FAN2_PWM"
 		(at 109.22 140.97 180)
 		(effects
 			(font
@@ -7574,7 +7646,7 @@
 		)
 		(uuid "cb0fd871-6ee2-5b0b-aa84-582e79f662d2")
 	)
-	(label "FAN2_GATE"
+	(global_label "FAN2_GATE"
 		(at 381 175.26 180)
 		(effects
 			(font
@@ -7584,7 +7656,7 @@
 		)
 		(uuid "cc2592f3-b074-4080-8b2e-f5653dccf660")
 	)
-	(label "FAN1_12V"
+	(global_label "FAN1_12V"
 		(at 328.93 143.51 180)
 		(effects
 			(font
@@ -7594,7 +7666,7 @@
 		)
 		(uuid "ccb5296f-6bb3-554a-9f49-4f18f5c17a12")
 	)
-	(label "+12V"
+	(global_label "+12V"
 		(at 25.4 99.06 180)
 		(effects
 			(font
@@ -7604,7 +7676,7 @@
 		)
 		(uuid "d000c3d0-11a3-5004-8fc1-c1ccc3866722")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 25.4 124.46 180)
 		(effects
 			(font
@@ -7614,7 +7686,7 @@
 		)
 		(uuid "d00ebeb6-6dc6-5eaa-8579-256d25e85230")
 	)
-	(label "AIN5"
+	(global_label "AIN5"
 		(at 109.22 72.39 180)
 		(effects
 			(font
@@ -7624,7 +7696,7 @@
 		)
 		(uuid "d189173c-1a88-5dc5-87ff-9e10ecf0ce5b")
 	)
-	(label "AIN1_IN"
+	(global_label "AIN1_IN"
 		(at 647.7 63.5 180)
 		(effects
 			(font
@@ -7634,7 +7706,7 @@
 		)
 		(uuid "d1acf1ee-a5d0-520b-8f2f-ad508a6c04c1")
 	)
-	(label "USB_DP"
+	(global_label "USB_DP"
 		(at 109.22 125.73 180)
 		(effects
 			(font
@@ -7644,7 +7716,7 @@
 		)
 		(uuid "d4d3147e-7751-5647-9af6-f433578526be")
 	)
-	(label "FAN1_PWM_G"
+	(global_label "FAN1_PWM_G"
 		(at 289.56 59.69 180)
 		(effects
 			(font
@@ -7654,7 +7726,7 @@
 		)
 		(uuid "d618e560-ac7a-5d4c-816b-a8984df42f71")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 657.86 353.06 0)
 		(effects
 			(font
@@ -7664,7 +7736,7 @@
 		)
 		(uuid "d68e1e8e-947e-5a76-a78c-856437429e70")
 	)
-	(label "V12_SENSE"
+	(global_label "V12_SENSE"
 		(at 35.56 149.86 0)
 		(effects
 			(font
@@ -7674,7 +7746,7 @@
 		)
 		(uuid "d807444f-5b27-5349-abdc-175e5977752f")
 	)
-	(label "+12V"
+	(global_label "+12V"
 		(at 381 45.72 180)
 		(effects
 			(font
@@ -7684,7 +7756,7 @@
 		)
 		(uuid "d99b8ae3-d8e8-56b9-be2f-ab1aeb20555e")
 	)
-	(label "+12V"
+	(global_label "+12V"
 		(at 35.56 73.66 0)
 		(effects
 			(font
@@ -7694,7 +7766,7 @@
 		)
 		(uuid "db6262f5-9e21-5655-ad39-617d0916b80e")
 	)
-	(label "VIN_12V"
+	(global_label "VIN_12V"
 		(at 22.86 41.91 180)
 		(effects
 			(font
@@ -7704,7 +7776,7 @@
 		)
 		(uuid "db7c103e-6b12-48bc-91c5-d1ac2ed8e06c")
 	)
-	(label "AIN1"
+	(global_label "AIN1"
 		(at 647.7 88.9 180)
 		(effects
 			(font
@@ -7714,7 +7786,7 @@
 		)
 		(uuid "dbb9d0de-0388-54b9-a871-1aa75847393e")
 	)
-	(label "USB_DM"
+	(global_label "USB_DM"
 		(at 109.22 123.19 180)
 		(effects
 			(font
@@ -7724,7 +7796,7 @@
 		)
 		(uuid "dd84db81-7c4c-5ed0-9c3e-09d9529b1ed0")
 	)
-	(label "AIN1_IN"
+	(global_label "AIN1_IN"
 		(at 645.16 48.26 180)
 		(effects
 			(font
@@ -7734,7 +7806,7 @@
 		)
 		(uuid "dded8dbb-74ff-52e3-adb4-7ac9e1cc9e6b")
 	)
-	(label "FAN3_PWM_G"
+	(global_label "FAN3_PWM_G"
 		(at 467.36 59.69 180)
 		(effects
 			(font
@@ -7744,7 +7816,7 @@
 		)
 		(uuid "e1d497a7-30a5-5385-9707-b154530abeb4")
 	)
-	(label "AIN6_IN"
+	(global_label "AIN6_IN"
 		(at 645.16 408.94 180)
 		(effects
 			(font
@@ -7754,7 +7826,7 @@
 		)
 		(uuid "e8187dc2-f0bb-563d-8c7b-61ed0c7b5012")
 	)
-	(label "+3V3"
+	(global_label "+3V3"
 		(at 302.26 101.6 0)
 		(effects
 			(font
@@ -7764,7 +7836,7 @@
 		)
 		(uuid "e9cb4dd8-cf8a-5f8c-b944-e355f358c390")
 	)
-	(label "NRST"
+	(global_label "NRST"
 		(at 109.22 52.07 180)
 		(effects
 			(font
@@ -7774,7 +7846,7 @@
 		)
 		(uuid "ea5b41f4-403c-57f4-8bce-09c24b1e13b5")
 	)
-	(label "AIN4"
+	(global_label "AIN4"
 		(at 660.4 318.77 0)
 		(effects
 			(font
@@ -7784,7 +7856,7 @@
 		)
 		(uuid "eb0859ac-b5b7-58b3-a848-62668ce64fa8")
 	)
-	(label "AIN5_IN"
+	(global_label "AIN5_IN"
 		(at 647.7 365.76 180)
 		(effects
 			(font
@@ -7794,7 +7866,7 @@
 		)
 		(uuid "ec0f7999-fb7c-5f49-bd9e-4221de4e6907")
 	)
-	(label "FAN4_PWM"
+	(global_label "FAN4_PWM"
 		(at 109.22 146.05 180)
 		(effects
 			(font
@@ -7804,7 +7876,7 @@
 		)
 		(uuid "f104edbd-6950-55a0-ba5b-4a9d358ede30")
 	)
-	(label "FAN2_PWM_OUT"
+	(global_label "FAN2_PWM_OUT"
 		(at 393.7 59.69 0)
 		(effects
 			(font
@@ -7814,7 +7886,7 @@
 		)
 		(uuid "f2fbf350-6025-55d8-a884-1dc398b3937b")
 	)
-	(label "+3V3A"
+	(global_label "+3V3A"
 		(at 645.16 321.31 180)
 		(effects
 			(font
@@ -7824,7 +7896,7 @@
 		)
 		(uuid "f70770a2-1f22-539f-95be-bbb0731147ba")
 	)
-	(label "AIN1"
+	(global_label "AIN1"
 		(at 657.86 76.2 0)
 		(effects
 			(font
@@ -7834,7 +7906,7 @@
 		)
 		(uuid "fb5508a2-d479-57a2-b369-ddae38855eca")
 	)
-	(label "+12V"
+	(global_label "+12V"
 		(at 292.1 45.72 180)
 		(effects
 			(font
@@ -19766,7 +19838,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "75c0ad18-2518-41b6-b341-e5db604b33dd")
-		(property "Reference" "#PWR101"
+		(property "Reference" "#PWR0120"
 			(at 391.16 283.21 0)
 			(hide yes)
 			(show_name no)
@@ -19826,7 +19898,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR101")
+					(reference "#PWR0120")
 					(unit 1)
 				)
 			)
@@ -20801,6 +20873,1145 @@
       (project "fan_controller"
         (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
           (reference "#PWR113")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 302.26 187.96 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "1c3da218-21da-457f-82f6-59c71ce6e8e4")
+    (property "Reference" "#PWR0121"
+      (at 302.26 181.61 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 302.26 184.15 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 302.26 187.96 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 302.26 187.96 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 302.26 187.96 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "df31832f-b235-4f28-a7ac-ddf1e7215e6e"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0121")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 469.9 251.46 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "8d4bbb1c-00d4-4f55-8739-9daf86628ddd")
+    (property "Reference" "#PWR0122"
+      (at 469.9 245.11 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 469.9 247.65 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 469.9 251.46 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 469.9 251.46 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 469.9 251.46 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "5a457f6e-e89e-4231-b180-afe1efe3ad96"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0122")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 645.16 102.87 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "16afc812-5eb1-43e7-879a-3ffffccebc2a")
+    (property "Reference" "#PWR0123"
+      (at 645.16 96.52 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 645.16 99.06 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 645.16 102.87 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 645.16 102.87 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 645.16 102.87 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "d3da5736-0180-4912-8893-9a4fd37b5a13"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0123")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 645.16 176.53 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "e2e840d9-3da4-453a-beb7-3dd5398a027a")
+    (property "Reference" "#PWR0124"
+      (at 645.16 170.18 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 645.16 172.72 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 645.16 176.53 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 645.16 176.53 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 645.16 176.53 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "cd796368-1b60-4801-b144-c447d5744b5d"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0124")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 645.16 247.65 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "181b3dd6-02f7-44d2-9089-37d15619504c")
+    (property "Reference" "#PWR0125"
+      (at 645.16 241.3 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 645.16 243.84 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 645.16 247.65 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 645.16 247.65 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 645.16 247.65 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "184e86d4-b399-47e8-a56d-a86218075e12"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0125")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 645.16 318.77 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "280cdccf-5bac-4d69-9617-faa8e4d7bcd7")
+    (property "Reference" "#PWR0126"
+      (at 645.16 312.42 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 645.16 314.96 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 645.16 318.77 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 645.16 318.77 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 645.16 318.77 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "2ea09867-2cc2-4e16-a2a8-8dda02cbf7cc"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0126")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 645.16 461.01 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "d179178b-4a29-4a94-ac09-fa15f573de60")
+    (property "Reference" "#PWR0127"
+      (at 645.16 454.66 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 645.16 457.2 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 645.16 461.01 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 645.16 461.01 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 645.16 461.01 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "eb1e193d-b465-4c31-ba08-15e8c9f88f86"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0127")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 657.86 88.9 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "f08e252f-3169-47e9-b191-633d936b1d9d")
+    (property "Reference" "#PWR0128"
+      (at 657.86 82.55 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 657.86 85.09 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 657.86 88.9 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 657.86 88.9 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 657.86 88.9 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "c6300346-69f5-40db-86a4-5685bd536cfd"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0128")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 657.86 162.56 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "97748098-6b0e-4860-9427-f19bf30c21c3")
+    (property "Reference" "#PWR0129"
+      (at 657.86 156.21 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 657.86 158.75 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 657.86 162.56 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 657.86 162.56 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 657.86 162.56 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "292804b8-c591-42dd-8169-a552cad9ac3f"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0129")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 657.86 233.68 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "fb8f62b2-c844-4c75-b0c8-550835e537e3")
+    (property "Reference" "#PWR0130"
+      (at 657.86 227.33 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 657.86 229.87 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 657.86 233.68 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 657.86 233.68 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 657.86 233.68 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "b85c3f6b-e063-4128-ba3a-d701d59ff991"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0130")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 657.86 304.8 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "528f2dc1-6da0-4282-9cdb-e6f87b9ca9a2")
+    (property "Reference" "#PWR0131"
+      (at 657.86 298.45 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 657.86 300.99 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 657.86 304.8 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 657.86 304.8 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 657.86 304.8 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "e9cd5c50-c008-4256-a667-ea63ae463104"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0131")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 657.86 378.46 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "dbac7d8a-14b4-45ed-a761-9ac6088a5035")
+    (property "Reference" "#PWR0132"
+      (at 657.86 372.11 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 657.86 374.65 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 657.86 378.46 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 657.86 378.46 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 657.86 378.46 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "67a6b425-10f0-4f8a-a278-efe85279fa9c"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0132")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 657.86 449.58 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "9d5ca1c9-dde9-4567-ada9-7a937198ec28")
+    (property "Reference" "#PWR0133"
+      (at 657.86 443.23 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 657.86 445.77 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 657.86 449.58 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 657.86 449.58 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 657.86 449.58 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "4c33ba3d-d35d-4865-ab40-06597912413b"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0133")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 645.16 50.8 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "742e067a-7cee-48eb-b677-8e6813741aa0")
+    (property "Reference" "#PWR0134"
+      (at 645.16 44.45 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 645.16 46.99 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 645.16 50.8 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 645.16 50.8 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 645.16 50.8 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "eccf8358-c552-44d6-8edc-0e8083d48f51"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0134")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 645.16 195.58 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "08674d5c-9221-420b-b5bf-84481e891ce2")
+    (property "Reference" "#PWR0135"
+      (at 645.16 189.23 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 645.16 191.77 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 645.16 195.58 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 645.16 195.58 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 645.16 195.58 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "3f82f341-aec2-4f6c-8e7a-79e3a50b5919"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0135")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 645.16 266.7 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "1ab9ccb9-a0f1-4a36-9c1f-b0403031545b")
+    (property "Reference" "#PWR0136"
+      (at 645.16 260.35 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 645.16 262.89 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 645.16 266.7 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 645.16 266.7 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 645.16 266.7 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "34bd21e6-1de7-4cd5-b886-5d57afbf5694"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0136")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "power:GND") (at 645.16 411.48 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "7f607fa1-032e-4e94-912c-0f5a0c3c3fb7")
+    (property "Reference" "#PWR0137"
+      (at 645.16 405.13 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Value" "GND"
+      (at 645.16 407.67 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Footprint" ""
+      (at 645.16 411.48 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 645.16 411.48 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+      (at 645.16 411.48 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (pin "1" (uuid "4577b7b5-419c-48b4-917c-2b641c371f48"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "#PWR0137")
           (unit 1)
         )
       )
