@@ -23,6 +23,50 @@ stm32-fan-controller/
 └── host/              fanctl.py command-line client (pyserial)
 ```
 
+## Prerequisites
+
+1. KiCad 10.0.7 (`kicad-cli`)
+
+   ```sh
+   # Arch
+   sudo pacman -S kicad
+
+   # Ubuntu 24.04
+   sudo add-apt-repository ppa:kicad/kicad-10.0-releases
+   sudo apt update
+   sudo apt install kicad
+   ```
+
+2. arm-none-eabi-gcc, OpenOCD
+
+   ```sh
+   # Arch
+   sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib openocd
+
+   # Ubuntu 24.04
+   sudo apt install gcc-arm-none-eabi openocd
+   ```
+
+3. Python 3, pyserial
+
+   ```sh
+   # Arch
+   sudo pacman -S python python-pyserial
+
+   # Ubuntu 24.04
+   sudo apt install python3 python3-serial
+   ```
+
+4. rsvg-convert
+
+   ```sh
+   # Arch
+   sudo pacman -S librsvg
+
+   # Ubuntu 24.04
+   sudo apt install librsvg2-bin
+   ```
+
 This tree follows the suggested layout with two changes:
 
 - **libopencm3 instead of the STM32Cube HAL.** The suggested `Core/`,
@@ -51,7 +95,8 @@ This tree follows the suggested layout with two changes:
 
 | Function | Pins | Peripheral |
 |---|---|---|
-| Fan 1–4 PWM signal | PB6, PB7, PB8, PB9 | TIM4 CH1–4, 25 kHz |
+| Fan 1–4 PWM signal (also the motor-switch chop signal, DC mode) | PB6, PB7, PB8, PB9 | TIM4 CH1–4, 25 kHz |
+| Fan 1–4 DC-mode enable | PA6, PA7, PA8, PB1 | plain GPIO, push-pull |
 | Fan 1–4 tach | PB12–PB15 | EXTI12–15, falling edge |
 | AIN1–AIN6 | PA0–PA5 | ADC1 IN0–IN5 |
 | 12 V sense | PB0 | ADC1 IN8 |
@@ -59,6 +104,9 @@ This tree follows the suggested layout with two changes:
 | SWD | PA13, PA14 | Blue Pill 4-pin SWD header |
 | Status LED | PC13 | Blue Pill on-board LED, active low |
 | Clock | PD0/PD1 | Blue Pill 8 MHz crystal, PLL to 72 MHz |
+
+The DC-mode enable pins are plain GPIO, not a timer remap: no `AFIO_MAPR`
+write, JTAG and SWD both stay as the Blue Pill module provides them.
 
 ### Blue Pill module
 
@@ -97,29 +145,56 @@ Things to check on the module:
 ### Fan channel
 
 Each channel drives a standard 4-pin header (1 GND, 2 +12 V, 3 tach, 4 PWM)
-and supports 4-pin PWM fans only.
+and supports both 4-pin PWM fans and 3-pin DC fans on the same header, in
+either firmware mode (`pwm`, the default, or `dc`; see [Protocol](#protocol)).
 
-**Supply.** Fan pin 2 connects to +12 V through a 1.1 A PTC (Bourns
-MF-MSMF110/16). There is no supply switch, so a fan always has power while
-12 V is present. A shorted fan or cable trips only its own PTC, so the other
-fans keep running and F1 does not trip.
+**Supply and motor switch.** Fan pin 2 connects to +12 V through a 1.1 A PTC
+(Bourns MF-MSMF110/16), then through a high-side P-channel MOSFET (`Q_hs`,
+AO3401A). A shorted fan or cable trips only its own PTC, so the other fans
+keep running and F1 does not trip. In `pwm` mode the switch is held fully on
+and only pin 4 controls speed, exactly as a 4-pin-only board would behave. In
+`dc` mode the switch chops the +12 V supply at the same 25 kHz duty that pin 4
+carries, which is how a 3-pin fan (no PWM input, pin 4 unconnected) is
+speed-controlled.
 
-**Speed.** The firmware sets speed with a 25 kHz signal on pin 4. Many 4-pin
-fans keep turning at 0 % PWM, at their minimum speed. The board cannot stop
-such a fan.
+**Motor switch gate drive.** The MCU cannot drive the P-FET gate directly, so
+a two-stage inverting chain does: a BSS138 (`Q_inv`), gated directly by the
+same pin-4 PWM signal (reused, not a separate net), switches an MMBT3906 PNP
+(`Q_pnp`), which pulls the P-FET gate toward +12 V to turn it off. A second
+BSS138 (`Q_en`) sits in series between `Q_inv` and GND, gated by its own
+per-channel GPIO (set by the `mode` command) — both transistors must be on
+for the chop to reach `Q_pnp`, so `pwm` mode simply holds `Q_en` off and the
+pin-4 signal never reaches the gate chain, regardless of its duty. A 2.2 kΩ
+resistor (`R_gpd`) holds the P-FET gate at GND — switch **on** — whenever
+either stage is not driven, and a 10 kΩ resistor (`R_dcen`) holds `Q_en`'s
+gate low by default. This rest state, not an actively-driven "off", is what
+keeps C1 below satisfied regardless of mode. An SS34 freewheel diode (`D_fw`)
+across each channel's output absorbs the motor's inductive kick when the
+switch opens.
 
-**PWM signal buffer.** A BSS138 works as an open-drain driver on fan pin 4.
-The fan pulls this pin up internally to ≤5.25 V (Intel 4-wire spec), so the
-MCU pin never sees the fan's voltage. The buffer inverts the signal, and the
-firmware compensates with timer mode PWM2.
+**Speed.** In `pwm` mode the firmware sets speed with a 25 kHz signal on pin
+4. Many 4-pin fans keep turning at 0 % PWM, at their minimum speed; the board
+cannot stop such a fan. In `dc` mode speed comes from the motor switch
+following that same signal instead; see [Known limits](#known-limits) for its
+two caveats (start threshold, tach under-read).
 
-**Safe state.** A 100 kΩ pull-down holds each BSS138 off unless the MCU
-drives it. The PWM line is then released, and a fan runs at 100 % on a
-released line. See [Failsafe behaviour](#failsafe-behaviour).
+**PWM signal transistor.** A BSS138 works as an open-drain driver on fan pin
+4. The fan pulls this pin up internally to ≤5.25 V (Intel 4-wire spec), so
+the MCU pin never sees the fan's voltage. The transistor inverts the signal,
+and the firmware compensates with timer mode PWM2.
+
+**Safe state.** A 100 kΩ pull-down holds the PWM transistor off unless
+the MCU drives it, releasing pin 4 (100 % on a released line). `R_gpd` holds
+the motor switch on, and `R_dcen` holds `Q_en` off, by the same logic
+(previous paragraph). All three rest states agree: a fan runs at 100 % with
+no firmware running, in either mode. See
+[Failsafe behaviour](#failsafe-behaviour).
 
 **Tach input.** The fan's open-collector output has a 10 kΩ pull-up to 3.3 V,
-then 1 kΩ + 1 nF filtering. PB12–PB15 are 5 V tolerant. A fan that pulls its
-tach output to 12 V internally (outside the spec) would need an extra clamp.
+then 1 kΩ + 1 nF filtering. PB12–PB15 are 5 V tolerant. The motor switch is
+high-side, so fan GND stays at board GND even while the switch is open, and
+the tach chain sees no overvoltage in `dc` mode. A fan that pulls its tach
+output to 12 V internally (outside the spec) would need an extra clamp.
 
 ### Compatibility
 
@@ -128,9 +203,9 @@ Verified against the [Intel 4-wire PWM fan spec rev 1.2](https://www.konilabs.ne
 | Spec requirement | Board implementation | Status |
 |---|---|---|
 | Pinout: 1 GND, 2 +12 V, 3 tach, 4 PWM | `Fan_4pin` header wired in that order | Match |
-| PWM: open-drain/collector, fan pulls up internally | BSS138 open-drain buffer, MCU only sinks | Match |
+| PWM: open-drain/collector, fan pulls up internally | BSS138 open-drain transistor, MCU only sinks | Match |
 | PWM frequency: 21–28 kHz target (25 kHz nominal) | TIM4 at 72 MHz / 2880 = 25.000 kHz exact | Match |
-| PWM line released = fan runs full speed (fail-safe) | 100 kΩ pull-down holds buffer off until firmware drives it | Match |
+| PWM line released = fan runs full speed (fail-safe) | 100 kΩ pull-down holds transistor off until firmware drives it | Match |
 | Tach: open-collector, pulled up, 2 pulses/rev | 10 kΩ pull-up to 3.3 V, `TACH_PULSES_PER_REV = 2` in firmware | Match |
 | Tach pull-up rail ≤ 5 V tolerant input | Pulled to 3.3 V; PB12–PB15 are 5 V tolerant | Match |
 
@@ -165,11 +240,23 @@ that are corrected for the actual supply voltage.
   PTC. Total current is limited to 2.5 A by F1, so four fans at 1 A cannot all
   run at once. At power-up all fans start at 100 % together. Measure the
   combined inrush with the real fans.
-- **0 % does not stop every fan:** see Fan channel.
+- **0 % does not stop every 4-pin fan in `pwm` mode:** see Fan channel. In
+  `dc` mode 0 % does stop the fan, because the motor switch cuts the supply.
 - **12 V sense without USB:** with 12 V present and USB unplugged, the
   47 kΩ/10 kΩ divider feeds about 2.1 V into the unpowered PB0 pin. The
   current is about 40 µA, far below the STM32's injection limit.
-- **3-pin fans:** not supported. They run at full speed on these headers.
+- **3-pin fans (`dc` mode) do not start below roughly 30–40 % duty.** This is
+  a motor-startup limit, not a firmware clamp; set a curve minimum above it
+  in `fancontrold` (see `fancontrol.conf.example`).
+- **Tach under-reads in `dc` mode.** The fan's electronics are unpowered
+  during the chopped-off phase, so tach pulses are missing roughly in
+  proportion to duty. `stall` is therefore meaningful only near 100 % duty on
+  a `dc`-mode channel.
+- **25 kHz supply chopping stresses a fan's input capacitor.** Inaudible, but
+  the chop reuses the pin-4 signal timer (`SIGNAL_PERIOD` in `App/pwm.c`),
+  shared across all four channels, so there is no per-channel frequency to
+  lower for one misbehaving fan without also changing the signal frequency on
+  every `pwm`-mode channel.
 - **USB VID/PID:** the firmware uses ST's VCP IDs (0483:5740). Replace them
   before shipping a product.
 
@@ -208,16 +295,15 @@ the renders below after a change that affects them.
 To refresh `hardware/pcb_3d.png`:
 
 ```sh
-docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp -v "$PWD/hardware":/w -w /w/kicad kicad/kicad:10.0 \
-    kicad-cli pcb render --side top --rotate '-20,0,350' --zoom 0.75 --perspective --floor \
-    --background transparent --quality high -w 480 -h 500 -o /w/pcb_3d.png fan_controller.kicad_pcb
+cd hardware/kicad
+kicad-cli pcb render --side top --rotate '-20,0,350' --zoom 0.75 --perspective --floor \
+    --background transparent --quality high -w 480 -h 500 -o ../pcb_3d.png fan_controller.kicad_pcb
 ```
 
 To refresh `hardware/pcb_top.png`:
 
 ```sh
-docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp -v "$PWD":/w -w /w kicad/kicad:10.0 \
-    kicad-cli pcb export svg --layers Edge.Cuts,F.Cu,F.SilkS,F.Fab --exclude-drawing-sheet \
+kicad-cli pcb export svg --layers Edge.Cuts,F.Cu,F.SilkS,F.Fab --exclude-drawing-sheet \
     --page-size-mode 2 -o top.svg hardware/kicad/fan_controller.kicad_pcb
 rsvg-convert -w 1400 -b white top.svg -o hardware/pcb_top.png && rm top.svg
 ```
@@ -242,7 +328,7 @@ reflects the board as built:
 | Qty | Part | Package | Use | DigiKey |
 |---|---|---|---|---|
 | 1 | STM32F103C8T6 Blue Pill | module | MCU, plugs into J2/J3 | not stocked at DigiKey; buy from module sellers |
-| 4 | BSS138 | SOT-23 | PWM buffers | [BSS138](https://www.digikey.com/en/products/result?keywords=BSS138) |
+| 4 | BSS138 | SOT-23 | PWM signal transistors | [BSS138](https://www.digikey.com/en/products/result?keywords=BSS138) |
 | 6 | BAT54S | SOT-23 | analog input clamps | [BAT54S,215](https://www.digikey.com/en/products/result?keywords=BAT54S%2C215) |
 | 1 | SMBJ13A | SMB | 12 V TVS | [SMBJ13A](https://www.digikey.com/en/products/result?keywords=SMBJ13A) |
 | 1 | MF-MSMF250/16X-2 | 1812 | 2.5 A PTC fuse | [MF-MSMF250/16X-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF250%2F16X-2) |
@@ -283,8 +369,8 @@ results arrive by DMA.
 | Module | Responsibility |
 |---|---|
 | `Core/main.c` | 72 MHz clock, SysTick, init order, main loop, status LED (Blue Pill PC13) |
-| `App/pwm.c` | TIM4 fan PWM signal, 25 kHz. Starts the timer at 100 % before taking the pins |
-| `App/fan.c` | Per-channel duty, mapped onto the PWM signal |
+| `App/pwm.c` | TIM4 fan PWM signal (25 kHz, also the motor-switch chop signal) and the per-channel DC-mode-enable GPIOs. Starts the timer at 100 % and the enables low before taking the pins |
+| `App/fan.c` | Per-channel mode and duty, mapped onto the signal PWM and the DC-mode enable |
 | `App/tach.c` | Tach pulse count per 1 s window, converted to RPM (2 pulses/rev) |
 | `App/thermal.c` | ADC1 continuous scan + DMA: AIN1–6, 12 V, MCU temperature, VREFINT. 1 ms IIR filter, mV conversion |
 | `App/safety.c` | IWDG (1 s), host-loss failsafe, stall detection |
@@ -293,17 +379,21 @@ results arrive by DMA.
 
 ### Failsafe behaviour
 
-All fans run at 100 % whenever the controller is not in control. Fan power
-comes straight from 12 V, so this needs only 12 V present.
+All fans run at 100 % whenever the controller is not in control, in both
+`pwm` and `dc` mode. Fan power comes straight from 12 V, so this needs only
+12 V present. The PWM signal line, the motor switch, and the DC-mode enable
+all rest in their "fan on" state (released pin 4; `R_gpd` holds the motor
+switch on; `R_dcen` holds the enable off), so either mode reaches 100 % the
+same way.
 
 | Case | Result |
 |---|---|
 | Power-up, before the host's first command | 100 % |
-| USB unplugged or host powered off | Module unpowered, PWM lines released, 100 % |
-| Module pulled out of its socket | PWM lines released, 100 % |
-| Supply sags below the STM32's reset threshold (about 1.9 V) | MCU held in reset, PWM lines released, 100 % |
-| Firmware hangs | Watchdog (1 s) resets the MCU, PWM lines released during reset, 100 % |
-| No valid command for 10 s, module still powered | Firmware failsafe sets 100 %, LED blinks fast |
+| USB unplugged or host powered off | Module unpowered, both switches rest on, 100 % |
+| Module pulled out of its socket | Both switches rest on, 100 % |
+| Supply sags below the STM32's reset threshold (about 1.9 V) | MCU held in reset, both switches rest on, 100 % |
+| Firmware hangs | Watchdog (1 s) resets the MCU, both switches rest on during reset, 100 % |
+| No valid command for 10 s, module still powered | Firmware failsafe sets 100 %, LED blinks fast, mode unchanged |
 
 `fanctl.py watch` or a control daemon keeps the 10 s timer from expiring.
 A fan is flagged `stall=1` when its duty is above 0 but its tach reads 0 RPM
@@ -317,11 +407,13 @@ is one line ending in `\n`, and each reply ends with `ok` or `err <reason>`.
 ```
 > set 2 40          duty 0..100 for fan 1..4 or "all"
 ok
+> mode 3 dc         pwm (4-pin) | dc (3-pin)
+ok
 > get
-fan 1 duty=100 rpm=1590 stall=0
-fan 2 duty=40 rpm=780 stall=0
-fan 3 duty=100 rpm=1200 stall=0
-fan 4 duty=100 rpm=0 stall=1
+fan 1 mode=pwm duty=100 rpm=1590 stall=0
+fan 2 mode=pwm duty=40 rpm=780 stall=0
+fan 3 mode=dc duty=100 rpm=1200 stall=0
+fan 4 mode=pwm duty=100 rpm=0 stall=1
 ain 1 raw=2047 mv=1649
 ...
 v12 mv=12043
@@ -339,6 +431,7 @@ ok
 pip install -r host/requirements.txt
 python3 host/fanctl.py -p /dev/ttyACM0 get
 python3 host/fanctl.py set all 50
+python3 host/fanctl.py mode 3 dc
 python3 host/fanctl.py watch -i 2
 ```
 
@@ -354,10 +447,13 @@ python3 host/fanctl.py -p /dev/ttyACM1 set 2 40   # board on another port
 ```
 
 - Each command sets one fan or all fans. Lists such as `1,2` and ranges such as `1-3` are not accepted.
-- To check a fan, run `python3 host/fanctl.py get`. Read the `fan N duty=… rpm=…` line.
+- To check a fan, run `python3 host/fanctl.py get`. Read the `fan N mode=… duty=… rpm=…` line.
 - Settings hold only while the host keeps talking to the board. When no
   command arrives for 10 s, all fans return to 100 %. Keep `fanctl.py watch`
   or a control daemon running to hold the values.
+- `mode <1-4|all> pwm|dc` picks the speed-control path for a channel (see
+  [Fan channel](#fan-channel)). It defaults to `pwm` at every boot and after
+  every reconnect, so a 3-pin fan's channel needs `mode N dc` resent each time.
 
 The `FanController` class in `fanctl.py` can be imported to build a control
 daemon, for example one that maps an NTC reading from `ain` to a fan duty.
@@ -370,10 +466,13 @@ R<sub>NTC</sub> = 10 kΩ × mV / (VDDA − mV).
 (`host/fancontrol.conf.example`) that sets each of the four channels to a
 constant duty, a temperature curve driven by one AIN input, or a curve
 driven by an NVIDIA GPU's temperature (`sensor = gpuN`, read via
-`nvidia-smi`, using the max of core and memory temperature). Every cycle it
-re-sends each managed channel's duty, which doubles as the ping that holds
-off the firmware's 10 s failsafe. A channel with no `[fanN]` section is left
-alone. `nvidia-smi` must be on `PATH`; no extra Python dependency is needed.
+`nvidia-smi`, using the max of core and memory temperature). A managed
+channel also takes `type = pwm` (default, 4-pin) or `type = dc` (3-pin); the
+daemon sends `mode` once at startup and again after every reconnect, since a
+firmware reset returns every channel to `pwm`. Every cycle it re-sends each
+managed channel's duty, which doubles as the ping that holds off the
+firmware's 10 s failsafe. A channel with no `[fanN]` section is left alone.
+`nvidia-smi` must be on `PATH`; no extra Python dependency is needed.
 
 For a `gpuN` sensor, install the proprietary NVIDIA driver, which provides
 `nvidia-smi`:
@@ -424,7 +523,7 @@ and is not covered by the above.
 
 ## TODO
 
-1. **3-pin fan motor-side PWM.** Current PWM buffer (BSS138 on pin 4) switches
+1. **3-pin fan motor-side PWM.** Current PWM transistor (BSS138 on pin 4) switches
    only the fan's signal pin, not motor current. A 3-pin fan has no PWM input;
    speed control would need the GND (or +12 V) return routed through a power
    MOSFET sized for motor current, plus a flyback diode across the motor for

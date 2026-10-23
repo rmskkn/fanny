@@ -4,6 +4,10 @@
  *   FANn PWM signal  (TIM4, 25 kHz):           PB8  PB7 PB6  PB9
  *     (PCB crosses TIM4_CH1/CH3: PB6 reaches the FAN3 header, PB8 reaches
  *     the FAN1 header; App/pwm.c's oc[] array maps fan index to channel)
+ *   FANn DC-mode enable (plain GPIO, gates
+ *     the motor switch's chop path):           PA6  PA7  PA8  PB1
+ *     (low/high-Z = pwm mode, chop blocked, Q_hs held on; see
+ *     hardware/3pin_dc_mode_plan.md and App/pwm.c)
  *   FANn tach        (EXTI12..15, falling):    PB12 PB13 PB14 PB15
  *   AIN1..AIN6       (ADC1 IN0..IN5):          PA0..PA5
  *   12 V sense       (ADC1 IN8):               PB0  (47k/10k divider)

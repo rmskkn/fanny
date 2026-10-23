@@ -24,7 +24,7 @@ Qty,References,Value,Footprint,MPN (example),Notes,DNP
 1,J12,AIN4,PinHeader_1x03_P2.54mm_Vertical,,Sensor: 3V3A SIG GND,
 1,J13,AIN5,PinHeader_1x03_P2.54mm_Vertical,,Sensor: 3V3A SIG GND,
 1,J14,AIN6,PinHeader_1x03_P2.54mm_Vertical,,Sensor: 3V3A SIG GND,
-4,Q1 Q2 Q3 Q4,BSS138,SOT-23,onsemi BSS138,Open-drain PWM buffer (fan pulls up to 5 V),
+4,Q1 Q2 Q3 Q4,BSS138,SOT-23,onsemi BSS138,Open-drain PWM transistor (fan pulls up to 5 V),
 1,R1,47k,R_0603_1608Metric,,12 V sense divider (top),
 11,R2 R6 R10 R14 R18 R20 R22 R24 R26 R28 R30,10k,R_0603_1608Metric,,12 V sense divider (bottom); Tach pull-up (open collector); NTC 10k bias; DNP for voltage-output sensors,
 1,R3,1k8,R_0603_1608Metric,,Fit only if the Blue Pill's D+ pull-up (R10) is 10k; 1k8 || 10k = 1k5,yes

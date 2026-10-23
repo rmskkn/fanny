@@ -2,13 +2,23 @@
 #include "fan.h"
 #include "pwm.h"
 
+static enum fan_mode modes[FAN_COUNT];
 static unsigned duties[FAN_COUNT];
+
+static void apply(unsigned ch)
+{
+	pwm_set_signal(ch, duties[ch]);
+	pwm_set_dc_enable(ch, modes[ch] == FAN_MODE_DC);
+}
 
 void fan_init(void)
 {
 	pwm_init();
-	for (unsigned ch = 0; ch < FAN_COUNT; ch++)
-		fan_set_duty(ch, 100);
+	for (unsigned ch = 0; ch < FAN_COUNT; ch++) {
+		modes[ch] = FAN_MODE_PWM;
+		duties[ch] = 100;
+		apply(ch);
+	}
 }
 
 bool fan_set_duty(unsigned ch, unsigned duty)
@@ -16,13 +26,27 @@ bool fan_set_duty(unsigned ch, unsigned duty)
 	if (ch >= FAN_COUNT || duty > 100)
 		return false;
 	duties[ch] = duty;
-	pwm_set_signal(ch, duty);
+	apply(ch);
+	return true;
+}
+
+bool fan_set_mode(unsigned ch, enum fan_mode mode)
+{
+	if (ch >= FAN_COUNT || (mode != FAN_MODE_PWM && mode != FAN_MODE_DC))
+		return false;
+	modes[ch] = mode;
+	apply(ch);
 	return true;
 }
 
 unsigned fan_duty(unsigned ch)
 {
 	return duties[ch];
+}
+
+enum fan_mode fan_mode(unsigned ch)
+{
+	return modes[ch];
 }
 
 void fan_force_full(void)

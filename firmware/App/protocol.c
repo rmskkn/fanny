@@ -8,7 +8,7 @@
 #include "tach.h"
 #include "thermal.h"
 
-#define FW_VERSION "fanctl 2.0"
+#define FW_VERSION "fanctl 2.1"
 #define LINE_MAX   64
 #define MAX_ARGS   3
 
@@ -86,6 +86,7 @@ static void cmd_get(void)
 	for (unsigned ch = 0; ch < FAN_COUNT; ch++) {
 		p = put_str(out, "fan ");
 		p = put_uint(p, ch + 1);
+		p = put_str(p, fan_mode(ch) == FAN_MODE_PWM ? " mode=pwm" : " mode=dc");
 		p = put_kv(p, "duty", fan_duty(ch));
 		p = put_kv(p, "rpm", tach_rpm(ch));
 		p = put_kv(p, "stall", safety_fan_stalled(ch));
@@ -143,6 +144,24 @@ static const char *cmd_set(char **argv, int argc)
 	return NULL;
 }
 
+static const char *cmd_mode(char **argv, int argc)
+{
+	unsigned first, last;
+	enum fan_mode mode;
+
+	if (argc != 3 || !parse_channels(argv[1], &first, &last))
+		return "usage: mode <1-4|all> pwm|dc";
+	if (strcmp(argv[2], "pwm") == 0)
+		mode = FAN_MODE_PWM;
+	else if (strcmp(argv[2], "dc") == 0)
+		mode = FAN_MODE_DC;
+	else
+		return "mode must be pwm or dc";
+	for (unsigned ch = first; ch < last; ch++)
+		fan_set_mode(ch, mode);
+	return NULL;
+}
+
 void protocol_exec(char *s)
 {
 	char *argv[MAX_ARGS];
@@ -169,11 +188,13 @@ void protocol_exec(char *s)
 		cmd_get();
 	} else if (strcmp(argv[0], "set") == 0) {
 		err = cmd_set(argv, argc);
+	} else if (strcmp(argv[0], "mode") == 0) {
+		err = cmd_mode(argv, argc);
 	} else if (strcmp(argv[0], "ping") == 0 && argc == 1) {
 	} else if (strcmp(argv[0], "version") == 0 && argc == 1) {
 		emit(FW_VERSION);
 	} else if (strcmp(argv[0], "help") == 0 && argc == 1) {
-		emit("get | set <1-4|all> <0-100> | ping | version");
+		emit("get | set <1-4|all> <0-100> | mode <1-4|all> pwm|dc | ping | version");
 	} else {
 		err = "unknown command";
 	}

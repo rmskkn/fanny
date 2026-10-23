@@ -27,4 +27,10 @@ t25 = 25
 mode = constant
 duty = 40
 
-# fan4 intentionally unmanaged in this example.
+[fan4]
+# A 3-pin fan on the motor-switch channel (DC mode). It will not start below
+# roughly 30-40% duty, so the curve's lowest point should clear that, not 0.
+type = dc
+mode = curve
+sensor = 1
+curve = 30:35, 50:60, 65:100

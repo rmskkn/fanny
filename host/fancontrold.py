@@ -26,7 +26,11 @@ Example config (INI), see fancontrol.conf.example:
     mode = constant
     duty = 40
 
-Channels with no section are left alone (not pinged, not overridden).
+Channels with no section are left alone (not pinged, not overridden). Add
+`type = dc` to a `[fanN]` section for a 3-pin fan on a motor-switch channel;
+it defaults to `type = pwm` (4-pin). The daemon sends `mode` once at startup
+and again after any reconnect, since a firmware reset returns every channel
+to `pwm`.
 """
 import argparse
 import configparser
@@ -158,18 +162,18 @@ def load_config(path):
             continue
         mode = cfg.get(section, "mode")
         if mode == "constant":
-            channels[ch] = ConstantChannel(cfg.getint(section, "duty"))
+            channel = ConstantChannel(cfg.getint(section, "duty"))
         elif mode == "curve":
             sensor = cfg.get(section, "sensor")
             points = parse_curve(cfg.get(section, "curve"))
             if sensor.startswith("gpu"):
                 if not sensor[3:].isdigit():
                     raise ConfigError(f"[{section}] sensor {sensor!r} must be 'gpuN'")
-                channels[ch] = GpuCurveChannel(int(sensor[3:]), points)
+                channel = GpuCurveChannel(int(sensor[3:]), points)
             else:
                 if not sensor.isdigit():
                     raise ConfigError(f"[{section}] sensor must be an AIN number or 'gpuN', got {sensor!r}")
-                channels[ch] = NtcCurveChannel(
+                channel = NtcCurveChannel(
                     int(sensor),
                     points,
                     ntc_r25=cfg.getfloat(section, "ntc_r25", fallback=10000.0),
@@ -178,11 +182,17 @@ def load_config(path):
                 )
         else:
             raise ConfigError(f"[{section}] mode must be 'constant' or 'curve', got {mode!r}")
+        channel.fan_type = cfg.get(section, "type", fallback="pwm")
+        if channel.fan_type not in ("pwm", "dc"):
+            raise ConfigError(f"[{section}] type must be 'pwm' or 'dc', got {channel.fan_type!r}")
+        channels[ch] = channel
     return port, interval, channels
 
 
 def run(fc, interval, channels):
     needs_gpu = any(channel.needs_gpu for channel in channels.values())
+    for ch, channel in channels.items():
+        fc.command(f"mode {ch} {channel.fan_type}")
     while True:
         readings = {"status": fc.status(), "gpu": read_gpu_temps() if needs_gpu else {}}
         for ch, channel in channels.items():
