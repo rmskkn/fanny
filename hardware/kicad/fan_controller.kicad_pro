@@ -40,8 +40,8 @@
         "other_text_upright": false,
         "pads": {
           "drill": 0.0,
-          "height": 1.8,
-          "width": 2.5
+          "height": 1.6,
+          "width": 3.5
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -704,7 +704,7 @@
         "uuid": "70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
       }
     ],
-    "used_designators": "#PWR102-119",
+    "used_designators": "#PWR102-119,#PWR138",
     "variants": []
   },
   "sheets": [
