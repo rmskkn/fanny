@@ -81,14 +81,51 @@ This tree follows the suggested layout with two changes:
 
 ### Block overview
 
-```
- 12 V (PSU) ─ J1 Mate-N-Lok ─ F1 PTC ─ D1 TVS ── +12V ─┬─ F2..F5 1.1 A PTC ─► fan +12V (×4)
-                                                        └─ 47k/10k ─► PB0
- USB (Blue Pill micro-B only) ── +5V ── Blue Pill LDO ── +3V3 ─ FB1 ─ +3V3A
-            ┌──────────── Blue Pill module (J2, J3) ─────────┐
-            │                       TIM4 PB6..PB9 (25 kHz) ─► BSS138 open drain ─► fan PWM pin
-            │                       EXTI PB12..PB15 ◄─ RC ◄─ 10k pull-up ◄─ fan tach
- sensors ─ 1k + 100n + BAT54S ─► PA0..PA5 (ADC)    PB0 ◄─ 47k/10k ◄─ +12V
+```mermaid
+flowchart LR
+    classDef power fill:#fde3d8,stroke:#e2572b,color:#111
+    classDef usb fill:#dbe7ff,stroke:#2f6fed,color:#111
+    classDef mcu fill:#e8d7f5,stroke:#5b4b8a,color:#111
+    classDef pwm fill:#d7f5df,stroke:#2f9e44,color:#111
+    classDef dcmode fill:#fdecc3,stroke:#c77f00,color:#111
+    classDef tach fill:#d7f5df,stroke:#0f9b8e,color:#111
+    classDef analog fill:#fbd9e8,stroke:#c2255c,color:#111
+
+    subgraph PWR["Power (12 V)"]
+        PSU["12 V PSU"] --> J1["J1 Mate-N-Lok"] --> F1["F1 PTC 2.5A"] --> D1["D1 TVS"] --> V12["+12V"]
+        V12 --> F25["F2..F5 1.1A PTC x4"] --> FANV["fan +12V (x4)"]
+        V12 --> DIV["47k/10k divider"] --> PB0["PB0 ADC"]
+    end
+
+    subgraph USB3V3["USB / 3V3"]
+        USB["USB (Blue Pill microB)"] --> P5V["+5V"] --> LDO["Blue Pill LDO"] --> V33["+3V3"] --> FB1["FB1"] --> V33A["+3V3A"]
+    end
+
+    subgraph MCU["Blue Pill module (J2, J3)"]
+        subgraph PWMSIG["PWM signal, fan pin 4"]
+            TIM4["TIM4 PB6..PB9 25kHz"] --> BSS["BSS138 open drain"] --> FPWM["fan PWM pin"]
+        end
+        subgraph DCMODE["DC-mode motor switch, per channel"]
+            QINV["Q_inv BSS138"] --> QEN["Q_en, gated FANn_DCEN"] --> QPNP["Q_pnp MMBT3906"] --> QHS["Q_hs AO3401A"] --> FSW["fan +12V motor switch"]
+            GPIO["PA6/7/8, PB1 GPIO"] --> QEN
+        end
+        TIM4 -. reuses PWM signal .-> QINV
+        subgraph TACHLANE["Tach"]
+            FT["fan tach"] --> PU["10k pull-up"] --> RC["RC filter"] --> EXTI["EXTI PB12..PB15"]
+        end
+    end
+
+    subgraph ANALOG["Analog inputs"]
+        SENS["sensors"] --> RCB["1k + 100n + BAT54S"] --> ADC["PA0..PA5 ADC x6"]
+    end
+
+    class PSU,J1,F1,D1,V12,F25,FANV,DIV power
+    class PB0 mcu
+    class USB,P5V,LDO,V33,FB1,V33A usb
+    class TIM4,BSS,FPWM pwm
+    class QINV,QEN,QPNP,QHS,FSW,GPIO dcmode
+    class FT,PU,RC,EXTI tach
+    class SENS,RCB,ADC analog
 ```
 
 ### Pin map
