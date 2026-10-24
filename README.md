@@ -270,7 +270,7 @@ GUI.
   label (netlist-style).
 - `hardware/kicad/fanctl.kicad_sym`: project symbol library. Pin numbers
   match the footprint pads.
-- `hardware/kicad/fan_controller.kicad_pcb`: 75 × 60 mm outline, four M3
+- `hardware/kicad/fan_controller.kicad_pcb`: 81 × 78 mm outline, four M3
   holes, and a `Power` net class (1 mm tracks) for the 12 V and GND nets.
 - `hardware/bom.csv`.
 
@@ -310,25 +310,33 @@ rsvg-convert -w 1400 -b white top.svg -o hardware/pcb_top.png && rm top.svg
 
 Checked with KiCad 10.0.7:
 
-- `kicad-cli sch erc --severity-all` reports 0 errors, 3 warnings (pre-existing
-  single-pin net-label notices).
-- `kicad-cli pcb drc --severity-all` reports 0 errors, 14 warnings (silkscreen
-  clearance between adjacent parts in the densest rows; cosmetic, not a fab
-  blocker).
+- `kicad-cli sch erc --severity-all` reports 11 errors, 5 warnings. All
+  pre-existing (not introduced by the `dc`-mode feature): unused pins on
+  `J1`, `D1`, `C1-C5`, `R2` (VIN/analog decoupling group — not yet given
+  `no_connect` flags), one spare BluePill pin, one unresolved
+  input-power-pin-not-driven quirk on a GND symbol. Tracked in `AGENTS.md`.
+- `kicad-cli pcb drc --severity-all` reports 0 errors, 21 warnings
+  (silkscreen clearance/overlap in the densest rows and a few dangling-track
+  notices; cosmetic, not a fab blocker).
 - Every footprint loads from the standard libraries and matches its library
   copy.
 - Every symbol pin number matches a pad in its footprint, and every pad has a pin.
 
 ### BOM summary (plus the Blue Pill module)
 
-`hardware/bom.csv` is stale (see the known gap above — it still lists the old
-2-pin terminal-block J1 and the removed USB header/ESD parts). This table
-reflects the board as built:
+`hardware/bom.csv` is regenerated from the schematic (`sch export bom`,
+grouped by value/footprint), with MPN/notes merged in by hand. This table
+reflects the board as built, including the per-channel `dc`-mode motor
+switch (`Q_inv`/`Q_en`/`Q_hs`/`Q_pnp`, see `hardware/3pin_dc_mode_plan.md`):
 
 | Qty | Part | Package | Use | DigiKey |
 |---|---|---|---|---|
 | 1 | STM32F103C8T6 Blue Pill | module | MCU, plugs into J2/J3 | not stocked at DigiKey; buy from module sellers |
-| 4 | BSS138 | SOT-23 | PWM signal transistors | [BSS138](https://www.digikey.com/en/products/result?keywords=BSS138) |
+| 12 | BSS138 | SOT-23 | PWM signal transistors (Q1-4); `Q_inv`/`Q_en` cascode motor-switch gate ×4 channels (Q7,10,13,16,17-20) | [BSS138](https://www.digikey.com/en/products/result?keywords=BSS138) |
+| 4 | AO3401A | SOT-23 | `Q_hs`: high-side P-MOSFET motor switch | [AO3401A](https://www.digikey.com/en/products/result?keywords=AO3401A) |
+| 4 | MMBT3906 | SOT-23 | `Q_pnp`: PNP level-shift driver for `Q_hs` gate | [MMBT3906](https://www.digikey.com/en/products/result?keywords=MMBT3906) |
+| 4 | SS34 | SMA | flyback diode across fan motor (`dc` mode) | [SS34](https://www.digikey.com/en/products/result?keywords=SS34) |
+| 4 | 0 Ω jumper (DNP) | 1206 | `JP1-4`: optional full-bypass override, see `3pin_dc_mode_plan.md` | generic 1206 0 Ω bridge/jumper |
 | 6 | BAT54S | SOT-23 | analog input clamps | [BAT54S,215](https://www.digikey.com/en/products/result?keywords=BAT54S%2C215) |
 | 1 | SMBJ13A | SMB | 12 V TVS | [SMBJ13A](https://www.digikey.com/en/products/result?keywords=SMBJ13A) |
 | 1 | MF-MSMF250/16X-2 | 1812 | 2.5 A PTC fuse | [MF-MSMF250/16X-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF250%2F16X-2) |
@@ -338,7 +346,7 @@ reflects the board as built:
 | 1 | TE Connectivity 350424-1 | 4-pin, 5.08 mm | 12 V input, Mate-N-Lok | [350424-1](https://www.digikey.com/en/products/result?keywords=350424-1) |
 | 6 | 1×3 headers | 2.54 mm | sensor inputs | any 2.54 mm pin header |
 | 6 | test pads | 1.5 mm | +12V, +3V3, GND, NRST, FAN1_PWM, FAN1_TACH | — (PCB pads, not a part) |
-| — | resistors, capacitors, ferrite | 0603 / 1206 / 6.3 mm | passives | [BLM18AG601SN1D](https://www.digikey.com/en/products/result?keywords=BLM18AG601SN1D) (FB1); others generic, see `bom.csv` (minus the stale USB-section rows) |
+| — | resistors, capacitors, ferrite | 0603 / 1206 / 6.3 mm | passives | [BLM18AG601SN1D](https://www.digikey.com/en/products/result?keywords=BLM18AG601SN1D) (FB1); others generic, see `bom.csv` |
 
 The MPNs in the BOM are examples. Check stock and second sources before ordering.
 The DigiKey links are keyword searches by MPN, so they still work when DigiKey
@@ -520,12 +528,3 @@ not permitted without a separate written license from the copyright holder.
 
 `firmware/Drivers/libopencm3` is a submodule under its own license (LGPL-3.0)
 and is not covered by the above.
-
-## TODO
-
-1. **3-pin fan motor-side PWM.** Current PWM transistor (BSS138 on pin 4) switches
-   only the fan's signal pin, not motor current. A 3-pin fan has no PWM input;
-   speed control would need the GND (or +12 V) return routed through a power
-   MOSFET sized for motor current, plus a flyback diode across the motor for
-   inductive kickback. Neither is present on this board revision — a 3-pin fan
-   wired to the existing header always runs at full speed.
