@@ -6,7 +6,7 @@
 #include "board.h"
 #include "thermal.h"
 
-/* Scan order: AIN1..AIN6, 12 V sense, temperature sensor, VREFINT. */
+/* Scan order: AIN1..AIN4, 12 V sense, temperature sensor, VREFINT. */
 enum { SLOT_V12 = AIN_COUNT, SLOT_TEMP, SLOT_VREF, SLOT_COUNT };
 
 /* 12 V divider: 47k over 10k. */
@@ -16,7 +16,7 @@ enum { SLOT_V12 = AIN_COUNT, SLOT_TEMP, SLOT_VREF, SLOT_COUNT };
 /* IIR filter: acc holds 2^FILTER_SHIFT times the average. ~16 ms time constant. */
 #define FILTER_SHIFT 4
 
-static uint8_t sequence[SLOT_COUNT] = { 0, 1, 2, 3, 4, 5, 8, ADC_CHANNEL_TEMP, ADC_CHANNEL_VREF };
+static uint8_t sequence[SLOT_COUNT] = { 0, 1, 2, 3, 8, ADC_CHANNEL_TEMP, ADC_CHANNEL_VREF };
 static volatile uint16_t samples[SLOT_COUNT];
 static uint32_t acc[SLOT_COUNT];
 static uint32_t last_ms;
@@ -34,7 +34,7 @@ void thermal_init(void)
 	rcc_periph_clock_enable(RCC_DMA1);
 
 	gpio_set_mode(GPIOA, GPIO_MODE_INPUT, GPIO_CNF_INPUT_ANALOG,
-		      GPIO0 | GPIO1 | GPIO2 | GPIO3 | GPIO4 | GPIO5);
+		      GPIO0 | GPIO1 | GPIO2 | GPIO3);
 	gpio_set_mode(GPIOB, GPIO_MODE_INPUT, GPIO_CNF_INPUT_ANALOG, GPIO0);
 
 	dma_channel_reset(DMA1, DMA_CHANNEL1);

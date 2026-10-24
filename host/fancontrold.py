@@ -43,6 +43,7 @@ import time
 from fanctl import DEFAULT_PORT, FanController
 
 FAN_COUNT = 4
+AIN_COUNT = 4
 CONFIG_DEFAULT_PATH = "~/.config/fancontrol.conf"
 
 
@@ -173,6 +174,8 @@ def load_config(path):
             else:
                 if not sensor.isdigit():
                     raise ConfigError(f"[{section}] sensor must be an AIN number or 'gpuN', got {sensor!r}")
+                if not 1 <= int(sensor) <= AIN_COUNT:
+                    raise ConfigError(f"[{section}] sensor must be AIN 1..{AIN_COUNT}, got {sensor!r}")
                 channel = NtcCurveChannel(
                     int(sensor),
                     points,

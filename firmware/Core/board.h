@@ -9,7 +9,7 @@
  *     (low/high-Z = pwm mode, chop blocked, Q_hs held on; see
  *     hardware/3pin_dc_mode_plan.md and App/pwm.c)
  *   FANn tach        (EXTI12..15, falling):    PB12 PB13 PB14 PB15
- *   AIN1..AIN6       (ADC1 IN0..IN5):          PA0..PA5
+ *   AIN1..AIN4       (ADC1 IN0..IN3):          PA0..PA3
  *   12 V sense       (ADC1 IN8):               PB0  (47k/10k divider)
  *   USB FS                                     PA11 (DM), PA12 (DP)
  *   SWD                                        PA13, PA14
@@ -21,7 +21,7 @@
 #include <stdint.h>
 
 #define FAN_COUNT 4
-#define AIN_COUNT 6
+#define AIN_COUNT 4
 
 /* Milliseconds since boot, from SysTick (Core/main.c). */
 uint32_t millis(void);

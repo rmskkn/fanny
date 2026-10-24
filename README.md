@@ -135,7 +135,7 @@ flowchart LR
 | Fan 1–4 PWM signal and the motor-switch chop signal in DC mode | PB6 PB7 PB8 PB9 | TIM4 CH1–4 at 25 kHz |
 | Fan 1–4 DC-mode enable | PA6 PA7 PA8 PB1 | plain push-pull GPIO |
 | Fan 1–4 tach | PB12–PB15 | EXTI12–15 on the falling edge |
-| AIN1–AIN6 | PA0–PA5 | ADC1 IN0–IN5 |
+| AIN1–AIN4 | PA0–PA3 | ADC1 IN0–IN3 |
 | 12 V sense | PB0 | ADC1 IN8 |
 | USB | PA11 for D− and PA12 for D+ | USB FS |
 | SWD | PA13 and PA14 | Blue Pill 4-pin SWD header |
@@ -252,7 +252,7 @@ Verified against the [Intel 4-wire PWM fan spec rev 1.2](https://www.konilabs.ne
 
 See [Fan channel](#fan-channel) above for the per-pin circuit detail.
 
-### Analog inputs (AIN1–AIN6)
+### Analog inputs (AIN1–AIN4)
 
 Each input is a 3-pin header carrying 3V3A and SIG and GND. The conditioning
 chain works like this:
@@ -262,7 +262,7 @@ chain works like this:
   sensors.
 - A 1 kΩ series resistor and 100 nF to GND for anti-aliasing and sample
   charge.
-- A BAT54S clamp to GND and 3V3A. PA0–PA5 are **not** 5 V tolerant.
+- A BAT54S clamp to GND and 3V3A. PA0–PA3 are **not** 5 V tolerant.
 
 The ADC references VDDA. The firmware measures VREFINT so it can report
 millivolts corrected for the actual supply voltage.
@@ -424,7 +424,7 @@ results arrive by DMA.
 | `App/pwm.c` | TIM4 fan PWM signal at 25 kHz which doubles as the motor-switch chop signal plus the per-channel DC-mode-enable GPIOs. Starts the timer at 100 % and the enables low before taking the pins |
 | `App/fan.c` | Per-channel mode and duty mapped onto the signal PWM and the DC-mode enable |
 | `App/tach.c` | Tach pulse count per 1 s window converted to RPM at 2 pulses per rev |
-| `App/thermal.c` | ADC1 continuous scan with DMA over AIN1–6 and 12 V and MCU temperature and VREFINT. 1 ms IIR filter and mV conversion |
+| `App/thermal.c` | ADC1 continuous scan with DMA over AIN1–4 and 12 V and MCU temperature and VREFINT. 1 ms IIR filter and mV conversion |
 | `App/safety.c` | IWDG at 1 s plus host-loss failsafe and stall detection |
 | `App/protocol.c` | Line-based command parser kept hardware independent so it can be unit tested |
 | `USB_DEVICE/usb_cdc.c` | CDC-ACM descriptors and an RX ring buffer and TX with timeout. Output is dropped while the port is closed |

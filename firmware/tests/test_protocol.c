@@ -112,7 +112,7 @@ int main(void)
 	CHECK(strstr(out, "fan 2 mode=pwm duty=0 rpm=1230 stall=0\n") != NULL);
 	CHECK(strstr(out, "fan 3 mode=dc duty=70 rpm=1260 stall=0\n") != NULL);
 	CHECK(strstr(out, "fan 4 mode=pwm duty=0 rpm=1290 stall=1\n") != NULL);
-	CHECK(strstr(out, "ain 6 raw=2053 mv=1655\n") != NULL);
+	CHECK(strstr(out, "ain 4 raw=2051 mv=1653\n") != NULL);
 	CHECK(strstr(out, "v12 mv=12050\n") != NULL);
 	CHECK(strstr(out, "mcu temp=-0.5\n") != NULL);
 	CHECK(strstr(out, "failsafe=0\nok\n") != NULL);
