@@ -1190,12 +1190,6 @@
 		(path "/dc3c8c2f-d05a-4a03-8d8c-c2e558f4a7de")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "1" "2")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -1270,7 +1264,7 @@
 			(uuid "d0276c2b-eea6-4bc6-b04e-e38283033a96")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_1206_3216Metric.step"
+		(model "${KIPRJMOD}/3dmodels/Resistor_SMD.3dshapes/R_1206_3216Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -4311,12 +4305,6 @@
 		(path "/2a949f97-3cac-43f9-84d7-6b54488fd752")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "1" "2")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -4391,7 +4379,7 @@
 			(uuid "ccd4fa48-e48c-4e90-a3fd-206977338e0c")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+		(model "${KIPRJMOD}/3dmodels/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -9910,12 +9898,6 @@
 		(path "/dba25dd4-7619-4602-8bf1-99c701b7f729")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "1" "2")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -9990,7 +9972,7 @@
 			(uuid "af9c9b57-80e7-45c6-88c9-4cf08f0327b1")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+		(model "${KIPRJMOD}/3dmodels/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -13213,12 +13195,6 @@
 		(path "/6dd687bf-3d68-486e-8caf-b67cbfb027d1")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "2" "1")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -13423,7 +13399,7 @@
 			(uuid "6e14e12e-c8da-48c1-b27b-7d469a045172")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SMA.step"
+		(model "${KIPRJMOD}/3dmodels/Diode_SMD.3dshapes/D_SMA.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -15101,12 +15077,6 @@
 		(path "/8c7a67a1-a180-4312-9a0f-fda32e97d7e6")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "1" "2")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -15181,7 +15151,7 @@
 			(uuid "dad56fcf-a678-45aa-9fad-40f8db5c218e")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_1206_3216Metric.step"
+		(model "${KIPRJMOD}/3dmodels/Resistor_SMD.3dshapes/R_1206_3216Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -16595,7 +16565,7 @@
 			(uuid "502b99c1-7414-4aa5-ad35-4a31456b6307")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
+		(model "${KIPRJMOD}/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -18265,12 +18235,6 @@
 		(path "/bbe26fa0-5d0f-4390-a65b-dadbb94156d2")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "2" "1")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -18464,7 +18428,7 @@
 			(uuid "bdeb015d-06eb-4e5d-87fa-f7c71936a1a2")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SMA.step"
+		(model "${KIPRJMOD}/3dmodels/Diode_SMD.3dshapes/D_SMA.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -19209,12 +19173,6 @@
 		(path "/fb32a182-3941-4e57-a0e4-e0c713d58958")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "1" "2")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -19289,7 +19247,7 @@
 			(uuid "2d7ebd2a-01e9-441a-87e0-6e9f44f041c9")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_1206_3216Metric.step"
+		(model "${KIPRJMOD}/3dmodels/Resistor_SMD.3dshapes/R_1206_3216Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -20587,12 +20545,6 @@
 		(path "/014b03f1-0b50-453d-b3bc-f81ac001d86a")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "1" "3" "2")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -20891,7 +20843,7 @@
 			(uuid "f3d5f6bd-33b4-4a3b-9e94-2667b5048623")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
+		(model "${KIPRJMOD}/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -22649,7 +22601,7 @@
 			(uuid "a7ea2cf1-5bd8-4f40-8f23-3a2a037f0945")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
+		(model "${KIPRJMOD}/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -23577,7 +23529,7 @@
 			(uuid "b62519cb-f562-45a6-be88-9952971d8c7d")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
+		(model "${KIPRJMOD}/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -24215,12 +24167,6 @@
 		(path "/d14cf24d-b3d8-42bc-84b0-9ebbfc1e24c7")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "1" "2")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -24295,7 +24241,7 @@
 			(uuid "b31bc2f4-59e3-4c7b-8ef6-6ee4af3fe585")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+		(model "${KIPRJMOD}/3dmodels/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -26196,12 +26142,6 @@
 		(path "/4a71024f-f017-46ce-a1be-f43375eb2dfa")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "2" "1")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -26406,7 +26346,7 @@
 			(uuid "2a89dbec-3365-4c55-b51e-ab84116cecd6")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SMA.step"
+		(model "${KIPRJMOD}/3dmodels/Diode_SMD.3dshapes/D_SMA.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -26662,12 +26602,6 @@
 		(path "/cea5f70d-ef8f-47a9-9250-c35a4c5b96ff")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "1" "2")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -26742,7 +26676,7 @@
 			(uuid "8d96cf37-3115-42a8-bb29-87f6b52ca42b")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_1206_3216Metric.step"
+		(model "${KIPRJMOD}/3dmodels/Resistor_SMD.3dshapes/R_1206_3216Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -27282,12 +27216,6 @@
 		(path "/13866b22-5b78-41bb-9d49-cc7746fbc901")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "2" "1")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -27481,7 +27409,7 @@
 			(uuid "3a42c2fd-9d19-4f67-a1c2-ea4497faf59f")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Diode_SMD.3dshapes/D_SMA.step"
+		(model "${KIPRJMOD}/3dmodels/Diode_SMD.3dshapes/D_SMA.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -27560,12 +27488,6 @@
 		(path "/ef7f6b42-e3e4-43fa-9189-f65b19cfe188")
 		(sheetname "/")
 		(sheetfile "fan_controller.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "1" "2")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -27640,7 +27562,7 @@
 			(uuid "975847c4-93cf-4fa9-a3c8-7ecb67434b5c")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+		(model "${KIPRJMOD}/3dmodels/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
