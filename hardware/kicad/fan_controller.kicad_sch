@@ -12417,93 +12417,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_BJT:MMBT3906")
-		(at 302.26 269.24 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "00c44ada-764b-4fae-8f99-2c871019e4a0")
-		(property "Reference" "Q16"
-			(at 302.26 261.62 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "MMBT3906"
-			(at 302.26 276.86 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 307.34 267.335 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf"
-			(at 302.26 269.24 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23"
-			(at 302.26 269.24 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "dfc350aa-3e5d-448f-a9ad-897f7f3bb020")
-		)
-		(pin "2"
-			(uuid "4a59dc90-aca2-4815-a0ae-7173d4a5969f")
-		)
-		(pin "3"
-			(uuid "e5a0349e-82ad-493c-b9b4-0ef6152ebd2e")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "Q16")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 604.52 312.42 0)
 		(unit 1)
@@ -13453,7 +13366,7 @@
 			)
 		)
 		(property "Value" "BSS138"
-			(at 538.48 345.44 0)
+			(at 543.052 334.772 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -16342,7 +16255,7 @@
 			)
 		)
 		(property "Value" "AO3401A"
-			(at 297.18 269.24 0)
+			(at 290.068 212.09 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -17681,7 +17594,7 @@
 			)
 		)
 		(property "Value" "AO3401A"
-			(at 158.242 261.874 0)
+			(at 158.496 255.016 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -17841,93 +17754,6 @@
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
 					(reference "J11")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Transistor_BJT:MMBT3906")
-		(at 153.67 198.12 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "6659d4bd-a825-4449-8392-4a6049fd1765")
-		(property "Reference" "Q14"
-			(at 158.75 200.025 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "MMBT3906"
-			(at 158.75 198.12 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 158.75 196.215 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf"
-			(at 153.67 198.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23"
-			(at 153.67 198.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "11cee8b9-32f7-4569-a713-9b2311b4018c")
-		)
-		(pin "2"
-			(uuid "30bf3a17-9697-4501-adf4-6af2be9448e4")
-		)
-		(pin "3"
-			(uuid "e92b8da0-c9bc-4c5f-a5df-899edcccac46")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "Q14")
 					(unit 1)
 				)
 			)
@@ -22182,93 +22008,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_BJT:MMBT3906")
-		(at 581.66 300.99 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "dfa3486f-2a31-4da3-ab26-2dcaff21f742")
-		(property "Reference" "Q20"
-			(at 581.66 293.37 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "MMBT3906"
-			(at 581.66 308.61 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 586.74 299.085 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf"
-			(at 581.66 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23"
-			(at 581.66 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "bb38c19e-f13b-4269-b56f-dc8456641034")
-		)
-		(pin "2"
-			(uuid "2699b6ee-dbda-4ca4-bdf9-65d44610bcb4")
-		)
-		(pin "3"
-			(uuid "81758e96-4dc2-4923-880c-ed0b1fcbd54b")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "Q20")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Transistor_FET:BSS138")
 		(at 367.03 273.05 0)
 		(unit 1)
@@ -23702,93 +23441,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_BJT:MMBT3906")
-		(at 463.55 312.42 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "fa2a3767-89be-4176-92ad-9d4e79a7bbb8")
-		(property "Reference" "Q18"
-			(at 463.55 304.8 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "MMBT3906"
-			(at 463.55 320.04 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 468.63 310.515 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf"
-			(at 463.55 312.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23"
-			(at 463.55 312.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "174d4a6a-9cd1-4f74-a71a-a7f34772fca3")
-		)
-		(pin "2"
-			(uuid "c3740eaf-00ae-48ce-ba72-17d169a2cfd6")
-		)
-		(pin "3"
-			(uuid "d7fe10be-2b6d-4806-a0d8-b3155021a7ff")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "Q18")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 247.65 160.02 0)
 		(unit 1)
@@ -24146,7 +23798,299 @@
 			)
 		)
 	)
-	(sheet_instances
+	  (symbol (lib_id "Transistor_FET:Q_PMOS_GSD") (at 153.67 198.12 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "ac6046ce-3974-4a00-b8a7-36ca39d49476")
+    (property "Reference" "Q14"
+      (at 158.75 200.025 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+    )
+    (property "Value" "AO3401A"
+      (at 158.75 198.12 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+    )
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+      (at 158.75 200.66 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 153.67 198.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "+12V pull-up for Q_hs gate; replaces PNP level-shift, held off by R_be at rest"
+      (at 153.67 198.12 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "MPN" "Alpha & Omega AO3401A" (at 153.67 198.12 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (pin "1" (uuid "0ec5f84f-eb3c-426c-b629-362104efac48"))
+    (pin "2" (uuid "e5582f6a-7740-44fa-ba82-ae5e7738e64b"))
+    (pin "3" (uuid "45076ff6-d4ad-4b50-b7de-36f45f67d16f"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "Q14")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "Transistor_FET:Q_PMOS_GSD") (at 302.26 269.24 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "7f516807-0f0e-4b5e-93cc-d765ca596cef")
+    (property "Reference" "Q16"
+      (at 307.34 271.145 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+    )
+    (property "Value" "AO3401A"
+      (at 307.34 269.24 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+    )
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+      (at 307.34 271.78 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 302.26 269.24 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "+12V pull-up for Q_hs gate; replaces PNP level-shift, held off by R_be at rest"
+      (at 302.26 269.24 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "MPN" "Alpha & Omega AO3401A" (at 302.26 269.24 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (pin "1" (uuid "80e2a6f7-7fb7-4888-bc42-2adb2e259844"))
+    (pin "2" (uuid "14fbca05-639c-4549-ad00-7feaddc4084f"))
+    (pin "3" (uuid "1d40d49b-b7d3-4a97-aa38-4c2965166445"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "Q16")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "Transistor_FET:Q_PMOS_GSD") (at 463.55 312.42 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "dbf14b66-f03c-4552-a95d-d24aaf2ffd8c")
+    (property "Reference" "Q18"
+      (at 468.63 314.325 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+    )
+    (property "Value" "AO3401A"
+      (at 468.63 312.42 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+    )
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+      (at 468.63 314.96 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 463.55 312.42 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "+12V pull-up for Q_hs gate; replaces PNP level-shift, held off by R_be at rest"
+      (at 463.55 312.42 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "MPN" "Alpha & Omega AO3401A" (at 463.55 312.42 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (pin "1" (uuid "fe81aabb-71fa-48f0-b7cb-be554f21bb98"))
+    (pin "2" (uuid "f6571fbf-8b5b-486d-b609-d71f604d363e"))
+    (pin "3" (uuid "3ffc1121-6c19-4054-8639-4dc4bcf89244"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "Q18")
+          (unit 1)
+        )
+      )
+    )
+  )
+    (symbol (lib_id "Transistor_FET:Q_PMOS_GSD") (at 581.66 300.99 0) (unit 1)
+    (body_style 1) (exclude_from_sim no) (in_bom yes) (on_board yes) (in_pos_files yes) (dnp no)
+    (uuid "a30b7bf2-548d-4de0-aa38-b8739873310e")
+    (property "Reference" "Q20"
+      (at 586.74 302.895 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+    )
+    (property "Value" "AO3401A"
+      (at 586.74 300.99 0)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+    )
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+      (at 586.74 303.53 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Datasheet" ""
+      (at 581.66 300.99 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "Description" "+12V pull-up for Q_hs gate; replaces PNP level-shift, held off by R_be at rest"
+      (at 581.66 300.99 0)
+      (hide yes)
+      (show_name no)
+      (do_not_autoplace no)
+      (effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+    )
+    (property "MPN" "Alpha & Omega AO3401A" (at 581.66 300.99 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (pin "1" (uuid "b4d441b7-cd94-4da4-9134-129414902944"))
+    (pin "2" (uuid "b650720a-85fa-48a1-b1ac-c244947d0e0a"))
+    (pin "3" (uuid "8ff3a8c4-a5c5-461e-9b81-39d0720ddda5"))
+    (instances
+      (project "fan_controller"
+        (path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+          (reference "Q20")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (sheet_instances
 		(path "/"
 			(page "1")
 		)

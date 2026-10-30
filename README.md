@@ -2,9 +2,22 @@
 
 ![PCB 3D view](hardware/pcb_3d.png)
 
-A USB controlled board for four 12 V PC fans and six analog sensor inputs. It
-is a carrier board for an STM32F103C8T6 "Blue Pill" module. The module shows
-up on the host as a USB CDC serial port (`/dev/ttyACM*` or `COMx`).
+A USB-controlled carrier board for an STM32F103C8T6 "Blue Pill" module. It
+drives four 12 V PC fans and reads four analog sensors. The module shows up
+on the host as a USB CDC serial port (`/dev/ttyACM*` or `COMx`).
+
+## Key features
+
+- **4 independent fan channels.** Each one switches between `pwm` (4-pin
+  signal control) and `dc` (3-pin supply chopping) at runtime.
+- **4 analog inputs** for NTC or voltage sensors plus 12 V rail sensing. All
+  share one ADC scan with mV conversion.
+- **Tach and stall detection** on all 4 channels. 5 V tolerant.
+- **Hardware failsafe.** Every fan runs at 100% whenever the MCU isn't
+  driving it. No firmware or host required.
+- **Per-channel and board-level PTC fusing** plus a 12 V TVS.
+- **Text protocol over USB CDC.** Comes with a Python CLI (`fanctl.py`) and
+  a daemon (`fancontrold.py`) for temperature or GPU-temperature curves.
 
 ```
 stm32-fan-controller/
@@ -106,7 +119,7 @@ flowchart LR
             TIM4["TIM4 PB6..PB9 25kHz"] --> BSS["BSS138 open drain"] --> FPWM["fan PWM pin"]
         end
         subgraph DCMODE["DC-mode motor switch per channel"]
-            QINV["Q_inv BSS138"] --> QEN["Q_en gated by FANn_DCEN"] --> QPNP["Q_pnp MMBT3906"] --> QHS["Q_hs AO3401A"] --> FSW["fan +12V motor switch"]
+            QINV["Q_inv BSS138"] --> QEN["Q_en gated by FANn_DCEN"] --> QPNP["Q_pnp AO3401A pull-up"] --> QHS["Q_hs AO3401A"] --> FSW["fan +12V motor switch"]
             GPIO["PA6 PA7 PA8 PB1 GPIO"] --> QEN
         end
         TIM4 -. reuses PWM signal .-> QINV
@@ -197,20 +210,18 @@ board behaves. In `dc` mode the switch chops the +12 V supply at the same
 25 kHz duty that pin 4 carries. That is how a 3-pin fan gets speed control at
 all since it has no PWM input and leaves pin 4 unconnected.
 
-**Motor switch gate drive.** The MCU cannot drive the P-FET gate directly so
-a two-stage inverting chain does the job. A BSS138 (`Q_inv`) is gated by the
-same pin-4 PWM signal. That signal is reused rather than given its own net. It
-switches an MMBT3906 PNP (`Q_pnp`) which pulls the P-FET gate toward +12 V to
-turn the switch off. A second BSS138 (`Q_en`) sits in series between `Q_inv`
-and GND and is gated by its own per-channel GPIO that the `mode` command sets.
-Both transistors must be on for the chop to reach `Q_pnp`. So `pwm` mode
-simply holds `Q_en` off and the pin-4 signal never reaches the gate chain no
-matter what its duty is. A 2.2 kΩ resistor (`R_gpd`) holds the P-FET gate at
-GND which means the switch is **on** whenever neither stage is driven. A
-10 kΩ resistor (`R_dcen`) holds the gate of `Q_en` low by default. This rest
-state rather than an actively driven "off" is what satisfies C1 below in
-either mode. An SS34 freewheel diode (`D_fw`) across the output of each
-channel absorbs the inductive kick of the motor when the switch opens.
+**Motor switch gate drive.** `Q_hs` needs its gate pulled toward +12 V to
+turn off. 3.3 V logic can't do that directly. So `Q_inv` and `Q_en` (both
+BSS138) form a GND-referenced AND gate. `Q_inv` is gated by the same pin-4
+PWM signal and reuses that net instead of getting its own. `Q_en` is gated
+by the per-channel GPIO the `mode` command sets. Only when both switches are
+on does `Q_pnp` (an AO3401A wired here as a +12 V pull-up rather than a
+switch) pull `Q_hs`'s gate high and turn the motor switch off. `pwm` mode
+just holds `Q_en` off so the pin-4 signal never reaches `Q_hs` no matter the
+duty. At rest `R_gpd` (2.2 kΩ) holds `Q_hs` on and `R_dcen` (10 kΩ) holds
+`Q_en` off. That undriven rest state is what satisfies the failsafe in
+either mode. An SS34 freewheel diode (`D_fw`) on each channel absorbs the
+motor's inductive kick when the switch opens.
 
 **Speed.** In `pwm` mode the firmware sets speed with a 25 kHz signal on pin
 4. Many 4-pin fans keep turning at 0 % PWM at their minimum speed and the
@@ -350,15 +361,10 @@ rsvg-convert -w 1400 -b white top.svg -o hardware/pcb_top.png && rm top.svg
 
 Checked with KiCad 10.0.7:
 
-- `kicad-cli sch erc --severity-all` reports 11 errors and 5 warnings. All of
-  them predate the `dc`-mode feature. They are unused pins on `J1` and `D1`
-  and `C1-C5` and `R2` in the VIN and analog decoupling group that have no
-  `no_connect` flags yet plus one spare BluePill pin plus one unresolved
-  input-power-pin-not-driven quirk on a GND symbol. All of it is tracked in
-  `AGENTS.md`.
-- `kicad-cli pcb drc --severity-all` reports 0 errors and 21 warnings. They
-  cover silkscreen clearance and overlap in the densest rows plus a few
-  dangling-track notices. All cosmetic and none of it blocks fabrication.
+- `kicad-cli sch erc --severity-all` reports 0 errors and 0 warnings.
+- `kicad-cli pcb drc --severity-all` reports 0 errors and 32 warnings. All
+  of them are silkscreen clearance or overlap in the densest rows. Cosmetic
+  and none of it blocks fabrication.
 - Every footprint loads from the standard libraries and matches its library
   copy.
 - Every symbol pin number matches a pad in its footprint and every pad has a
@@ -367,19 +373,17 @@ Checked with KiCad 10.0.7:
 ### BOM summary plus the Blue Pill module
 
 `hardware/bom.csv` is regenerated from the schematic with `sch export bom`
-grouped by value and footprint. The MPN and notes columns are merged back in
-by hand. This table reflects the board as built including the per-channel
-`dc`-mode motor switch built from `Q_inv` and `Q_en` and `Q_hs` and `Q_pnp`.
-See `hardware/3pin_dc_mode_plan.md`.
+grouped by value and footprint. The MPN and notes columns get merged back in
+by hand. This table reflects the board as built. That includes the
+per-channel `dc`-mode motor switch: `Q_inv` `Q_en` `Q_pnp` and `Q_hs` four
+of each.
 
 | Qty | Part | Package | Use | DigiKey |
 |---|---|---|---|---|
 | 1 | STM32F103C8T6 Blue Pill | module | MCU that plugs into J2 and J3 | not stocked at DigiKey. Buy from module sellers |
-| 12 | BSS138 | SOT-23 | PWM signal transistors Q1-4 plus the `Q_inv` and `Q_en` cascade motor-switch gate on 4 channels as Q7 Q10 Q13 Q16 and Q17-20 | [BSS138](https://www.digikey.com/en/products/result?keywords=BSS138) |
-| 4 | AO3401A | SOT-23 | `Q_hs` high-side P-MOSFET motor switch | [AO3401A](https://www.digikey.com/en/products/result?keywords=AO3401A) |
-| 4 | MMBT3906 | SOT-23 | `Q_pnp` PNP level-shift driver for the `Q_hs` gate | [MMBT3906](https://www.digikey.com/en/products/result?keywords=MMBT3906) |
+| 12 | BSS138 | SOT-23 | pin-4 PWM drive (`Q_sig`) + motor-switch gate AND (`Q_inv`, `Q_en`), 3 per channel | [BSS138](https://www.digikey.com/en/products/result?keywords=BSS138) |
+| 8 | AO3401A | SOT-23 | `Q_hs` high-side motor switch + `Q_pnp` gate pull-up, 2 per channel | [AO3401A](https://www.digikey.com/en/products/result?keywords=AO3401A) |
 | 4 | SS34 | SMA | flyback diode across the fan motor in `dc` mode | [SS34](https://www.digikey.com/en/products/result?keywords=SS34) |
-| 4 | 0 Ω jumper and DNP | 1206 | `JP1-4` optional full-bypass override. See `3pin_dc_mode_plan.md` | generic 1206 0 Ω bridge or jumper |
 | 6 | BAT54S | SOT-23 | analog input clamps | [BAT54S 215](https://www.digikey.com/en/products/result?keywords=BAT54S%2C215) |
 | 1 | SMBJ13A | SMB | 12 V TVS | [SMBJ13A](https://www.digikey.com/en/products/result?keywords=SMBJ13A) |
 | 1 | MF-MSMF250/16X-2 | 1812 | 2.5 A PTC fuse | [MF-MSMF250/16X-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF250%2F16X-2) |
