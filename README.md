@@ -199,7 +199,7 @@ Things worth checking on the module:
 Each channel drives a standard 4-pin header where pin 1 is GND and pin 2 is
 +12 V and pin 3 is tach and pin 4 is PWM. The same header takes both 4-pin
 PWM fans and 3-pin DC fans in either firmware mode. The default mode is `pwm`
-and the other is `dc`. See [Protocol](#protocol).
+and the other is `dc`. See [Host commands](#host-commands).
 
 **Supply and motor switch.** Fan pin 2 reaches +12 V through a 1.1 A PTC
 (Bourns MF-MSMF110/16) and then through a high-side P-channel MOSFET (`Q_hs`
@@ -312,65 +312,7 @@ millivolts corrected for the actual supply voltage.
   frequency to lower for one misbehaving fan without also moving the signal
   frequency on every `pwm` channel.
 
-## KiCad project
-
-The KiCad files are the source of truth. Edit them directly in the KiCad GUI.
-
-- `hardware/kicad/fan_controller.kicad_sch`: one A1 sheet grouped by block
-  into Power and MCU and Fan 1–4 and Analog inputs and Test points. Each pin
-  connects through a net label in netlist style.
-- `hardware/kicad/fanctl.kicad_sym`: the project symbol library. Pin numbers
-  match the footprint pads.
-- `hardware/kicad/fan_controller.kicad_pcb`: an 81 × 78 mm outline with four
-  M3 holes and a `Power` net class of 1 mm tracks for the 12 V and GND nets.
-- `hardware/bom.csv`.
-
-The 3D model lives under `hardware/kicad/3dmodels/` as `fan_controller.step`
-and `fan_controller.glb` and both are committed. The Blue Pill module has no
-3D model so only its two sockets show up.
-
-Every footprint on the board points at its model as
-`${KIPRJMOD}/3dmodels/<library>.3dshapes/<name>.step`. KiCad resolves
-`${KIPRJMOD}` to the project folder so the 3D viewer and the STEP export work
-without the KiCad 3D library installed. A footprint added later in the KiCad
-GUI keeps its own library path of `${KICAD10_3DMODEL_DIR}/…` instead. To use
-a local copy put the `.step` file under `3dmodels/` and change the path on the
-3D Models tab of that footprint.
-
-Every footprint comes from the standard KiCad 10 libraries.
-
-The workflow is to open `fan_controller.kicad_pro` and change the schematic or
-the board and run ERC and DRC and then route. Re-export the BOM
-(`hardware/bom.csv`) and the renders below after any change that affects them.
-
-To refresh `hardware/pcb_3d.png`:
-
-```sh
-cd hardware/kicad
-kicad-cli pcb render --side top --rotate '-20,0,350' --zoom 0.75 --perspective --floor \
-    --background transparent --quality high -w 480 -h 500 -o ../pcb_3d.png fan_controller.kicad_pcb
-```
-
-To refresh `hardware/pcb_top.png`:
-
-```sh
-kicad-cli pcb export svg --layers Edge.Cuts,F.Cu,F.SilkS,F.Fab --exclude-drawing-sheet \
-    --page-size-mode 2 -o top.svg hardware/kicad/fan_controller.kicad_pcb
-rsvg-convert -w 1400 -b white top.svg -o hardware/pcb_top.png && rm top.svg
-```
-
-Checked with KiCad 10.0.7:
-
-- `kicad-cli sch erc --severity-all` reports 0 errors and 0 warnings.
-- `kicad-cli pcb drc --severity-all` reports 0 errors and 32 warnings. All
-  of them are silkscreen clearance or overlap in the densest rows. Cosmetic
-  and none of it blocks fabrication.
-- Every footprint loads from the standard libraries and matches its library
-  copy.
-- Every symbol pin number matches a pad in its footprint and every pad has a
-  pin.
-
-### BOM summary plus the Blue Pill module
+## Bom list
 
 `hardware/bom.csv` is regenerated from the schematic with `sch export bom`
 grouped by value and footprint. The MPN and notes columns get merged back in
@@ -416,23 +358,6 @@ The first `make` builds libopencm3 for STM32F1 only. It also runs
 `git submodule update --init` when the clone has no submodule checkout. The
 same targets work from inside `firmware/`.
 
-### Architecture
-
-The firmware has no RTOS. It runs a single cooperative main loop fed by two
-interrupts. SysTick counts milliseconds and EXTI catches tach edges. ADC
-results arrive by DMA.
-
-| Module | Responsibility |
-|---|---|
-| `Core/main.c` | 72 MHz clock and SysTick and init order and the main loop and the status LED on Blue Pill PC13 |
-| `App/pwm.c` | TIM4 fan PWM signal at 25 kHz which doubles as the motor-switch chop signal plus the per-channel DC-mode-enable GPIOs. Starts the timer at 100 % and the enables low before taking the pins |
-| `App/fan.c` | Per-channel mode and duty mapped onto the signal PWM and the DC-mode enable |
-| `App/tach.c` | Tach pulse count per 1 s window converted to RPM at 2 pulses per rev |
-| `App/thermal.c` | ADC1 continuous scan with DMA over AIN1–4 and 12 V and MCU temperature and VREFINT. 1 ms IIR filter and mV conversion |
-| `App/safety.c` | IWDG at 1 s plus host-loss failsafe and stall detection |
-| `App/protocol.c` | Line-based command parser kept hardware independent so it can be unit tested |
-| `USB_DEVICE/usb_cdc.c` | CDC-ACM descriptors and an RX ring buffer and TX with timeout. Output is dropped while the port is closed |
-
 ### Failsafe behaviour
 
 All fans run at 100 % whenever the controller is not in control and that holds
@@ -455,7 +380,7 @@ Running `fanctl.py watch` or a control daemon keeps the 10 s timer from
 expiring. A fan is flagged `stall=1` when its duty sits above 0 but its tach
 reads 0 RPM for 3 s. Fans without a tach wire always show this flag.
 
-### Protocol
+### Host commands
 
 The protocol is text over USB CDC and the baud rate is ignored. Each command
 is one line ending in `\n` and each reply ends with `ok` or `err <reason>`.
