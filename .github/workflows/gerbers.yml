@@ -3,11 +3,11 @@ name: Gerbers
 on:
   push:
     paths:
-      - "hardware/kicad/**"
+      - "hardware/kicad/fan_controller.kicad_pcb"
       - ".github/workflows/gerbers.yml"
   pull_request:
     paths:
-      - "hardware/kicad/**"
+      - "hardware/kicad/fan_controller.kicad_pcb"
       - ".github/workflows/gerbers.yml"
   workflow_call:
 
