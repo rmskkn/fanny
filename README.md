@@ -13,8 +13,10 @@ on the host as a USB CDC serial port (`/dev/ttyACM*` or `COMx`).
 - **4 analog inputs** for NTC or voltage sensors plus 12 V rail sensing. All
   share one ADC scan with mV conversion.
 - **Tach and stall detection** on all 4 channels. 5 V tolerant.
-- **Hardware failsafe.** Every fan runs at 100% whenever the MCU isn't
-  driving it. No firmware or host required.
+- **Hardware failsafe by design.** Every control line rests in its "fan on"
+  state by default, held there by pull resistors alone. A fan runs at
+  100% on power-up, after a crash, or with the MCU pulled out. No firmware
+  or host required.
 - **Per-channel and board-level PTC fusing** plus a 12 V TVS.
 - **Text protocol over USB CDC.** Comes with a Python CLI (`fanctl.py`) and
   a daemon (`fancontrold.py`) for temperature or GPU-temperature curves.
@@ -159,95 +161,6 @@ The DC-mode enable pins are plain GPIO rather than a timer remap. Nothing
 writes `AFIO_MAPR` so JTAG and SWD both stay exactly as the Blue Pill module
 provides them.
 
-### Blue Pill module
-
-The module plugs into two 1×20 female headers (J2 and J3) with rows 15.24 mm
-apart. Pin 1 of each row sits at the USB end of the module. Hold the board
-with the USB end up and the components facing you. J2 is then the right row
-and J3 the left row:
-
-| Pin | J2 on the right | J3 on the left |
-|---|---|---|
-| 1–4 | GND GND 3V3 NRST | PB12 PB13 PB14 PB15 |
-| 5–10 | PB11 PB10 PB1 PB0 PA7 PA6 | PA8 PA9 PA10 PA11 PA12 PA15 |
-| 11–16 | PA5 PA4 PA3 PA2 PA1 PA0 | PB3 PB4 PB5 PB6 PB7 PB8 |
-| 17–20 | PC15 PC14 PC13 VBAT | PB9 5V GND 3V3 |
-
-The pinout follows the
-[DeepBlueMbedded Blue Pill diagram](https://deepbluembedded.com/stm32-blue-pill-pinout-programming-guide/).
-Check it against your own module before laying out a board.
-
-The module brings the MCU and the 8 MHz crystal and the 3.3 V regulator and
-the PC13 LED and the reset button and the BOOT jumpers and the SWD header and
-the micro-B USB connector. It runs from USB alone through its own micro-B
-connector. The carrier has no USB connector or wiring of its own. The 12 V
-input powers only the fans. The 3V3 pin of the module powers the 3.3 V logic
-and the sensor bias on the carrier.
-
-Things worth checking on the module:
-
-- **D+ pull-up (R10):** USB needs 1.5 kΩ but many Blue Pills ship with 10 kΩ.
-  Some hosts then fail to enumerate. Swap R10 for 1.5 kΩ if that happens.
-- **MCU:** some modules carry a clone such as CS32F103 or CKS32F103 or
-  GD32F103 rather than a genuine ST part. The firmware targets the ST part.
-  Clones can differ in USB and flash timing.
-- **NRST:** the SWD header of the module has no reset pin. Use TP4 or the R
-  pin for connect-under-reset.
-
-### Fan channel
-
-Each channel drives a standard 4-pin header where pin 1 is GND and pin 2 is
-+12 V and pin 3 is tach and pin 4 is PWM. The same header takes both 4-pin
-PWM fans and 3-pin DC fans in either firmware mode. The default mode is `pwm`
-and the other is `dc`. See [Host commands](#host-commands).
-
-**Supply and motor switch.** Fan pin 2 reaches +12 V through a 1.1 A PTC
-(Bourns MF-MSMF110/16) and then through a high-side P-channel MOSFET (`Q_hs`
-which is an AO3401A). A shorted fan or cable trips only its own PTC so the
-other fans keep running and F1 stays intact. In `pwm` mode the switch is held
-fully on and only pin 4 controls speed. That is exactly how a 4-pin-only
-board behaves. In `dc` mode the switch chops the +12 V supply at the same
-25 kHz duty that pin 4 carries. That is how a 3-pin fan gets speed control at
-all since it has no PWM input and leaves pin 4 unconnected.
-
-**Motor switch gate drive.** `Q_hs` needs its gate pulled toward +12 V to
-turn off. 3.3 V logic can't do that directly. So `Q_inv` and `Q_en` (both
-BSS138) form a GND-referenced AND gate. `Q_inv` is gated by the same pin-4
-PWM signal and reuses that net instead of getting its own. `Q_en` is gated
-by the per-channel GPIO the `mode` command sets. Only when both switches are
-on does `Q_pnp` (an AO3401A wired here as a +12 V pull-up rather than a
-switch) pull `Q_hs`'s gate high and turn the motor switch off. `pwm` mode
-just holds `Q_en` off so the pin-4 signal never reaches `Q_hs` no matter the
-duty. At rest `R_gpd` (2.2 kΩ) holds `Q_hs` on and `R_dcen` (10 kΩ) holds
-`Q_en` off. That undriven rest state is what satisfies the failsafe in
-either mode. An SS34 freewheel diode (`D_fw`) on each channel absorbs the
-motor's inductive kick when the switch opens.
-
-**Speed.** In `pwm` mode the firmware sets speed with a 25 kHz signal on pin
-4. Many 4-pin fans keep turning at 0 % PWM at their minimum speed and the
-board cannot stop such a fan. In `dc` mode speed comes from the motor switch
-following that same signal instead. See [Known limits](#known-limits) for the
-two caveats that come with it.
-
-**PWM signal transistor.** A BSS138 works as an open-drain driver on fan pin
-4. The fan pulls this pin up internally to 5.25 V or less as the Intel 4-wire
-spec requires so the MCU pin never sees the voltage of the fan. The transistor
-inverts the signal and the firmware compensates with timer mode PWM2.
-
-**Safe state.** A 100 kΩ pull-down holds the PWM transistor off unless the
-MCU drives it. That releases pin 4 and a released line reads as 100 %.
-`R_gpd` holds the motor switch on and `R_dcen` holds `Q_en` off by the same
-logic described above. All three rest states agree with each other. A fan
-runs at 100 % with no firmware running in either mode. See
-[Failsafe behaviour](#failsafe-behaviour).
-
-**Tach input.** The open-collector output of the fan gets a 10 kΩ pull-up to
-3.3 V and then 1 kΩ plus 1 nF of filtering. PB12–PB15 are 5 V tolerant. The
-motor switch is high-side so fan GND stays at board GND even while the switch
-is open and the tach chain never sees overvoltage in `dc` mode. A fan that
-pulls its tach output to 12 V internally sits outside the spec and would need
-an extra clamp.
-
 ### Compatibility
 
 Verified against the [Intel 4-wire PWM fan spec rev 1.2](https://www.konilabs.net/docs/standards/fan/intel_4wire_pwm_fans_specs_rev1_2.pdf):
@@ -260,8 +173,6 @@ Verified against the [Intel 4-wire PWM fan spec rev 1.2](https://www.konilabs.ne
 | A released PWM line must run the fan at full speed | 100 kΩ pull-down holds the transistor off until firmware drives it | Match |
 | Tach must be open-collector and pulled up at 2 pulses per rev | 10 kΩ pull-up to 3.3 V with `TACH_PULSES_PER_REV = 2` in firmware | Match |
 | Tach pull-up rail of 5 V or less into a tolerant input | Pulled to 3.3 V and PB12–PB15 are 5 V tolerant | Match |
-
-See [Fan channel](#fan-channel) above for the per-pin circuit detail.
 
 ### Analog inputs (AIN1–AIN4)
 
@@ -297,8 +208,9 @@ millivolts corrected for the actual supply voltage.
   1.1 A PTC. F1 caps the whole board at 2.5 A so four fans pulling 1 A cannot
   run together. At power-up every fan starts at 100 % at once. Measure the
   combined inrush with the real fans.
-- **0 % does not stop every 4-pin fan in `pwm` mode.** See Fan channel. In
-  `dc` mode 0 % does stop the fan because the motor switch cuts the supply.
+- **0 % does not stop every 4-pin fan in `pwm` mode.** It depends on the
+  fan. In `dc` mode 0 % does stop it because the motor switch cuts the
+  supply.
 - **3-pin fans in `dc` mode do not start below roughly 30 % to 40 % duty.**
   That is a motor startup limit rather than a firmware clamp. Set a curve
   minimum above it in `fancontrold` and see `fancontrol.conf.example`.
@@ -435,8 +347,8 @@ python3 host/fanctl.py -p /dev/ttyACM1 set 2 40   # board on another port
 - Settings hold only while the host keeps talking to the board. When no
   command arrives for 10 s all fans return to 100 %. Keep `fanctl.py watch`
   or a control daemon running to hold the values.
-- `mode <1-4|all> pwm|dc` picks the speed-control path for a channel as
-  described in [Fan channel](#fan-channel). It falls back to `pwm` at every
+- `mode <1-4|all> pwm|dc` picks the speed-control path for a channel: `pwm`
+  for a 4-pin fan, `dc` for a 3-pin fan. It falls back to `pwm` at every
   boot and after every reconnect so the channel of a 3-pin fan needs
   `mode N dc` sent again each time.
 
