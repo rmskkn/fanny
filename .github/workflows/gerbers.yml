@@ -14,7 +14,9 @@ on:
 jobs:
   export:
     runs-on: ubuntu-latest
-    container: kicad/kicad:10.0.7
+    container:
+      image: kicad/kicad:10.0.7
+      options: --user root
     steps:
       - uses: actions/checkout@v4
 
