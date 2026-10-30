@@ -31,10 +31,10 @@ jobs:
       - name: Zip gerbers
         run: |
           cd hardware/gerbers/export
-          zip -r ../fan_controller_gerbers.zip .
+          zip -r ../fanny-gerbers.zip .
 
       - name: Upload gerbers
         uses: actions/upload-artifact@v4
         with:
           name: fanny-gerbers
-          path: hardware/gerbers/fan_controller_gerbers.zip
+          path: hardware/gerbers/fanny-gerbers.zip

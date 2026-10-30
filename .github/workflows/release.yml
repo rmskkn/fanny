@@ -35,4 +35,4 @@ jobs:
           files: |
             firmware/build/fanny.elf
             firmware/build/fanny.bin
-            hardware/gerbers/fan_controller_gerbers.zip
+            hardware/gerbers/fanny-gerbers.zip
