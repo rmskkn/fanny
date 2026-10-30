@@ -197,8 +197,8 @@ the results.
 ```sh
 git clone --recurse-submodules git@github.com:rmskkn/fanny.git
 cd fanny
-make                 # firmware/build/fanctl.elf, .bin (~11.5 KiB flash)
-make flash           # OpenOCD + ST-Link over SWD
+make                 # firmware/build/fanny.elf, .bin (~11.5 KiB flash)
+make flash           # flash fanny.bin, OpenOCD + ST-Link over SWD
 make test            # host-side protocol and conversion tests
 ```
 
@@ -207,12 +207,16 @@ The first `make` builds libopencm3 for STM32F1 only. It also runs
 same targets work from inside `firmware/`.
 
 `make flash` wraps this OpenOCD call, with an ST-Link programmer on the
-Blue Pill's SWD header:
+Blue Pill's SWD header. `fanny.bin` is a raw image with no load address, so
+one is given on the command line, the start of flash on this MCU:
 
 ```sh
 openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \
-    -c "program firmware/build/fanctl.elf verify reset exit"
+    -c "program firmware/build/fanny.bin verify reset exit 0x08000000"
 ```
+
+`fanny.elf` still builds alongside it (`make` keeps producing both), kept
+for `arm-none-eabi-size` and debugging, but flashing only ever needs the bin.
 
 ### Failsafe behaviour
 

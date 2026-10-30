@@ -1,8 +1,8 @@
 # STM32F103C8 PWM fan controller firmware (libopencm3).
 #
-#   make              build build/fanctl.elf/.bin (inits and builds the
+#   make              build build/fanny.elf/.bin (inits and builds the
 #                     libopencm3 submodule on first run)
-#   make flash        flash with OpenOCD + ST-Link
+#   make flash        flash build/fanny.bin with OpenOCD + ST-Link
 #   make test         host-side unit tests (native gcc)
 
 OPENCM3_DIR ?= Drivers/libopencm3
@@ -13,7 +13,7 @@ OBJCOPY := $(PREFIX)objcopy
 SIZE    := $(PREFIX)size
 
 BUILD := build
-TARGET := $(BUILD)/fanctl
+TARGET := $(BUILD)/fanny
 
 SRCS := Core/main.c \
 	App/fan.c App/pwm.c App/tach.c App/thermal.c App/safety.c App/protocol.c \
@@ -47,9 +47,9 @@ $(OPENCM3_DIR)/lib/libopencm3_stm32f1.a:
 	test -f $(OPENCM3_DIR)/Makefile || git submodule update --init $(OPENCM3_DIR)
 	$(MAKE) -C $(OPENCM3_DIR) TARGETS=stm32/f1
 
-flash: $(TARGET).elf
+flash: $(TARGET).bin
 	openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \
-		-c "program $< verify reset exit"
+		-c "program $< verify reset exit 0x08000000"
 
 test:
 	@mkdir -p $(BUILD)

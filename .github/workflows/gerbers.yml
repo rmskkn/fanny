@@ -1,0 +1,38 @@
+name: Gerbers
+
+on:
+  push:
+    paths:
+      - "hardware/kicad/**"
+      - ".github/workflows/gerbers.yml"
+  pull_request:
+    paths:
+      - "hardware/kicad/**"
+      - ".github/workflows/gerbers.yml"
+  workflow_call:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    container: kicad/kicad:10.0.7
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Export gerbers and drill file
+        run: |
+          mkdir -p hardware/gerbers/export
+          kicad-cli pcb export gerbers --board-plot-params \
+            -o hardware/gerbers/export hardware/kicad/fan_controller.kicad_pcb
+          kicad-cli pcb export drill \
+            -o hardware/gerbers/export hardware/kicad/fan_controller.kicad_pcb
+
+      - name: Zip gerbers
+        run: |
+          cd hardware/gerbers/export
+          zip -r ../fan_controller_gerbers.zip .
+
+      - name: Upload gerbers
+        uses: actions/upload-artifact@v4
+        with:
+          name: fanny-gerbers
+          path: hardware/gerbers/fan_controller_gerbers.zip

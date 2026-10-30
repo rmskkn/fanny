@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  ci:
+    uses: ./.github/workflows/firmware.yml
+
+  gerbers:
+    uses: ./.github/workflows/gerbers.yml
+
+  release:
+    needs: [ci, gerbers]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: fanny-firmware
+          path: firmware/build
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: fanny-gerbers
+          path: hardware/gerbers
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            firmware/build/fanny.elf
+            firmware/build/fanny.bin
+            hardware/gerbers/fan_controller_gerbers.zip
