@@ -21,16 +21,18 @@ on the host as a USB CDC serial port (`/dev/ttyACM*` or `COMx`).
 - **Text protocol over USB CDC.** Comes with a Python CLI (`fanctl.py`) and
   a daemon (`fancontrold.py`) for temperature or GPU-temperature curves.
 
+## Repository structure
+
 ```
-stm32-fan-controller/
-├── firmware/          libopencm3 firmware (C11 built with arm-none-eabi-gcc)
-│   ├── Core/          main loop / clocks / SysTick / linker script / board pin map
-│   ├── Drivers/       libopencm3 git submodule
+.
+├── firmware/          MCU firmware
+│   ├── Core/          clocks, SysTick, linker script, board pin map
+│   ├── Drivers/       libopencm3 submodule
 │   ├── USB_DEVICE/    USB CDC-ACM device
-│   ├── App/           fan / pwm / tach / protocol / thermal (analog) / safety
-│   └── tests/         host-side unit tests (`make test`)
+│   ├── App/           fan, pwm, tach, protocol, thermal, safety
+│   └── tests/         host-side unit tests
 ├── hardware/
-│   ├── kicad/         KiCad 10 project with schematic and symbol lib and board. Source of truth and hand-edited
+│   ├── kicad/         schematic, symbol lib, board
 │   ├── bom.csv        bill of materials
 │   ├── pcb_3d.png     3D render of the placed board
 │   ├── pcb_top.png    placement plot seen from the top
