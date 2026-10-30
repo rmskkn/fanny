@@ -1,4 +1,4 @@
-# Fanny — a versatile USB PWM fan controller
+# Fanny — a USB PWM fan controller
 
 ![PCB 3D view](hardware/pcb_3d.png)
 
@@ -42,57 +42,21 @@ on the host as a USB CDC serial port (`/dev/ttyACM*` or `COMx`).
 
 ## Prerequisites
 
-1. KiCad 10.0.7 (`kicad-cli`)
+KiCad 10.0.7, arm-none-eabi-gcc, OpenOCD, and Python 3 with pyserial:
 
-   ```sh
-   # Arch
-   sudo pacman -S kicad
+```sh
+# Arch
+sudo pacman -S kicad arm-none-eabi-gcc arm-none-eabi-newlib openocd python python-pyserial
 
-   # Ubuntu 24.04
-   sudo add-apt-repository ppa:kicad/kicad-10.0-releases
-   sudo apt update
-   sudo apt install kicad
-   ```
+# Ubuntu 24.04
+sudo add-apt-repository ppa:kicad/kicad-10.0-releases
+sudo apt update
+sudo apt install kicad gcc-arm-none-eabi openocd python3 python3-serial
+```
 
-2. arm-none-eabi-gcc and OpenOCD
+You also need an ST-Link V2 programmer wired to the Blue Pill's SWD header
+to flash firmware.
 
-   ```sh
-   # Arch
-   sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib openocd
-
-   # Ubuntu 24.04
-   sudo apt install gcc-arm-none-eabi openocd
-   ```
-
-3. Python 3 and pyserial
-
-   ```sh
-   # Arch
-   sudo pacman -S python python-pyserial
-
-   # Ubuntu 24.04
-   sudo apt install python3 python3-serial
-   ```
-
-4. rsvg-convert
-
-   ```sh
-   # Arch
-   sudo pacman -S librsvg
-
-   # Ubuntu 24.04
-   sudo apt install librsvg2-bin
-   ```
-
-This tree follows the suggested layout with two changes:
-
-- **libopencm3 instead of the STM32Cube HAL.** The suggested `Core/` and
-  `Drivers/` and `USB_DEVICE/` folders are STM32CubeMX output. CubeMX is not
-  available here so the firmware uses libopencm3 instead. Its CDC stack is
-  small and the build is a plain Makefile. The folder roles stay the same.
-- **`hardware/kicad/` instead of separate `schematic/` and `pcb/` folders.**
-  KiCad keeps the `.kicad_pro` and `.kicad_sch` and `.kicad_pcb` files of one
-  project together in a single directory.
 
 ## Hardware design
 
@@ -196,7 +160,7 @@ millivolts corrected for the actual supply voltage.
   carrier has no USB connector or header or ESD protection of its own. The
   firmware pulls D+ low for 10 ms at boot to force the host to re-enumerate.
 
-## Bom list
+## BOM list
 
 `hardware/bom.csv` is regenerated from the schematic with `sch export bom`
 grouped by value and footprint. The MPN and notes columns get merged back in
@@ -241,6 +205,14 @@ make test            # host-side protocol and conversion tests
 The first `make` builds libopencm3 for STM32F1 only. It also runs
 `git submodule update --init` when the clone has no submodule checkout. The
 same targets work from inside `firmware/`.
+
+`make flash` wraps this OpenOCD call, with an ST-Link programmer on the
+Blue Pill's SWD header:
+
+```sh
+openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \
+    -c "program firmware/build/fanctl.elf verify reset exit"
+```
 
 ### Failsafe behaviour
 
@@ -315,7 +287,7 @@ python3 host/fanctl.py -p /dev/ttyACM1 set 2 40   # board on another port
 - Each command sets one fan or all fans. Lists such as `1,2` and ranges such
   as `1-3` are not accepted.
 - To check a fan run `python3 host/fanctl.py get` and read the
-  `fan N mode=… duty=… rpm=…` line.
+  `fan N mode=... duty=... rpm=...` line.
 - Settings hold only while the host keeps talking to the board. When no
   command arrives for 10 s all fans return to 100 %. Keep `fanctl.py watch`
   or a control daemon running to hold the values.
