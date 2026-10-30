@@ -154,14 +154,6 @@ flowchart LR
 | Fan 1–4 tach | PB12–PB15 | EXTI12–15 on the falling edge |
 | AIN1–AIN4 | PA0–PA3 | ADC1 IN0–IN3 |
 | 12 V sense | PB0 | ADC1 IN8 |
-| USB | PA11 for D− and PA12 for D+ | USB FS |
-| SWD | PA13 and PA14 | Blue Pill 4-pin SWD header |
-| Status LED | PC13 | Blue Pill on-board LED and active low |
-| Clock | PD0/PD1 | Blue Pill 8 MHz crystal with PLL to 72 MHz |
-
-The DC-mode enable pins are plain GPIO rather than a timer remap. Nothing
-writes `AFIO_MAPR` so JTAG and SWD both stay exactly as the Blue Pill module
-provides them.
 
 ### Compatibility
 
@@ -203,28 +195,6 @@ millivolts corrected for the actual supply voltage.
 - **USB:** the micro-B connector of the Blue Pill and nothing else. The
   carrier has no USB connector or header or ESD protection of its own. The
   firmware pulls D+ low for 10 ms at boot to force the host to re-enumerate.
-
-### Known limits
-
-- **Current:** each fan header is rated 1 A and each channel has its own
-  1.1 A PTC. F1 caps the whole board at 2.5 A so four fans pulling 1 A cannot
-  run together. At power-up every fan starts at 100 % at once. Measure the
-  combined inrush with the real fans.
-- **0 % does not stop every 4-pin fan in `pwm` mode.** It depends on the
-  fan. In `dc` mode 0 % does stop it because the motor switch cuts the
-  supply.
-- **3-pin fans in `dc` mode do not start below roughly 30 % to 40 % duty.**
-  That is a motor startup limit rather than a firmware clamp. Set a curve
-  minimum above it in `fancontrold` and see `fancontrol.conf.example`.
-- **Tach under-reads in `dc` mode.** The electronics of the fan are unpowered
-  during the chopped-off phase so tach pulses go missing roughly in proportion
-  to duty. `stall` is therefore meaningful only near 100 % duty on a `dc`
-  channel.
-- **25 kHz supply chopping stresses the input capacitor of a fan.** It stays
-  inaudible. The chop reuses the pin-4 signal timer (`SIGNAL_PERIOD` in
-  `App/pwm.c`) which all four channels share. There is no per-channel
-  frequency to lower for one misbehaving fan without also moving the signal
-  frequency on every `pwm` channel.
 
 ## Bom list
 
@@ -404,6 +374,17 @@ systemctl --user daemon-reload
 systemctl --user enable --now fancontrold.service
 loginctl enable-linger "$USER"   # only if the board must run with no user session logged in
 ```
+
+## Known limits
+
+- **0 % doesn't stop every 4-pin fan in `pwm` mode** (fan-dependent). It does
+  stop the fan in `dc` mode.
+- **3-pin fans in `dc` mode won't start below ~30-40 % duty** (motor limit,
+  not firmware). Set a curve minimum above it.
+- **Tach under-reads in `dc` mode** since the fan is unpowered during the
+  chopped-off phase. `stall` is only meaningful near 100 % duty.
+- **25 kHz chop stresses a fan's input cap** but stays inaudible. All four
+  `pwm` channels share one chop frequency.
 
 ## License
 
