@@ -162,33 +162,7 @@ millivolts corrected for the actual supply voltage.
 
 ## BOM list
 
-`hardware/bom.csv` is regenerated from the schematic with `sch export bom`
-grouped by value and footprint. The MPN and notes columns get merged back in
-by hand. This table reflects the board as built. That includes the
-per-channel `dc`-mode motor switch: `Q_inv` `Q_en` `Q_pnp` and `Q_hs` four
-of each.
-
-| Qty | Part | Package | Use | DigiKey |
-|---|---|---|---|---|
-| 1 | STM32F103C8T6 Blue Pill | module | MCU that plugs into J2 and J3 | not stocked at DigiKey. Buy from module sellers |
-| 12 | BSS138 | SOT-23 | pin-4 PWM drive (`Q_sig`) + motor-switch gate AND (`Q_inv`, `Q_en`), 3 per channel | [BSS138](https://www.digikey.com/en/products/result?keywords=BSS138) |
-| 8 | AO3401A | SOT-23 | `Q_hs` high-side motor switch + `Q_pnp` gate pull-up, 2 per channel | [AO3401A](https://www.digikey.com/en/products/result?keywords=AO3401A) |
-| 4 | SS34 | SMA | flyback diode across the fan motor in `dc` mode | [SS34](https://www.digikey.com/en/products/result?keywords=SS34) |
-| 6 | BAT54S | SOT-23 | analog input clamps | [BAT54S 215](https://www.digikey.com/en/products/result?keywords=BAT54S%2C215) |
-| 1 | SMBJ13A | SMB | 12 V TVS | [SMBJ13A](https://www.digikey.com/en/products/result?keywords=SMBJ13A) |
-| 1 | MF-MSMF250/16X-2 | 1812 | 2.5 A PTC fuse | [MF-MSMF250/16X-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF250%2F16X-2) |
-| 4 | MF-MSMF110/16-2 | 1812 | 1.1 A per-channel PTC fuses | [MF-MSMF110/16-2](https://www.digikey.com/en/products/result?keywords=MF-MSMF110%2F16-2) |
-| 4 | Molex 47053-1000 | 4-pin | fan headers | [0470531000](https://www.digikey.com/en/products/result?keywords=0470531000) |
-| 2 | 1×20 female header | 2.54 mm | Blue Pill socket | [PPTC201LFBN-RC](https://www.digikey.com/en/products/result?keywords=PPTC201LFBN-RC) from Sullins or any 1×20 socket |
-| 1 | TE Connectivity 350424-1 | 4-pin at 5.08 mm | 12 V input on Mate-N-Lok | [350424-1](https://www.digikey.com/en/products/result?keywords=350424-1) |
-| 6 | 1×3 headers | 2.54 mm | sensor inputs | any 2.54 mm pin header |
-| 6 | test pads | 1.5 mm | +12V and +3V3 and GND and NRST and FAN1_PWM and FAN1_TACH | PCB pads rather than a part |
-| — | resistors and capacitors and ferrite | 0603 / 1206 / 6.3 mm | passives | [BLM18AG601SN1D](https://www.digikey.com/en/products/result?keywords=BLM18AG601SN1D) for FB1. Others are generic so see `bom.csv` |
-
-The MPNs in the BOM are examples. Check stock and second sources before
-ordering. The DigiKey links are keyword searches by MPN so they keep working
-when DigiKey part numbers change. Pick the exact package and reel option from
-the results.
+The full bill of materials is in [`hardware/bom.csv`](hardware/bom.csv).
 
 ## Firmware
 
