@@ -709,7 +709,7 @@
         "uuid": "70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
       }
     ],
-    "used_designators": "#PWR1-37,#PWR102-122,#PWR127-134,#PWR137-141,C1-12,D1-10,D12-14,F1-8,FB1,J1-11,J14-15,Q1-12,Q14-15,Q17-21,R1-43",
+    "used_designators": "#PWR1-39,#PWR102-122,#PWR127-134,#PWR137-141,C1-12,D1-10,D12-14,F1-8,FB1,J1-11,J14-15,Q1-12,Q14-15,Q17-21,R1-43",
     "variants": []
   },
   "sheets": [
