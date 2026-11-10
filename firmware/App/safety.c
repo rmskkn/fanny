@@ -37,12 +37,12 @@ void safety_update(uint32_t now_ms)
 {
 	iwdg_reset();
 
-	if (!failsafe && now_ms - host_seen_ms >= SAFETY_HOST_TIMEOUT_MS) {
+	if (!failsafe && ms_since(host_seen_ms, now_ms) >= SAFETY_HOST_TIMEOUT_MS) {
 		failsafe = true;
 		fan_force_full();
 	}
 
-	if (now_ms - stall_check_ms < 1000)
+	if (ms_since(stall_check_ms, now_ms) < 1000)
 		return;
 	stall_check_ms = now_ms;
 	for (unsigned ch = 0; ch < FAN_COUNT; ch++) {

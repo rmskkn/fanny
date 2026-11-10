@@ -200,7 +200,7 @@ void usb_cdc_init(void)
 	/* D+ has a fixed 1.5k pull-up: hold it low briefly so the host re-enumerates after reset. */
 	gpio_clear(GPIOA, GPIO12);
 	gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO12);
-	for (uint32_t t0 = millis(); millis() - t0 < 10;)
+	for (uint32_t t0 = millis(); ms_since(t0, millis()) < 10;)
 		;
 	gpio_set_mode(GPIOA, GPIO_MODE_INPUT, GPIO_CNF_INPUT_FLOAT, GPIO12);
 
@@ -233,7 +233,7 @@ void usb_cdc_write(const char *s)
 		uint32_t t0 = millis();
 
 		while (usbd_ep_write_packet(usbd, EP_DATA_IN, s, n) == 0) {
-			if (millis() - t0 >= TX_TIMEOUT_MS)
+			if (ms_since(t0, millis()) >= TX_TIMEOUT_MS)
 				return;
 			usbd_poll(usbd);
 		}
