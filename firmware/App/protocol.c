@@ -16,6 +16,7 @@ static protocol_emit_fn emit;
 static char line[LINE_MAX];
 static unsigned line_len;
 static bool line_overflow;
+static bool activity_flag;
 
 static char *put_str(char *p, const char *s)
 {
@@ -238,4 +239,13 @@ void protocol_feed(char c)
 		protocol_exec(line);
 	line_len = 0;
 	line_overflow = false;
+	activity_flag = true;
+}
+
+bool protocol_activity_pending(void)
+{
+	bool pending = activity_flag;
+
+	activity_flag = false;
+	return pending;
 }
