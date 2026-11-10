@@ -5,7 +5,7 @@
       "Application": "Pcbnew",
       "Version": "10.0.7"
     },
-    "CreationDate": "2026-10-30T16:37:44+00:00"
+    "CreationDate": "2026-11-10T18:06:29+00:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -14,8 +14,8 @@
       "Revision": "1.0"
     },
     "Size": {
-      "X": 81.05,
-      "Y": 78.05
+      "X": 77.575,
+      "Y": 67.3934
     },
     "LayerNumber": 2,
     "BoardThickness": 1.6,
@@ -27,52 +27,52 @@
       "PadToPad": 0.2,
       "PadToTrack": 0.2,
       "TrackToTrack": 0.2,
-      "MinLineWidth": 0.15
+      "MinLineWidth": 0.2
     }
   ],
   "FilesAttributes": [
     {
-      "Path": "fan_controller-F_Cu.gtl",
+      "Path": "fan_controller-F_Cu.gbr",
       "FileFunction": "Copper,L1,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "fan_controller-B_Cu.gbl",
+      "Path": "fan_controller-B_Cu.gbr",
       "FileFunction": "Copper,L2,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "fan_controller-F_Paste.gtp",
+      "Path": "fan_controller-F_Paste.gbr",
       "FileFunction": "SolderPaste,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "fan_controller-B_Paste.gbp",
+      "Path": "fan_controller-B_Paste.gbr",
       "FileFunction": "SolderPaste,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "fan_controller-F_Silkscreen.gto",
+      "Path": "fan_controller-F_Silkscreen.gbr",
       "FileFunction": "Legend,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "fan_controller-B_Silkscreen.gbo",
+      "Path": "fan_controller-B_Silkscreen.gbr",
       "FileFunction": "Legend,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "fan_controller-F_Mask.gts",
+      "Path": "fan_controller-F_Mask.gbr",
       "FileFunction": "SolderMask,Top",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "fan_controller-B_Mask.gbs",
+      "Path": "fan_controller-B_Mask.gbr",
       "FileFunction": "SolderMask,Bot",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "fan_controller-Edge_Cuts.gm1",
+      "Path": "fan_controller-Edge_Cuts.gbr",
       "FileFunction": "Profile",
       "FilePolarity": "Positive"
     }
