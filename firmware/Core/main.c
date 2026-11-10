@@ -28,15 +28,21 @@ static void emit_line(const char *line)
 	usb_cdc_write("\r\n");
 }
 
+#define LED_PULSE_MS 50
+
 static void led_update(uint32_t now)
 {
-	/* 1 Hz blink in normal operation, 4 Hz while failsafe holds fans at 100 %. */
-	uint32_t half_period = safety_failsafe_active() ? 125 : 500;
+	/* Flash PC13 (active low) once per host line, so the LED is a comms
+	 * activity indicator rather than a free-running heartbeat. */
+	static uint32_t led_off_at;
 
-	if ((now / half_period) & 1)
-		gpio_set(GPIOC, GPIO13);
-	else
+	if (protocol_activity_pending()) {
 		gpio_clear(GPIOC, GPIO13);
+		led_off_at = now + LED_PULSE_MS;
+	} else if (led_off_at && now >= led_off_at) {
+		gpio_set(GPIOC, GPIO13);
+		led_off_at = 0;
+	}
 }
 
 int main(void)

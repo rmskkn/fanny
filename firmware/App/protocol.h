@@ -14,10 +14,17 @@
 #ifndef PROTOCOL_H
 #define PROTOCOL_H
 
+#include <stdbool.h>
+
 typedef void (*protocol_emit_fn)(const char *line);
 
 void protocol_init(protocol_emit_fn emit);
 void protocol_feed(char c);
+
+/* True once after a line from the host finishes processing, then clears
+ * itself. Lets the caller flash an activity LED without protocol.c knowing
+ * about any hardware. */
+bool protocol_activity_pending(void);
 
 /* Runs one command line (modified in place). Exposed for tests. */
 void protocol_exec(char *line);
