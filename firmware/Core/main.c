@@ -14,7 +14,7 @@ static volatile uint32_t ms_ticks;
 
 void sys_tick_handler(void)
 {
-	ms_ticks++;
+	ms_ticks = (ms_ticks + 1) & INT32_MAX;
 }
 
 uint32_t millis(void)
@@ -34,14 +34,16 @@ static void led_update(uint32_t now)
 {
 	/* Flash PC13 (active low) once per host line, so the LED is a comms
 	 * activity indicator rather than a free-running heartbeat. */
-	static uint32_t led_off_at;
+	static bool led_on;
+	static uint32_t led_on_at;
 
 	if (protocol_activity_pending()) {
 		gpio_clear(GPIOC, GPIO13);
-		led_off_at = now + LED_PULSE_MS;
-	} else if (led_off_at && now >= led_off_at) {
+		led_on = true;
+		led_on_at = now;
+	} else if (led_on && ms_since(led_on_at, now) >= LED_PULSE_MS) {
 		gpio_set(GPIOC, GPIO13);
-		led_off_at = 0;
+		led_on = false;
 	}
 }
 
@@ -76,9 +78,9 @@ int main(void)
 
 		/* Captured after draining incoming bytes: protocol_feed() can call
 		 * safety_host_seen(), which stamps host_seen_ms with its own fresh
-		 * millis() read. An earlier `now` here could then be smaller than
-		 * host_seen_ms, and safety_update()'s unsigned now - host_seen_ms
-		 * would underflow to a huge value and trip the failsafe instantly. */
+		 * millis() read. Reading `now` after it keeps now >= host_seen_ms;
+		 * the reverse order would look like a rollover to ms_since() and
+		 * trip the failsafe instantly. */
 		now = millis();
 
 		tach_update(now);

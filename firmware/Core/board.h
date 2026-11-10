@@ -23,7 +23,16 @@
 #define FAN_COUNT 4
 #define AIN_COUNT 4
 
-/* Milliseconds since boot, from SysTick (Core/main.c). */
+/* Milliseconds since boot, from SysTick (Core/main.c). Runs 0..INT32_MAX
+ * and rolls over to 0 every ~24.8 days. */
 uint32_t millis(void);
+
+/* Milliseconds from `prev` to `now`. now < prev means millis() rolled over
+ * from INT32_MAX to 0 in between: count the ticks up to INT32_MAX plus the
+ * ticks after 0 (the +1 is the INT32_MAX -> 0 step itself). */
+static inline uint32_t ms_since(uint32_t prev, uint32_t now)
+{
+	return now < prev ? INT32_MAX - prev + now + 1 : now - prev;
+}
 
 #endif

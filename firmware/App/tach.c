@@ -38,7 +38,7 @@ void tach_init(void)
 
 void tach_update(uint32_t now_ms)
 {
-	uint32_t elapsed = now_ms - window_start;
+	uint32_t elapsed = ms_since(window_start, now_ms);
 	uint32_t count[FAN_COUNT];
 
 	if (elapsed < TACH_WINDOW_MS)
