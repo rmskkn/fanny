@@ -67,12 +67,19 @@ int main(void)
 	usb_cdc_init();
 
 	for (;;) {
-		uint32_t now = millis();
+		uint32_t now;
 		uint8_t c;
 
 		usb_cdc_poll();
 		while (usb_cdc_getc(&c))
 			protocol_feed((char)c);
+
+		/* Captured after draining incoming bytes: protocol_feed() can call
+		 * safety_host_seen(), which stamps host_seen_ms with its own fresh
+		 * millis() read. An earlier `now` here could then be smaller than
+		 * host_seen_ms, and safety_update()'s unsigned now - host_seen_ms
+		 * would underflow to a huge value and trip the failsafe instantly. */
+		now = millis();
 
 		tach_update(now);
 		thermal_update(now);
