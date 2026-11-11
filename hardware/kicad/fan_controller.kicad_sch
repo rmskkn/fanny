@@ -9099,6 +9099,28 @@
 			)
 		)
 	)
+	(global_label "+3V3A"
+		(shape bidirectional)
+		(at 646.43 46.99 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2773e85f-8cb1-4b42-a8de-5293a3539be9")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 646.43 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "+12V"
 		(shape bidirectional)
 		(at 25.4 73.66 180)
@@ -9508,6 +9530,28 @@
 		(uuid "45da6ff9-e626-4c9f-ad75-aeab3d68dc95")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 610.87 290.83 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "+3V3A"
+		(shape bidirectional)
+		(at 645.16 179.07 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "487b1bfc-2758-47c8-a72d-6c183995b0d8")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 645.16 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10112,6 +10156,28 @@
 			)
 		)
 	)
+	(global_label "AIN3_IN"
+		(shape bidirectional)
+		(at 637.54 179.07 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6f82081b-de0d-4642-9719-093f388da5c1")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 637.54 179.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "FAN1_TACH_IN"
 		(shape bidirectional)
 		(at 109.22 105.41 0)
@@ -10279,6 +10345,28 @@
 		(uuid "7f721bdd-4090-4288-a361-fd768b7ffc55")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 551.18 220.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "AIN4_IN"
+		(shape bidirectional)
+		(at 637.54 224.79 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "83babab5-a110-4c11-8da3-8c1c4f93a681")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 637.54 224.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11038,6 +11126,28 @@
 			)
 		)
 	)
+	(global_label "AIN1_IN"
+		(shape bidirectional)
+		(at 638.81 46.99 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cf557f47-6283-4ea4-ac08-e564a06585c2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 638.81 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "+3V3A"
 		(shape bidirectional)
 		(at 101.6 49.53 0)
@@ -11160,6 +11270,28 @@
 		(uuid "d818e4f5-e9c1-4df8-9fb0-33bda95d93a1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 100.33 80.01 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "+3V3A"
+		(shape bidirectional)
+		(at 645.16 224.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "da270ed7-010b-4ccc-b647-e3a4a461ae42")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 645.16 224.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11610,6 +11742,28 @@
 			)
 		)
 	)
+	(global_label "+3V3A"
+		(shape bidirectional)
+		(at 647.7 96.52 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f99fb3a9-16ba-45cd-8506-da7d1e61b8be")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 647.7 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "+12V_F3"
 		(shape bidirectional)
 		(at 490.22 50.8 0)
@@ -11622,6 +11776,28 @@
 		(uuid "fb787295-a8dd-4b74-b5b7-e9b5603ec800")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 490.22 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "AIN2_IN"
+		(shape bidirectional)
+		(at 640.08 96.52 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fc04d42d-b30b-492f-af9a-07d9857208f4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 640.08 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12244,6 +12420,85 @@
 	)
 	(symbol
 		(lib_id "Device:R")
+		(at 642.62 46.99 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0c3bf1fd-a5dc-410f-8d2f-959ac0db6124")
+		(property "Reference" "R41"
+			(at 642.62 49.022 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "33k"
+			(at 642.62 46.99 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 642.62 45.212 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 642.62 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 642.62 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "952df170-acbb-489d-b01a-de8002f0ca1b")
+		)
+		(pin "2"
+			(uuid "d59dff25-90e7-462c-b06d-e7f321020a5d")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "R41")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
 		(at 683.26 95.25 270)
 		(unit 1)
 		(body_style 1)
@@ -12253,7 +12508,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0d8a3fe9-900f-40d6-9a2b-513c4b88f3db")
-		(property "Reference" "R42"
+		(property "Reference" "R46"
 			(at 683.26 97.282 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12326,7 +12581,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R42")
+					(reference "R46")
 					(unit 1)
 				)
 			)
@@ -12962,6 +13217,85 @@
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
 					(reference "#PWR030")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 641.35 179.07 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "1aae4a39-046b-4346-a5d8-bfac0ac84c6f")
+		(property "Reference" "R39"
+			(at 641.35 181.102 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "33k"
+			(at 641.35 179.07 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 641.35 177.292 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 641.35 179.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 641.35 179.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "fec813d9-9842-4491-9835-e4cc26458910")
+		)
+		(pin "2"
+			(uuid "536edc6d-b144-4534-8a8e-eabbbdea8a21")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "R39")
 					(unit 1)
 				)
 			)
@@ -14452,7 +14786,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3312eba9-9ffe-41b3-852b-70a70af39652")
-		(property "Reference" "R39"
+		(property "Reference" "R43"
 			(at 679.45 148.082 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14525,7 +14859,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R39")
+					(reference "R43")
 					(unit 1)
 				)
 			)
@@ -15571,6 +15905,85 @@
 	)
 	(symbol
 		(lib_id "Device:R")
+		(at 643.89 96.52 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "4656fead-bac7-42b6-bb94-c9b1312b66fc")
+		(property "Reference" "R42"
+			(at 643.89 98.552 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "33k"
+			(at 643.89 96.52 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 643.89 94.742 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 643.89 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 643.89 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6d77b042-6800-4373-b018-5ee42866d0c6")
+		)
+		(pin "2"
+			(uuid "8ee4b045-8f2c-4f35-827e-df85e5b0698d")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "R42")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
 		(at 436.88 226.06 0)
 		(unit 1)
 		(body_style 1)
@@ -15659,7 +16072,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4a3158e6-d54e-4b3b-bd46-6ae232bcc28d")
-		(property "Reference" "R40"
+		(property "Reference" "R44"
 			(at 679.45 209.042 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15732,7 +16145,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R40")
+					(reference "R44")
 					(unit 1)
 				)
 			)
@@ -16391,7 +16804,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5d7663fc-2c6a-4ad4-8632-0714dcfe2c88")
-		(property "Reference" "R41"
+		(property "Reference" "R45"
 			(at 681.99 49.022 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16464,7 +16877,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R41")
+					(reference "R45")
 					(unit 1)
 				)
 			)
@@ -17500,6 +17913,85 @@
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
 					(reference "J8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 641.35 224.79 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7a4f062b-4ef7-4e0c-bccc-9e622a94e95d")
+		(property "Reference" "R40"
+			(at 641.35 226.822 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "33k"
+			(at 641.35 224.79 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 641.35 223.012 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 641.35 224.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 641.35 224.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "edde419c-584b-4499-98af-be64afb31cee")
+		)
+		(pin "2"
+			(uuid "61c9fc66-b1a2-4768-8194-5c12ea8fc4d6")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "R40")
 					(unit 1)
 				)
 			)
