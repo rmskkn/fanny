@@ -147,6 +147,21 @@ chain works like this:
 The ADC references VDDA. The firmware measures VREFINT so it can report
 millivolts corrected for the actual supply voltage.
 
+#### Example: a 33 kΩ NTC (NTCM-HP-33K-1%)
+
+The default 10 kΩ pull-up is sized for a 10 kΩ NTC. A different R25 needs a
+matching pull-up: it sets both the divider's output range and the firmware's
+calibration constant.
+
+For an NTCM-HP-33K-1% (33 kΩ, B=3950 K):
+
+1. Swap the on-board pull-up from 10 kΩ to 33 kΩ.
+2. In the fan daemon config, set `ntc_r25 = 33000` (the default `ntc_beta =
+   3950` already matches this part).
+3. Before trusting the curve, compare `fanctl.py get`'s `ain N mv` reading at
+   a known temperature against the expected value in
+   `hardware/datasheets/NTCM-HP-33K-1_ Response Curve.md`.
+
 ### Power
 
 - **12 V input:** a screw terminal followed by a PTC that holds 2.5 A and
