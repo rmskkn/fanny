@@ -6,6 +6,7 @@
 #include "tach.h"
 
 static bool failsafe = true;
+static bool host_check_enabled = true;
 static uint32_t host_seen_ms;
 static uint32_t stall_check_ms;
 static uint8_t stall_s[FAN_COUNT];
@@ -28,6 +29,13 @@ bool safety_failsafe_active(void)
 	return failsafe;
 }
 
+void safety_set_host_check(bool enabled)
+{
+	host_check_enabled = enabled;
+	if (!enabled)
+		failsafe = false;
+}
+
 bool safety_fan_stalled(unsigned ch)
 {
 	return stall_s[ch] >= SAFETY_STALL_S;
@@ -37,7 +45,7 @@ void safety_update(uint32_t now_ms)
 {
 	iwdg_reset();
 
-	if (!failsafe && ms_since(host_seen_ms, now_ms) >= SAFETY_HOST_TIMEOUT_MS) {
+	if (host_check_enabled && !failsafe && ms_since(host_seen_ms, now_ms) >= SAFETY_HOST_TIMEOUT_MS) {
 		failsafe = true;
 		fan_force_full();
 	}

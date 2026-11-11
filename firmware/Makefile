@@ -17,6 +17,7 @@ TARGET := $(BUILD)/fanny
 
 SRCS := Core/main.c \
 	App/fan.c App/pwm.c App/tach.c App/thermal.c App/safety.c App/protocol.c \
+	App/autocurve.c \
 	USB_DEVICE/usb_cdc.c
 OBJS := $(SRCS:%.c=$(BUILD)/%.o)
 
@@ -25,7 +26,7 @@ CFLAGS  := $(ARCH) -Os -g -std=c11 -Wall -Wextra -Werror -ffunction-sections -fd
 	   -DSTM32F1 -I$(OPENCM3_DIR)/include -ICore -IApp -IUSB_DEVICE -MMD -MP
 LDFLAGS := $(ARCH) -nostartfiles --specs=nano.specs --specs=nosys.specs -Wl,--gc-sections \
 	   -L$(OPENCM3_DIR)/lib -TCore/stm32f103x8.ld -Wl,-Map=$(TARGET).map
-LDLIBS  := -lopencm3_stm32f1
+LDLIBS  := -lopencm3_stm32f1 -lm
 
 all: $(TARGET).bin
 	$(SIZE) $(TARGET).elf

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "autocurve.h"
 #include "board.h"
 #include "fan.h"
 #include "protocol.h"
@@ -17,6 +18,8 @@
 static unsigned duties[FAN_COUNT] = { 100, 100, 100, 100 };
 static enum fan_mode modes[FAN_COUNT];
 static int host_seen;
+static bool autocurve_on;
+static bool host_check_enabled = true;
 
 uint32_t millis(void) { return 0; }
 bool fan_set_duty(unsigned ch, unsigned d) { duties[ch] = d; return true; }
@@ -33,6 +36,9 @@ int thermal_mcu_temp_decic(void) { return -5; }
 void safety_host_seen(void) { host_seen++; }
 bool safety_failsafe_active(void) { return false; }
 bool safety_fan_stalled(unsigned ch) { return ch == 3; }
+void safety_set_host_check(bool enabled) { host_check_enabled = enabled; }
+void autocurve_set(bool on) { autocurve_on = on; }
+bool autocurve_active(void) { return autocurve_on; }
 
 /* ---- harness ---- */
 
@@ -80,6 +86,15 @@ int main(void)
 	CHECK(strcmp(out, "ok\n") == 0);
 	CHECK(modes[2] == FAN_MODE_DC && modes[1] == FAN_MODE_PWM);
 
+	run("auto on\n");
+	CHECK(strcmp(out, "ok\n") == 0);
+	CHECK(autocurve_on && !host_check_enabled);
+	run("auto off\n");
+	CHECK(strcmp(out, "ok\n") == 0);
+	CHECK(!autocurve_on && host_check_enabled);
+	run("auto sideways\n");
+	CHECK(strcmp(out, "err auto must be on or off\n") == 0);
+
 	host_seen = 0;
 	run("set 5 10\n");
 	CHECK(strncmp(out, "err ", 4) == 0);
@@ -116,7 +131,7 @@ int main(void)
 	CHECK(strstr(out, "ain 4 raw=2051 mv=1653\n") != NULL);
 	CHECK(strstr(out, "v12 raw=2988 mv=12050\n") != NULL);
 	CHECK(strstr(out, "mcu temp=-0.5\n") != NULL);
-	CHECK(strstr(out, "failsafe=0\nok\n") != NULL);
+	CHECK(strstr(out, "failsafe=0\nauto=0\nok\n") != NULL);
 
 	/* conversion helpers */
 	CHECK(tach_calc_rpm(40, 1000) == 1200);

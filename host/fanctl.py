@@ -6,10 +6,13 @@ Examples:
     fanctl.py set 2 40
     fanctl.py set all 60
     fanctl.py mode 3 dc
+    fanctl.py auto on          # board runs its own NTC curve, no host needed
     fanctl.py watch            # print status every second; keeps failsafe from tripping
 
-The firmware returns all fans to 100 % when it hears nothing for 10 s,
+The firmware returns all fans to 100 % when it hears nothing for 20 s,
 so a control daemon must send a command (e.g. `ping`) more often than that.
+Unless `auto` mode is on: the board then drives duty from its own NTC
+curve and ignores host silence entirely (see `fanctl.py auto on`).
 """
 import argparse
 import sys
@@ -71,6 +74,8 @@ def main():
     p_mode = sub.add_parser("mode")
     p_mode.add_argument("fan", help="1-4 or all")
     p_mode.add_argument("mode", choices=["pwm", "dc"])
+    p_auto = sub.add_parser("auto")
+    p_auto.add_argument("state", choices=["on", "off"])
     p_watch = sub.add_parser("watch")
     p_watch.add_argument("-i", "--interval", type=float, default=1.0)
     args = parser.parse_args()
@@ -83,6 +88,8 @@ def main():
             fc.command(f"set {args.fan} {args.duty}")
         elif args.cmd == "mode":
             fc.command(f"mode {args.fan} {args.mode}")
+        elif args.cmd == "auto":
+            fc.command(f"auto {args.state}")
         elif args.cmd == "watch":
             while True:
                 print("\n".join(fc.command("get")), end="\n\n", flush=True)
