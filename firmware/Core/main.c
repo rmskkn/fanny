@@ -2,6 +2,7 @@
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/rcc.h>
 
+#include "autocurve.h"
 #include "board.h"
 #include "fan.h"
 #include "protocol.h"
@@ -85,6 +86,7 @@ int main(void)
 
 		tach_update(now);
 		thermal_update(now);
+		autocurve_update(now);
 		safety_update(now);
 		led_update(now);
 	}

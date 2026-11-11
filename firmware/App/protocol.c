@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "autocurve.h"
 #include "board.h"
 #include "fan.h"
 #include "protocol.h"
@@ -131,6 +132,12 @@ static void cmd_get(void)
 	p = put_uint(p, safety_failsafe_active());
 	*p = '\0';
 	emit(out);
+
+	p = put_str(out, "auto");
+	*p++ = '=';
+	p = put_uint(p, autocurve_active());
+	*p = '\0';
+	emit(out);
 }
 
 static const char *cmd_set(char **argv, int argc)
@@ -164,6 +171,23 @@ static const char *cmd_mode(char **argv, int argc)
 	return NULL;
 }
 
+static const char *cmd_auto(char **argv, int argc)
+{
+	bool on;
+
+	if (argc != 2)
+		return "usage: auto on|off";
+	if (strcmp(argv[1], "on") == 0)
+		on = true;
+	else if (strcmp(argv[1], "off") == 0)
+		on = false;
+	else
+		return "auto must be on or off";
+	autocurve_set(on);
+	safety_set_host_check(!on);
+	return NULL;
+}
+
 void protocol_exec(char *s)
 {
 	char *argv[MAX_ARGS];
@@ -192,11 +216,13 @@ void protocol_exec(char *s)
 		err = cmd_set(argv, argc);
 	} else if (strcmp(argv[0], "mode") == 0) {
 		err = cmd_mode(argv, argc);
+	} else if (strcmp(argv[0], "auto") == 0) {
+		err = cmd_auto(argv, argc);
 	} else if (strcmp(argv[0], "ping") == 0 && argc == 1) {
 	} else if (strcmp(argv[0], "version") == 0 && argc == 1) {
 		emit(FW_VERSION);
 	} else if (strcmp(argv[0], "help") == 0 && argc == 1) {
-		emit("get | set <1-4|all> <0-100> | mode <1-4|all> pwm|dc | ping | version");
+		emit("get | set <1-4|all> <0-100> | mode <1-4|all> pwm|dc | auto on|off | ping | version");
 	} else {
 		err = "unknown command";
 	}
