@@ -9,25 +9,42 @@ permissions:
   contents: write
 
 jobs:
-  ci:
-    uses: ./.github/workflows/firmware.yml
-
-  gerbers:
-    uses: ./.github/workflows/gerbers.yml
-
   release:
-    needs: [ci, gerbers]
     runs-on: ubuntu-latest
+    container:
+      image: kicad/kicad:10.0.7
+      options: --user root
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
         with:
-          name: fanny-firmware
-          path: firmware/build
+          submodules: recursive
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: fanny-gerbers
-          path: hardware/gerbers
+      - name: Install arm-none-eabi-gcc
+        run: |
+          apt-get update
+          apt-get install -y gcc-arm-none-eabi zip
+
+      - name: Build firmware
+        run: make
+
+      - name: Run firmware tests
+        run: make test
+
+      - name: Export gerbers and drill file
+        run: |
+          mkdir -p hardware/gerbers/export
+          kicad-cli pcb export gerbers --board-plot-params \
+            -o hardware/gerbers/export hardware/kicad/fan_controller.kicad_pcb
+          kicad-cli pcb export drill \
+            -o hardware/gerbers/export hardware/kicad/fan_controller.kicad_pcb
+
+      - name: Copy BOM
+        run: cp hardware/bom.csv hardware/gerbers/export/bom.csv
+
+      - name: Zip gerbers
+        run: |
+          cd hardware/gerbers/export
+          zip -r ../fanny-gerbers.zip .
 
       - name: Create release
         uses: softprops/action-gh-release@v2
