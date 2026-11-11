@@ -104,6 +104,7 @@ static void cmd_get(void)
 	}
 
 	p = put_str(out, "v12");
+	p = put_kv(p, "raw", thermal_v12_raw());
 	p = put_kv(p, "mv", thermal_v12_mv());
 	*p = '\0';
 	emit(out);

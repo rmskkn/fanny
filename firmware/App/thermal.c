@@ -9,14 +9,14 @@
 /* Scan order: AIN1..AIN4, 12 V sense, temperature sensor, VREFINT. */
 enum { SLOT_V12 = AIN_COUNT, SLOT_TEMP, SLOT_VREF, SLOT_COUNT };
 
-/* 12 V divider: 47k over 10k. */
-#define V12_DIV_NUM 57u
-#define V12_DIV_DEN 10u
+/* 12 V divider: 10k over 3.3k. */
+#define V12_DIV_NUM 133u
+#define V12_DIV_DEN 33u
 
 /* IIR filter: acc holds 2^FILTER_SHIFT times the average. ~16 ms time constant. */
 #define FILTER_SHIFT 4
 
-static uint8_t sequence[SLOT_COUNT] = { 0, 1, 2, 3, 8, ADC_CHANNEL_TEMP, ADC_CHANNEL_VREF };
+static uint8_t sequence[SLOT_COUNT] = { 0, 1, 2, 3, 4, ADC_CHANNEL_TEMP, ADC_CHANNEL_VREF };
 static volatile uint16_t samples[SLOT_COUNT];
 static uint32_t acc[SLOT_COUNT];
 static uint32_t last_ms;
@@ -34,8 +34,7 @@ void thermal_init(void)
 	rcc_periph_clock_enable(RCC_DMA1);
 
 	gpio_set_mode(GPIOA, GPIO_MODE_INPUT, GPIO_CNF_INPUT_ANALOG,
-		      GPIO0 | GPIO1 | GPIO2 | GPIO3);
-	gpio_set_mode(GPIOB, GPIO_MODE_INPUT, GPIO_CNF_INPUT_ANALOG, GPIO0);
+		      GPIO0 | GPIO1 | GPIO2 | GPIO3 | GPIO4);
 
 	dma_channel_reset(DMA1, DMA_CHANNEL1);
 	dma_set_peripheral_address(DMA1, DMA_CHANNEL1, (uint32_t)&ADC_DR(ADC1));
@@ -96,6 +95,11 @@ unsigned thermal_vdda_mv(void)
 unsigned thermal_ain_mv(unsigned k)
 {
 	return thermal_raw_to_mv(filtered(k), thermal_vdda_mv());
+}
+
+unsigned thermal_v12_raw(void)
+{
+	return filtered(SLOT_V12);
 }
 
 unsigned thermal_v12_mv(void)

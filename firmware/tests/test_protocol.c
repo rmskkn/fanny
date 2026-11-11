@@ -26,6 +26,7 @@ enum fan_mode fan_mode(unsigned ch) { return modes[ch]; }
 unsigned tach_rpm(unsigned ch) { return 1200 + 30 * ch; }
 unsigned thermal_ain_raw(unsigned k) { return 2048 + k; }
 unsigned thermal_ain_mv(unsigned k) { return 1650 + k; }
+unsigned thermal_v12_raw(void) { return 2988; }
 unsigned thermal_v12_mv(void) { return 12050; }
 unsigned thermal_vdda_mv(void) { return 3300; }
 int thermal_mcu_temp_decic(void) { return -5; }
@@ -113,7 +114,7 @@ int main(void)
 	CHECK(strstr(out, "fan 3 mode=dc duty=70 rpm=1260 stall=0\n") != NULL);
 	CHECK(strstr(out, "fan 4 mode=pwm duty=0 rpm=1290 stall=1\n") != NULL);
 	CHECK(strstr(out, "ain 4 raw=2051 mv=1653\n") != NULL);
-	CHECK(strstr(out, "v12 mv=12050\n") != NULL);
+	CHECK(strstr(out, "v12 raw=2988 mv=12050\n") != NULL);
 	CHECK(strstr(out, "mcu temp=-0.5\n") != NULL);
 	CHECK(strstr(out, "failsafe=0\nok\n") != NULL);
 

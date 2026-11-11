@@ -10,7 +10,8 @@
  *     hardware/3pin_dc_mode_plan.md and App/pwm.c)
  *   FANn tach        (EXTI12..15, falling):    PB12 PB13 PB14 PB15
  *   AIN1..AIN4       (ADC1 IN0..IN3):          PA0..PA3
- *   12 V sense       (ADC1 IN8):               PB0  (47k/10k divider)
+ *   12 V sense       (ADC1 IN4):               PA4  (10k/3.3k divider)
+ *     (moved off PB0 2026-11-11: PB0 channel read dead/stuck, debug pending)
  *   USB FS                                     PA11 (DM), PA12 (DP)
  *   SWD                                        PA13, PA14
  *   Status LED       (active low)              PC13

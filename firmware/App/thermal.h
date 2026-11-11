@@ -33,6 +33,7 @@ void thermal_update(uint32_t now_ms);
 /* k is 0-based. */
 unsigned thermal_ain_raw(unsigned k);
 unsigned thermal_ain_mv(unsigned k);
+unsigned thermal_v12_raw(void);
 unsigned thermal_v12_mv(void);
 unsigned thermal_vdda_mv(void);
 int thermal_mcu_temp_decic(void);
