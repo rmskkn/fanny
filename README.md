@@ -12,7 +12,8 @@ on the host as a USB CDC serial port (`/dev/ttyACM*` or `COMx`).
   signal control) and `dc` (3-pin supply chopping) at runtime.
 - **4 analog inputs** for NTC or voltage sensors plus 12 V rail sensing. All
   share one ADC scan with mV conversion.
-- **Tach and stall detection** on all 4 channels. 5 V tolerant.
+- **Tach and stall detection** on all 4 channels. Fans 1-3 are counted by
+  hardware timers, fan 4 by a level-checked interrupt.
 - **Hardware failsafe by design.** Every control line rests in its "fan on"
   state by default, held there by pull resistors alone. A fan runs at
   100% on power-up, after a crash, or with the MCU pulled out. No firmware
@@ -92,7 +93,7 @@ flowchart LR
         end
         TIM4 -. reuses PWM signal .-> QINV
         subgraph TACHLANE["Tach"]
-            FT["fan tach"] --> PU["10k pull-up"] --> RC["RC filter"] --> EXTI["EXTI PB12..PB15"]
+            FT["fan tach"] --> PU["10k pull-up"] --> RC["RC filter"] --> EXTI["TIM1/2/3 counters, EXTI PB15"]
         end
     end
 
@@ -115,7 +116,8 @@ flowchart LR
 |---|---|---|
 | Fan 1–4 PWM signal and the motor-switch chop signal in DC mode | PB6 PB7 PB8 PB9 | TIM4 CH1–4 at 25 kHz |
 | Fan 1–4 DC-mode enable | PA6 PA7 PA8 PB1 | plain push-pull GPIO |
-| Fan 1–4 tach | PB12–PB15 | EXTI12–15 on the falling edge |
+| Fan 1–3 tach | PA9 PA15 PB5 | TIM1 CH2, TIM2 CH1 (partial remap 1), TIM3 CH2 (partial remap), each in external clock mode counting falling edges in hardware |
+| Fan 4 tach | PB15 | EXTI15 on both edges, counted only on a real high-to-low level change |
 | AIN1–AIN4 | PA0–PA3 | ADC1 IN0–IN3 |
 | 12 V sense | PB0 | ADC1 IN8 |
 
@@ -130,7 +132,7 @@ Verified against the [Intel 4-wire PWM fan spec rev 1.2](https://www.konilabs.ne
 | PWM frequency between 21 kHz and 28 kHz with 25 kHz nominal | TIM4 at 72 MHz / 2880 which is exactly 25.000 kHz | Match |
 | A released PWM line must run the fan at full speed | 100 kΩ pull-down holds the transistor off until firmware drives it | Match |
 | Tach must be open-collector and pulled up at 2 pulses per rev | 10 kΩ pull-up to 3.3 V with `TACH_PULSES_PER_REV = 2` in firmware | Match |
-| Tach pull-up rail of 5 V or less into a tolerant input | Pulled to 3.3 V and PB12–PB15 are 5 V tolerant | Match |
+| Tach pull-up rail of 5 V or less into a tolerant input | Pulled to 3.3 V. PA9, PA15 and PB15 are 5 V tolerant; PB5 is not, so fan 3 needs the 3.3 V pull-up | Match |
 
 ### Analog inputs (AIN1–AIN4)
 
@@ -344,8 +346,21 @@ loginctl enable-linger "$USER"   # only if the board must run with no user sessi
 
 - **0 % doesn't stop every 4-pin fan in `pwm` mode** (fan-dependent). It does
   stop the fan in `dc` mode.
+- **Duty 1-100 % maps to 10-100 % on the PWM line.** A Noctua NF-P12 PWM
+  won't start below 10 % and stops below about 6 % even after a spin-up, so
+  the firmware never sends less than 10 % unless you set 0 %. At 1 % that fan
+  runs at about 200 rpm. Every other setting lands a little above its raw
+  value: 50 % sends 55 %.
 - **3-pin fans in `dc` mode won't start below ~30-40 % duty** (motor limit,
   not firmware). Set a curve minimum above it.
+- **Fan 4 tach uses an interrupt, not a hardware counter.** Each counter
+  needs a whole timer, and the STM32F103C8 has four: TIM1-TIM3 count fans
+  1-3 and TIM4 makes the PWM. Fan 4 runs on EXTI15 with a pin-level check
+  that ignores spikes shorter than the interrupt entry time (about 0.5 us).
+  Longer glitches still count, and edges closer together than the handler
+  runtime can merge.
+- **JTAG is off** because fan 2 tach uses PA15. SWD on PA13/PA14 still
+  flashes and debugs the board.
 - **Tach under-reads in `dc` mode** since the fan is unpowered during the
   chopped-off phase. `stall` is only meaningful near 100 % duty.
 - **25 kHz chop stresses a fan's input cap** but stays inaudible. All four
