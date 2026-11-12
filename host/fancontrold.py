@@ -5,7 +5,7 @@ Reads a config file that sets each fan channel to either a constant duty, a
 temperature->duty curve driven by one of the board's AIN inputs, or a curve
 driven by an NVIDIA GPU's temperature (via `nvidia-smi`). Polls the board
 (`get`) and re-sends each channel's duty on every cycle, which doubles as
-the ping that keeps the firmware's 1 hour failsafe from tripping.
+the ping that keeps the firmware's 20 s failsafe from tripping.
 
 Example config (INI), see fancontrol.conf.example:
 

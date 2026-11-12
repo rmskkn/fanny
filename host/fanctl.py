@@ -9,7 +9,7 @@ Examples:
     fanctl.py auto on          # board runs its own NTC curve, no host needed
     fanctl.py watch            # print status every second; keeps failsafe from tripping
 
-The firmware returns all fans to 100 % when it hears nothing for 1 hour,
+The firmware returns all fans to 100 % when it hears nothing for 20 s,
 so a control daemon must send a command (e.g. `ping`) more often than that.
 Unless `auto` mode is on: the board then drives duty from its own NTC
 curve and ignores host silence entirely (see `fanctl.py auto on`).
