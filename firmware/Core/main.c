@@ -84,7 +84,8 @@ int main(void)
 		 * trip the failsafe instantly. */
 		now = millis();
 
-		tach_update(now);
+		tach_update();
+		fan_update(now);
 		thermal_update(now);
 		autocurve_update(now);
 		safety_update(now);

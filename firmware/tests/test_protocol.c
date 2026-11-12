@@ -134,8 +134,8 @@ int main(void)
 	CHECK(strstr(out, "failsafe=0\nauto=0\nok\n") != NULL);
 
 	/* conversion helpers */
-	CHECK(tach_calc_rpm(40, 1000) == 1200);
-	CHECK(tach_calc_rpm(0, 1000) == 0);
+	CHECK(tach_calc_rpm(40, 1000000) == 1200);
+	CHECK(tach_calc_rpm(0, 1000000) == 0);
 	CHECK(tach_calc_rpm(5, 0) == 0);
 	CHECK(thermal_vdda_from_vref(1489) == 3300);
 	CHECK(thermal_raw_to_mv(4095, 3300) == 3300);

@@ -8,7 +8,10 @@
  *     the motor switch's chop path):           PA6  PA7  PA8  PB1
  *     (low/high-Z = pwm mode, chop blocked, Q_hs held on; see
  *     hardware/3pin_dc_mode_plan.md and App/pwm.c)
- *   FANn tach        (EXTI12..15, falling):    PB12 PB13 PB14 PB15
+ *   FAN1..3 tach     (TIM1_CH2, TIM2_CH1, TIM3_CH2
+ *     external clock; TIM2/TIM3 partial remap,
+ *     JTAG off, SWD kept):                     PA9  PA15 PB5
+ *   FAN4 tach        (EXTI15, both edges):     PB15
  *   AIN1..AIN4       (ADC1 IN0..IN3):          PA0..PA3
  *   12 V sense       (ADC1 IN4):               PA4  (10k/3.3k divider)
  *     (moved off PB0 2026-11-11: PB0 channel read dead/stuck, debug pending)
