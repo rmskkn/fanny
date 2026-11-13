@@ -5802,6 +5802,164 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector_Generic:Conn_01x02"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "J"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x02"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Conn_01x02_1_1"
+				(rectangle
+					(start -1.27 1.27)
+					(end 1.27 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(rectangle
+					(start -1.27 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "Analog inputs"
 		(exclude_from_sim no)
@@ -6140,16 +6298,6 @@
 	)
 	(wire
 		(pts
-			(xy 676.91 74.93) (xy 679.45 74.93)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "09ea4600-36a8-44ab-b96c-33b32e1b8d53")
-	)
-	(wire
-		(pts
 			(xy 171.45 313.69) (xy 171.45 320.04)
 		)
 		(stroke
@@ -6347,16 +6495,6 @@
 			(type default)
 		)
 		(uuid "1eb59e11-3e4c-44da-a996-2392f9a5ff63")
-	)
-	(wire
-		(pts
-			(xy 678.18 129.54) (xy 680.72 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1fabf7cc-6678-4214-98ab-46c7b7bc9c98")
 	)
 	(wire
 		(pts
@@ -6807,16 +6945,6 @@
 			(type default)
 		)
 		(uuid "49ccdc5a-fbdf-4fc8-9a62-cedc42799c3e")
-	)
-	(wire
-		(pts
-			(xy 673.1 175.26) (xy 675.64 175.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "49ee34ee-35e4-47fc-be6e-ab1cfb2cfd98")
 	)
 	(wire
 		(pts
@@ -7900,16 +8028,6 @@
 	)
 	(wire
 		(pts
-			(xy 675.64 193.04) (xy 678.18 193.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c656ffc4-886a-4c39-b5b1-f80d7d0d1ea0")
-	)
-	(wire
-		(pts
 			(xy 452.12 218.44) (xy 452.12 220.98)
 		)
 		(stroke
@@ -8519,28 +8637,6 @@
 		(uuid "0782c13d-b59a-41fa-b7e4-67a030f004f5")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 171.45 285.75 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "+3V3A"
-		(shape bidirectional)
-		(at 673.1 175.26 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "07f08d80-a190-57e0-89a0-77b83ea5aa8f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 673.1 175.26 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10357,28 +10453,6 @@
 			)
 		)
 	)
-	(global_label "+3V3A"
-		(shape bidirectional)
-		(at 676.91 74.93 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "85777db6-2df1-5866-acc2-5dbb6c811de7")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 676.91 74.93 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "AIN4"
 		(shape bidirectional)
 		(at 679.45 223.52 270)
@@ -10578,28 +10652,6 @@
 			)
 		)
 	)
-	(global_label "+3V3A"
-		(shape bidirectional)
-		(at 675.64 193.04 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "9e8ca32f-fc36-58f7-b36c-35499054065e")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 675.64 193.04 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "AIN4"
 		(shape bidirectional)
 		(at 100.33 74.93 0)
@@ -10754,28 +10806,6 @@
 			)
 		)
 	)
-	(global_label "AIN1_IN"
-		(shape bidirectional)
-		(at 679.45 77.47 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ae42a099-5d4c-4a1b-b7b2-e40a0d502a98")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 679.45 77.47 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "FAN3_TACH_IN"
 		(shape bidirectional)
 		(at 450.85 154.94 180)
@@ -10798,28 +10828,6 @@
 			)
 		)
 	)
-	(global_label "AIN4_IN"
-		(shape bidirectional)
-		(at 678.18 195.58 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "b7c162e8-7708-4aca-aebc-853fbaf127a8")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 678.18 195.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "FAN1_PWM_GATE"
 		(shape bidirectional)
 		(at 163.83 290.83 180)
@@ -10832,28 +10840,6 @@
 		(uuid "b8c6aa89-a86c-466b-b97d-5dbd7a0ad1b4")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 163.83 290.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "+3V3A"
-		(shape bidirectional)
-		(at 678.18 129.54 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "b8dc2f26-a4c3-5747-a19f-729a357cc98e")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 678.18 129.54 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11304,28 +11290,6 @@
 			)
 		)
 	)
-	(global_label "AIN2_IN"
-		(shape bidirectional)
-		(at 680.72 132.08 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "db8642d2-65bf-4726-926f-db9aa225408b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 680.72 132.08 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
 	(global_label "FAN3_DCEN_G"
 		(shape bidirectional)
 		(at 511.81 312.42 180)
@@ -11360,28 +11324,6 @@
 		(uuid "de95894e-2f8b-4d39-8707-223852358e9d")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 626.11 151.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-	)
-	(global_label "AIN3_IN"
-		(shape bidirectional)
-		(at 675.64 177.8 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e0b1531d-ace1-49f5-ae77-4b5f9446da3f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 675.64 177.8 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12397,7 +12339,7 @@
 				)
 			)
 		)
-		(property "Value" "33k"
+		(property "Value" "10k"
 			(at 642.62 46.99 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13201,7 +13143,7 @@
 				)
 			)
 		)
-		(property "Value" "33k"
+		(property "Value" "10k"
 			(at 641.35 179.07 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15882,7 +15824,7 @@
 				)
 			)
 		)
-		(property "Value" "33k"
+		(property "Value" "10k"
 			(at 643.89 96.52 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16104,99 +16046,6 @@
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
 					(reference "R44")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x03")
-		(at 685.8 132.08 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "4b52165d-efbf-49c1-8c82-f51a843fe2db")
-		(property "Reference" "J11"
-			(at 685.8 137.16 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "AIN2"
-			(at 685.8 127 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
-			(at 685.8 132.08 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 685.8 132.08 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Sensor: 3V3A SIG GND"
-			(at 685.8 132.08 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" ""
-			(at 685.8 132.08 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "c96d6ae5-1006-411e-89cc-ad8b250d79e8")
-		)
-		(pin "2"
-			(uuid "198aa961-2d25-419f-aa1a-1c1c018b048b")
-		)
-		(pin "3"
-			(uuid "567f7e3f-1eee-41f8-8763-dca9fb8235d8")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "J11")
 					(unit 1)
 				)
 			)
@@ -16931,99 +16780,6 @@
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
 					(reference "Q2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x03")
-		(at 684.53 77.47 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "648bcf75-3b4b-44b8-a4e7-cf9be4c4de23")
-		(property "Reference" "J10"
-			(at 684.53 82.55 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "AIN1"
-			(at 684.53 72.39 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
-			(at 684.53 77.47 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 684.53 77.47 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Sensor: 3V3A SIG GND"
-			(at 684.53 77.47 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" ""
-			(at 684.53 77.47 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "1c89b81b-62f4-4aa5-9e53-15eb2ff09f4d")
-		)
-		(pin "2"
-			(uuid "334e2400-649a-4953-a78b-9ebedbba4bc7")
-		)
-		(pin "3"
-			(uuid "34d22fc6-d926-4ad2-8b6a-e07a763db2d4")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "J10")
 					(unit 1)
 				)
 			)
@@ -17784,99 +17540,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Generic:Conn_01x03")
-		(at 680.72 177.8 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "77fadd9e-ce09-491a-9cb6-3d606ead9b5a")
-		(property "Reference" "J8"
-			(at 680.72 182.88 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "AIN3"
-			(at 680.72 172.72 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
-			(at 680.72 177.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 680.72 177.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Sensor: 3V3A SIG GND"
-			(at 680.72 177.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" ""
-			(at 680.72 177.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "871371f1-6eb0-4283-89f0-cc417f3ebddb")
-		)
-		(pin "2"
-			(uuid "4e1a634c-c673-45fd-838a-4ee5ff68fa22")
-		)
-		(pin "3"
-			(uuid "82f9c49b-48b4-431d-bb34-4b7b030cb72a")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "J8")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 641.35 224.79 270)
 		(unit 1)
@@ -17897,7 +17560,7 @@
 				)
 			)
 		)
-		(property "Value" "33k"
+		(property "Value" "10k"
 			(at 641.35 224.79 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21031,99 +20694,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Generic:Conn_01x03")
-		(at 683.26 195.58 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "cb6e19fc-1fcb-4f21-a07d-d6e3cbdfa995")
-		(property "Reference" "J9"
-			(at 683.26 200.66 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "AIN4"
-			(at 683.26 190.5 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
-			(at 683.26 195.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 683.26 195.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Sensor: 3V3A SIG GND"
-			(at 683.26 195.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" ""
-			(at 683.26 195.58 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "eb998ef7-5016-4df4-8cff-2bb6d876d554")
-		)
-		(pin "2"
-			(uuid "bb0e2abb-0e74-46c9-aee6-1a1a87aa4777")
-		)
-		(pin "3"
-			(uuid "67afa621-eeb5-4fe7-ba62-7599741cad0a")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "J9")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 316.23 236.22 0)
 		(unit 1)
@@ -23445,6 +23015,362 @@
 	(no_connect
 		(at 91.44 110.49)
 		(uuid "c42fd604-351d-4a12-97a4-1312f865117e")
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x02")
+		(at 684.53 77.47 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "86d911e9-baa5-486f-a851-4e041b8ccb1d")
+		(property "Reference" "J10"
+			(at 684.53 80.01 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AIN1"
+			(at 684.53 72.39 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical"
+			(at 684.53 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 684.53 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Sensor: SIG GND (JST PH 2.0mm male, bare NTC probe)"
+			(at 684.53 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c21ce3f0-6458-4e17-82e0-96b84c4de235")
+		)
+		(pin "2"
+			(uuid "f67eacb3-9066-4812-8764-524b6715c428")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "J10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "AIN1_IN"
+		(at 679.4499999999999 77.47 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0da870f0-97cc-4b64-ac84-20a587cc405f")
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x02")
+		(at 680.72 177.8 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "5af36796-0f50-4b62-84ce-4bb50299debb")
+		(property "Reference" "J8"
+			(at 680.72 180.34 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AIN3"
+			(at 680.72 172.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical"
+			(at 680.72 177.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 680.72 177.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Sensor: SIG GND (JST PH 2.0mm male, bare NTC probe)"
+			(at 680.72 177.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "944efe2e-86e1-43c3-82f3-94c9e5a4ab04")
+		)
+		(pin "2"
+			(uuid "a8efecb4-225b-4d6b-9007-e8f94ea5bcde")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "J8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "AIN3_IN"
+		(at 675.64 177.8 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a3997088-a7f0-44ab-a3a7-51b24241160d")
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x02")
+		(at 683.26 195.58 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "416978f0-6911-4e17-8ab7-91b12ed3708f")
+		(property "Reference" "J9"
+			(at 683.26 198.12 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AIN4"
+			(at 683.26 190.5 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical"
+			(at 683.26 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 683.26 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Sensor: SIG GND (JST PH 2.0mm male, bare NTC probe)"
+			(at 683.26 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "d287756f-bfe9-4c14-96a6-73f38229521b")
+		)
+		(pin "2"
+			(uuid "e40edd17-2155-4dbc-9af1-f5f0a41da938")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "J9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "AIN4_IN"
+		(at 678.18 195.58 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5f4e287f-61b1-4c99-ae48-c351482f2e90")
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x02")
+		(at 685.8 132.08 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "ae4e46f5-c226-4543-8a89-15443e7ddbf0")
+		(property "Reference" "J11"
+			(at 685.8 134.62 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AIN2"
+			(at 685.8 127 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical"
+			(at 685.8 132.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 685.8 132.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Sensor: SIG GND (JST PH 2.0mm male, bare NTC probe)"
+			(at 685.8 132.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3d8d4a4f-84b7-4a4d-bfe7-861e5b64f61c")
+		)
+		(pin "2"
+			(uuid "ee0a3ca2-bfb2-46a4-ad65-5e0ebffc9f7f")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "J11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(global_label "AIN2_IN"
+		(at 680.7199999999999 132.08 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4f2cd912-78d9-4950-9897-5f9e79beaf69")
 	)
 	(sheet_instances
 		(path "/"
