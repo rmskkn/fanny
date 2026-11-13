@@ -12,5 +12,5 @@ The PDFs are not stored in the repository. Download them from the manufacturers:
 | MMBT3906 | https://www.onsemi.com/products/discrete-power-modules/bipolar-transistors/mmbt3906 (`Q_pnp` level shifter) |
 | SS34 | https://www.diodes.com (SS3x Schottky series, fan motor flyback diode) |
 | MF-MSMF250/16X / MF-MSMF110/16 | https://www.bourns.com (MF-MSMF series) |
-| NTCM-HP-33K-1% | https://www.tme.eu/gb/details/ntcm-hp-33k-1%25/tht-measurement-ntc-thermistors/sr-passives/ (SR Passives, AIN NTC; no separate manufacturer PDF, see `hardware/datasheets/NTCM-HP-33K-1_ Response Curve.md`) |
+| NTC 10 kΩ B3950 | Probe bundled with the [Skip0ner 1X4L fan-1248 conf v1](https://skiponer.com/1x4l-pwm-fan-controller-manual/) module (AIN NTC; no separate manufacturer PDF, see `hardware/datasheets/NTC-10k-B3950 Response Curve.md`) |
 | 4-wire fan spec | Intel "4-Wire Pulse Width Modulation (PWM) Controlled Fans" rev 1.3 |

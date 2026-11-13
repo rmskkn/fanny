@@ -149,20 +149,23 @@ chain works like this:
 The ADC references VDDA. The firmware measures VREFINT so it can report
 millivolts corrected for the actual supply voltage.
 
-#### Example: a 33 kΩ NTC (NTCM-HP-33K-1%)
+#### Choosing an NTC
 
-The default 10 kΩ pull-up is sized for a 10 kΩ NTC. A different R25 needs a
-matching pull-up: it sets both the divider's output range and the firmware's
-calibration constant.
+The on-board pull-up is 10 kΩ, matched to a 10 kΩ NTC with B=3950 (`ntc_r25 =
+10000`, `ntc_beta = 3950` in the fan daemon config, both already the
+defaults). Any bare 2-wire 10 kΩ/B3950 probe plugs straight in, SIG and GND,
+no third wire needed — this is what the probe bundled with the
+[Skip0ner 1X4L fan-1248 conf v1](https://skiponer.com/1x4l-pwm-fan-controller-manual/)
+module is. Expected mV at a given temperature:
+`hardware/datasheets/NTC-10k-B3950 Response Curve.md`. The onboard autocurve
+mode (`auto on`) uses the same table, baked into
+`firmware/App/ntc_calib.h`.
 
-For an NTCM-HP-33K-1% (33 kΩ, B=3950 K):
-
-1. Swap the on-board pull-up from 10 kΩ to 33 kΩ.
-2. In the fan daemon config, set `ntc_r25 = 33000` (the default `ntc_beta =
-   3950` already matches this part).
-3. Before trusting the curve, compare `fanctl.py get`'s `ain N mv` reading at
-   a known temperature against the expected value in
-   `hardware/datasheets/NTCM-HP-33K-1_ Response Curve.md`.
+A different R25 needs a matching pull-up swap, since the pull-up sets both
+the divider's output range and the firmware's calibration constant: match
+`ntc_r25` (host) and `ntc_calib_ain1..4` (firmware) to the new part's R25 and
+B, and re-check `fanctl.py get`'s `ain N mv` against a known temperature
+before trusting the curve.
 
 ### Power
 
