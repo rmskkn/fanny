@@ -57,6 +57,9 @@ test:
 	cc -std=c11 -Wall -Wextra -Werror -ICore -IApp tests/test_protocol.c App/protocol.c \
 		-o $(BUILD)/test_protocol
 	$(BUILD)/test_protocol
+	cc -std=c11 -Wall -Wextra -Werror -ICore -IApp tests/test_autocurve.c App/autocurve.c \
+		-o $(BUILD)/test_autocurve
+	$(BUILD)/test_autocurve
 
 clean:
 	rm -rf $(BUILD)

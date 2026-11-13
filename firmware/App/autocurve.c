@@ -1,16 +1,8 @@
-#include <math.h>
-
 #include "autocurve.h"
 #include "board.h"
 #include "fan.h"
+#include "ntc_calib.h"
 #include "thermal.h"
-
-/* Divider bias resistor on each AIN channel equals the NTC's R25 (10 k),
- * matching host/fancontrol.conf.example's defaults and board.h's AIN bias
- * resistors (R27-R30). */
-#define NTC_R25   10000.0f
-#define NTC_BETA  3950.0f
-#define NTC_T25_K (25.0f + 273.15f)
 
 /* Readings this close to either rail mean the sensor is open or shorted,
  * not a real temperature. */
@@ -51,17 +43,27 @@ static bool ain_valid(unsigned ch)
 	return raw >= AIN_RAW_MIN_VALID && raw <= AIN_RAW_MAX_VALID;
 }
 
-static float ntc_temp_c(unsigned ch)
+static int temp_c_for_mv(unsigned ch, unsigned mv)
 {
-	float mv = (float)thermal_ain_mv(ch);
-	float vdda = (float)thermal_vdda_mv();
-	float r_ntc = NTC_R25 * mv / (vdda - mv);
-	float inv_t = 1.0f / NTC_T25_K + logf(r_ntc / NTC_R25) / NTC_BETA;
+	const struct mv_point *table = ntc_calib_table[ch];
 
-	return 1.0f / inv_t - 273.15f;
+	if ((int)mv >= table[0].mv)
+		return table[0].temp_c;
+	if ((int)mv <= table[NTC_CALIB_LEN - 1].mv)
+		return table[NTC_CALIB_LEN - 1].temp_c;
+	for (unsigned i = 0; i + 1 < NTC_CALIB_LEN; i++) {
+		int mv0 = table[i].mv, mv1 = table[i + 1].mv;
+
+		if ((int)mv <= mv0 && (int)mv >= mv1) {
+			int t0 = table[i].temp_c, t1 = table[i + 1].temp_c;
+
+			return t0 + ((int)mv - mv0) * (t1 - t0) / (mv1 - mv0);
+		}
+	}
+	return table[NTC_CALIB_LEN - 1].temp_c; /* unreachable */
 }
 
-static unsigned duty_for_temp(float temp)
+static unsigned duty_for_temp(int temp)
 {
 	if (temp <= curve[0].temp_c)
 		return curve[0].duty;
@@ -71,9 +73,9 @@ static unsigned duty_for_temp(float temp)
 		int t0 = curve[i].temp_c, t1 = curve[i + 1].temp_c;
 
 		if (temp >= t0 && temp <= t1) {
-			float frac = (temp - t0) / (float)(t1 - t0);
+			int d0 = curve[i].duty, d1 = curve[i + 1].duty;
 
-			return (unsigned)(curve[i].duty + frac * (curve[i + 1].duty - curve[i].duty) + 0.5f);
+			return d0 + (2 * (temp - t0) * (d1 - d0) + (t1 - t0)) / (2 * (t1 - t0));
 		}
 	}
 	return curve[CURVE_LEN - 1].duty; /* unreachable */
@@ -89,7 +91,7 @@ void autocurve_update(uint32_t now_ms)
 
 	for (unsigned ch = 0; ch < FAN_COUNT; ch++) {
 		if (ain_valid(ch))
-			fan_set_duty(ch, duty_for_temp(ntc_temp_c(ch)));
+			fan_set_duty(ch, duty_for_temp(temp_c_for_mv(ch, thermal_ain_mv(ch))));
 		else
 			fan_set_duty(ch, 100);
 	}
