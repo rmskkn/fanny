@@ -16,4 +16,10 @@ bool autocurve_active(void);
 /* Call every main loop pass; it throttles itself to once a second. */
 void autocurve_update(uint32_t now_ms);
 
+/* NTC temperature for channel ch's AIN, via the same calibration table and
+ * validity check autocurve_update() uses. *valid is false when the reading
+ * is out of range (sensor open or shorted); temp_c is then the table's
+ * clamped boundary value, not a real reading. */
+int autocurve_ntc_temp_c(unsigned ch, bool *valid);
+
 #endif

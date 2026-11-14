@@ -103,6 +103,25 @@ static void cmd_get(void)
 		*p = '\0';
 		emit(out);
 	}
+	for (unsigned k = 0; k < AIN_COUNT; k++) {
+		bool valid;
+		int temp = autocurve_ntc_temp_c(k, &valid);
+
+		p = put_str(out, "ntc ");
+		p = put_uint(p, k + 1);
+		p = put_str(p, " temp=");
+		if (valid) {
+			if (temp < 0) {
+				*p++ = '-';
+				temp = -temp;
+			}
+			p = put_uint(p, (unsigned)temp);
+		} else {
+			p = put_str(p, "NA");
+		}
+		*p = '\0';
+		emit(out);
+	}
 
 	p = put_str(out, "v12");
 	p = put_kv(p, "raw", thermal_v12_raw());

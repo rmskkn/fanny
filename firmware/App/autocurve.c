@@ -81,6 +81,12 @@ static unsigned duty_for_temp(int temp)
 	return curve[CURVE_LEN - 1].duty; /* unreachable */
 }
 
+int autocurve_ntc_temp_c(unsigned ch, bool *valid)
+{
+	*valid = ain_valid(ch);
+	return temp_c_for_mv(ch, thermal_ain_mv(ch));
+}
+
 void autocurve_update(uint32_t now_ms)
 {
 	if (!active)
