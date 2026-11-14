@@ -52,12 +52,11 @@ static void step(void)
 
 int main(void)
 {
-	/* Channel 0 (AIN1) carries a probe-specific calibration that is still
-	 * being tuned, so these checks use channels 1 and 2, which keep the
-	 * nominal 10k/B3950 table quoted in the comments below. */
+	/* All four channels now share the nominal 10k/B3950 table quoted in
+	 * the comments below; these checks use channels 1 and 2. */
 	autocurve_set(true);
 
-	/* Above the table's top entry (1836 mv/20 C): clamps to 20 C, which
+	/* Above the table's top entry (1833 mv/20 C): clamps to 20 C, which
 	 * is also below the duty curve's first point, so duty clamps too. */
 	set_ch(1, 2500, 2048);
 	step();
@@ -68,13 +67,13 @@ int main(void)
 	step();
 	check("exact table point", duties[1], 55);
 
-	/* Between two table points and two curve points: 1300 mv -> 35 C
-	 * (between 30/1470 and 40/1143) -> duty 28 (between 30/20 and 40/35). */
+	/* Between two table points and two curve points: 1300 mv -> ~35 C
+	 * (between 30/1472 and 40/1145) -> duty 28 (between 30/20 and 40/35). */
 	set_ch(1, 1300, 2048);
 	step();
 	check("interpolated mv and duty", duties[1], 28);
 
-	/* Below the table's bottom entry (282 mv/90 C): clamps to 90 C, above
+	/* Below the table's bottom entry (274 mv/90 C): clamps to 90 C, above
 	 * the duty curve's last point, so duty clamps to 100. */
 	set_ch(1, 100, 2048);
 	step();
@@ -82,7 +81,7 @@ int main(void)
 
 	/* Open/shorted sensor (raw outside the valid band) forces 100 %
 	 * regardless of mv, even a mv that would otherwise read as cool. */
-	set_ch(1, 1836, 10);
+	set_ch(1, 1833, 10);
 	step();
 	check("invalid sensor forces full duty", duties[1], 100);
 

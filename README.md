@@ -157,8 +157,10 @@ defaults). Any bare 2-wire 10 kΩ/B3950 probe plugs straight in, SIG and GND,
 no third wire needed — this is what the probe bundled with the
 [Skip0ner 1X4L fan-1248 conf v1](https://skiponer.com/1x4l-pwm-fan-controller-manual/)
 module is. Expected mV at a given temperature:
-`hardware/datasheets/NTC-10k-B3950 Response Curve.md`. The onboard autocurve
-mode (`auto on`) uses the same table, baked into
+`hardware/datasheets/NTC-10k-B3950 Response Curve.md`, taken from the
+10k/3950 column of Focusensing's
+[10k thermistor reference chart](https://www.focusensing.com/10k-thermistor-chart-type-2-vs-type-3-vs-3950-tables_n196).
+The onboard autocurve mode (`auto on`) uses the same table, baked into
 `firmware/App/ntc_calib.h`.
 
 A different R25 needs a matching pull-up swap, since the pull-up sets both

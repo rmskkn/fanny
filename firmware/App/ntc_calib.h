@@ -2,8 +2,13 @@
  * Per-channel mV -> degC calibration for the onboard autocurve NTC
  * conversion (see autocurve.c). One table per AIN channel so a channel's
  * thermistor/pullup/VDDA pairing can be recalibrated on its own; all four
- * start identical since every channel uses the same 10k/B3950 NTC against
- * its matching 10k AIN pullup (R27-R30) at VDDA 3300 mV.
+ * use the nominal 10k/B3950 NTC against its matching 10k AIN pullup
+ * (R27-R30) at VDDA 3300 mV.
+ *
+ * Resistance points taken from the "10k 3950" column of the reference
+ * chart at
+ * https://www.focusensing.com/10k-thermistor-chart-type-2-vs-type-3-vs-3950-tables_n196,
+ * converted to mv via mv = 3300 * R / (R + 10000).
  *
  * Each table must stay sorted by descending mv (mv falls as temp rises).
  */
@@ -22,23 +27,23 @@ struct mv_point {
 #define NTC_CALIB_LEN 8
 
 static const struct mv_point ntc_calib_ain1[NTC_CALIB_LEN] = {
-	{ 1836, 20 }, { 1470, 30 }, { 1143, 40 }, { 871, 50 },
-	{ 657, 60 }, { 494, 70 }, { 372, 80 }, { 282, 90 },
+	{ 1833, 20 }, { 1472, 30 }, { 1145, 40 }, { 871, 50 },
+	{ 654, 60 }, { 489, 70 }, { 365, 80 }, { 274, 90 },
 };
 
 static const struct mv_point ntc_calib_ain2[NTC_CALIB_LEN] = {
-	{ 1836, 20 }, { 1470, 30 }, { 1143, 40 }, { 871, 50 },
-	{ 657, 60 }, { 494, 70 }, { 372, 80 }, { 282, 90 },
+	{ 1833, 20 }, { 1472, 30 }, { 1145, 40 }, { 871, 50 },
+	{ 654, 60 }, { 489, 70 }, { 365, 80 }, { 274, 90 },
 };
 
 static const struct mv_point ntc_calib_ain3[NTC_CALIB_LEN] = {
-	{ 1836, 20 }, { 1470, 30 }, { 1143, 40 }, { 871, 50 },
-	{ 657, 60 }, { 494, 70 }, { 372, 80 }, { 282, 90 },
+	{ 1833, 20 }, { 1472, 30 }, { 1145, 40 }, { 871, 50 },
+	{ 654, 60 }, { 489, 70 }, { 365, 80 }, { 274, 90 },
 };
 
 static const struct mv_point ntc_calib_ain4[NTC_CALIB_LEN] = {
-	{ 1836, 20 }, { 1470, 30 }, { 1143, 40 }, { 871, 50 },
-	{ 657, 60 }, { 494, 70 }, { 372, 80 }, { 282, 90 },
+	{ 1833, 20 }, { 1472, 30 }, { 1145, 40 }, { 871, 50 },
+	{ 654, 60 }, { 489, 70 }, { 365, 80 }, { 274, 90 },
 };
 
 /* Indexed 0-based by channel (channel N <- AIN N+1), matching autocurve.c's
