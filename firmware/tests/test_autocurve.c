@@ -52,49 +52,52 @@ static void step(void)
 
 int main(void)
 {
+	/* Channel 0 (AIN1) carries a probe-specific calibration that is still
+	 * being tuned, so these checks use channels 1 and 2, which keep the
+	 * nominal 10k/B3950 table quoted in the comments below. */
 	autocurve_set(true);
 
 	/* Above the table's top entry (1836 mv/20 C): clamps to 20 C, which
 	 * is also below the duty curve's first point, so duty clamps too. */
-	set_ch(0, 2500, 2048);
+	set_ch(1, 2500, 2048);
 	step();
-	check("clamp-high mv -> clamp-low duty", duties[0], 20);
+	check("clamp-high mv -> clamp-low duty", duties[1], 20);
 
 	/* Exact table point: 871 mv -> 50 C -> duty curve point (50, 55). */
-	set_ch(0, 871, 2048);
+	set_ch(1, 871, 2048);
 	step();
-	check("exact table point", duties[0], 55);
+	check("exact table point", duties[1], 55);
 
 	/* Between two table points and two curve points: 1300 mv -> 35 C
 	 * (between 30/1470 and 40/1143) -> duty 28 (between 30/20 and 40/35). */
-	set_ch(0, 1300, 2048);
+	set_ch(1, 1300, 2048);
 	step();
-	check("interpolated mv and duty", duties[0], 28);
+	check("interpolated mv and duty", duties[1], 28);
 
 	/* Below the table's bottom entry (282 mv/90 C): clamps to 90 C, above
 	 * the duty curve's last point, so duty clamps to 100. */
-	set_ch(0, 100, 2048);
+	set_ch(1, 100, 2048);
 	step();
-	check("clamp-low mv -> clamp-high duty", duties[0], 100);
+	check("clamp-low mv -> clamp-high duty", duties[1], 100);
 
 	/* Open/shorted sensor (raw outside the valid band) forces 100 %
 	 * regardless of mv, even a mv that would otherwise read as cool. */
-	set_ch(0, 1836, 10);
+	set_ch(1, 1836, 10);
 	step();
-	check("invalid sensor forces full duty", duties[0], 100);
+	check("invalid sensor forces full duty", duties[1], 100);
 
 	/* Each channel reads its own AIN independently in the same update. */
-	set_ch(0, 871, 2048);  /* 50 C -> 55 */
-	set_ch(1, 1300, 2048); /* 35 C -> 28 */
+	set_ch(1, 871, 2048);  /* 50 C -> 55 */
+	set_ch(2, 1300, 2048); /* 35 C -> 28 */
 	step();
-	check("channel 0 independent", duties[0], 55);
-	check("channel 1 independent", duties[1], 28);
+	check("channel 1 independent", duties[1], 55);
+	check("channel 2 independent", duties[2], 28);
 
 	/* auto off: update() is a no-op, duties stay put even if mv changes. */
 	autocurve_set(false);
-	set_ch(0, 100, 2048);
+	set_ch(1, 100, 2048);
 	step();
-	check("auto off is a no-op", duties[0], 55);
+	check("auto off is a no-op", duties[1], 55);
 
 	if (failures) {
 		printf("%d failure(s)\n", failures);

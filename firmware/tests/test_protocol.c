@@ -39,6 +39,13 @@ bool safety_fan_stalled(unsigned ch) { return ch == 3; }
 void safety_set_host_check(bool enabled) { host_check_enabled = enabled; }
 void autocurve_set(bool on) { autocurve_on = on; }
 bool autocurve_active(void) { return autocurve_on; }
+int autocurve_ntc_temp_c(unsigned ch, bool *valid)
+{
+	static const int temps[] = { 25, -7, 0, 0 };
+
+	*valid = ch != 3;
+	return temps[ch];
+}
 
 /* ---- harness ---- */
 
@@ -130,6 +137,9 @@ int main(void)
 	CHECK(strstr(out, "fan 4 mode=pwm duty=0 rpm=1290 stall=1\n") != NULL);
 	CHECK(strstr(out, "ain 4 raw=2051 mv=1653\n") != NULL);
 	CHECK(strstr(out, "v12 raw=2988 mv=12050\n") != NULL);
+	CHECK(strstr(out, "ntc 1 temp=25\n") != NULL);
+	CHECK(strstr(out, "ntc 2 temp=-7\n") != NULL);
+	CHECK(strstr(out, "ntc 4 temp=NA\n") != NULL);
 	CHECK(strstr(out, "mcu temp=-0.5\n") != NULL);
 	CHECK(strstr(out, "failsafe=0\nauto=0\nok\n") != NULL);
 
