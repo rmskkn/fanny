@@ -17,7 +17,7 @@ TARGET := $(BUILD)/fanny
 
 SRCS := Core/main.c \
 	App/fan.c App/pwm.c App/tach.c App/thermal.c App/safety.c App/protocol.c \
-	App/autocurve.c \
+	App/autocurve.c App/curve_store.c \
 	USB_DEVICE/usb_cdc.c
 OBJS := $(SRCS:%.c=$(BUILD)/%.o)
 
@@ -57,8 +57,8 @@ test:
 	cc -std=c11 -Wall -Wextra -Werror -ICore -IApp tests/test_protocol.c App/protocol.c \
 		-o $(BUILD)/test_protocol
 	$(BUILD)/test_protocol
-	cc -std=c11 -Wall -Wextra -Werror -ICore -IApp tests/test_autocurve.c App/autocurve.c \
-		-o $(BUILD)/test_autocurve
+	cc -std=c11 -Wall -Wextra -Werror -ICore -IApp -DAUTOCURVE_TEST_HOOKS \
+		tests/test_autocurve.c App/autocurve.c -o $(BUILD)/test_autocurve
 	$(BUILD)/test_autocurve
 
 clean:

@@ -92,6 +92,18 @@ static void cmd_get(void)
 		p = put_kv(p, "duty", fan_duty(ch));
 		p = put_kv(p, "rpm", tach_rpm(ch));
 		p = put_kv(p, "stall", safety_fan_stalled(ch));
+		p = put_str(p, " curve=");
+		switch (autocurve_curve_status(ch)) {
+		case CURVE_OK:
+			p = put_str(p, "ok");
+			break;
+		case CURVE_BAD:
+			p = put_str(p, "bad");
+			break;
+		default:
+			p = put_str(p, "none");
+			break;
+		}
 		*p = '\0';
 		emit(out);
 	}
@@ -190,6 +202,67 @@ static const char *cmd_mode(char **argv, int argc)
 	return NULL;
 }
 
+/* Emits "curve <ch+1> <temp:duty,...>" for ch's stored table, or
+ * "curve <ch+1> none"/"bad" when it is not usable, so a caller can send
+ * this straight back as a `curve ch temp:duty,...` command. */
+static void emit_curve(unsigned ch)
+{
+	char out[LINE_MAX];
+	char *p = put_str(out, "curve ");
+	char *end = out + sizeof(out) - 1; /* leave room for the '\0' */
+	enum curve_status status = autocurve_curve_status(ch);
+
+	p = put_uint(p, ch + 1);
+	*p++ = ' ';
+	if (status != CURVE_OK) {
+		p = put_str(p, status == CURVE_BAD ? "bad" : "none");
+	} else {
+		unsigned n = autocurve_curve_count(ch);
+
+		for (unsigned i = 0; i < n; i++) {
+			int temp = autocurve_curve_temp(ch, i);
+
+			/* Worst case per point: ',' '-' 5 digits ':' 3 digits.
+			 * Only reachable if a corrupted table coincidentally
+			 * passed its CRC check; stop short rather than
+			 * overflow `out` on whatever garbage is in it. */
+			if (end - p < 11)
+				break;
+			if (i)
+				*p++ = ',';
+			if (temp < 0) {
+				*p++ = '-';
+				temp = -temp;
+			}
+			p = put_uint(p, (unsigned)temp);
+			*p++ = ':';
+			p = put_uint(p, autocurve_curve_duty(ch, i));
+		}
+	}
+	*p = '\0';
+	emit(out);
+}
+
+static const char *cmd_curve(char **argv, int argc)
+{
+	unsigned first, last;
+
+	if ((argc != 2 && argc != 3) || !parse_channels(argv[1], &first, &last))
+		return "usage: curve <1-4|all> [temp:duty,...]";
+	if (argc == 2) {
+		for (unsigned ch = first; ch < last; ch++)
+			emit_curve(ch);
+		return NULL;
+	}
+	for (unsigned ch = first; ch < last; ch++) {
+		const char *err = autocurve_set_curve(ch, argv[2]);
+
+		if (err)
+			return err;
+	}
+	return NULL;
+}
+
 static const char *cmd_auto(char **argv, int argc)
 {
 	bool on;
@@ -235,13 +308,16 @@ void protocol_exec(char *s)
 		err = cmd_set(argv, argc);
 	} else if (strcmp(argv[0], "mode") == 0) {
 		err = cmd_mode(argv, argc);
+	} else if (strcmp(argv[0], "curve") == 0) {
+		err = cmd_curve(argv, argc);
 	} else if (strcmp(argv[0], "auto") == 0) {
 		err = cmd_auto(argv, argc);
 	} else if (strcmp(argv[0], "ping") == 0 && argc == 1) {
 	} else if (strcmp(argv[0], "version") == 0 && argc == 1) {
 		emit(FW_VERSION);
 	} else if (strcmp(argv[0], "help") == 0 && argc == 1) {
-		emit("get | set <1-4|all> <0-100> | mode <1-4|all> pwm|dc | auto on|off | ping | version");
+		emit("get | set <1-4|all> <0-100> | mode <1-4|all> pwm|dc | "
+		     "curve <1-4|all> [t:d,...] | auto on|off | ping | version");
 	} else {
 		err = "unknown command";
 	}

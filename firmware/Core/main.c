@@ -66,6 +66,7 @@ int main(void)
 	tach_init();
 	thermal_init();
 	safety_init();
+	autocurve_init();
 	protocol_init(emit_line);
 	usb_cdc_init();
 

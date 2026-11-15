@@ -44,10 +44,17 @@ class FanController:
             lines.append(text)
 
     def status(self):
-        """Parse 'get' into {'fan': {1: {...}}, 'ain': {...}, 'v12': {...}, ...}."""
+        """Parse 'get' into {'fan': {1: {...}}, 'ain': {...}, 'v12': {...},
+        'failsafe': 0.0, 'auto': 0.0, ...}."""
         result = {}
         for text in self.command("get"):
             words = text.split()
+            if "=" in words[0]:
+                # Bare scalar flag line, e.g. "failsafe=0": no name/index
+                # prefix, so it is one word, not a separate key=value pair.
+                key, _, value = words[0].partition("=")
+                result[key] = float(value)
+                continue
             name, rest = words[0], words[1:]
             index = None
             if rest and "=" not in rest[0]:
@@ -55,7 +62,7 @@ class FanController:
             fields = {}
             for kv in rest:
                 key, _, value = kv.partition("=")
-                fields[key] = value if key == "mode" else float(value)
+                fields[key] = value if key in ("mode", "curve") else float(value)
             if index is None:
                 result[name] = fields
             else:

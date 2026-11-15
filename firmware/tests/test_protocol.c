@@ -39,6 +39,23 @@ bool safety_fan_stalled(unsigned ch) { return ch == 3; }
 void safety_set_host_check(bool enabled) { host_check_enabled = enabled; }
 void autocurve_set(bool on) { autocurve_on = on; }
 bool autocurve_active(void) { return autocurve_on; }
+static enum curve_status curve_stat[FAN_COUNT];
+/* A fixed canned table stands in for whatever text was actually sent: this
+ * file tests protocol dispatch, not curve parsing (test_autocurve.c covers
+ * that), so the round-trip through emit_curve() only needs stable values. */
+static const int fake_temp[2] = { 10, 20 };
+static const unsigned fake_duty[2] = { 30, 40 };
+const char *autocurve_set_curve(unsigned ch, const char *text)
+{
+	if (strcmp(text, "bad") == 0)
+		return "bad point, want temp:duty";
+	curve_stat[ch] = CURVE_OK;
+	return NULL;
+}
+enum curve_status autocurve_curve_status(unsigned ch) { return curve_stat[ch]; }
+unsigned autocurve_curve_count(unsigned ch) { (void)ch; return 2; }
+int autocurve_curve_temp(unsigned ch, unsigned i) { (void)ch; return fake_temp[i]; }
+unsigned autocurve_curve_duty(unsigned ch, unsigned i) { (void)ch; return fake_duty[i]; }
 int autocurve_ntc_temp_c(unsigned ch, bool *valid)
 {
 	static const int temps[] = { 25, -7, 0, 0 };
@@ -131,10 +148,30 @@ int main(void)
 	run("ping\n"); /* parser recovers after overflow */
 	CHECK(strcmp(out, "ok\n") == 0);
 
+	run("curve 1 30:20,40:35,50:55,60:75,70:100\n");
+	CHECK(strcmp(out, "ok\n") == 0);
+	run("curve 2 bad\n");
+	CHECK(strcmp(out, "err bad point, want temp:duty\n") == 0);
+	CHECK(curve_stat[1] == CURVE_NONE); /* rejected table leaves it unset */
+	run("curve 2\n"); /* query: rejected above, so still unset */
+	CHECK(strcmp(out, "curve 2 none\nok\n") == 0);
+	run("curve 5 30:20\n");
+	CHECK(strncmp(out, "err ", 4) == 0);
+	run("curve 5\n");
+	CHECK(strncmp(out, "err ", 4) == 0);
+	run("curve all 10:5\n");
+	CHECK(strcmp(out, "ok\n") == 0);
+
+	run("curve 1\n"); /* query: no points arg, echoes the stored table */
+	CHECK(strcmp(out, "curve 1 10:30,20:40\nok\n") == 0);
+	run("curve 2\n"); /* "curve all" above set it too */
+	CHECK(strcmp(out, "curve 2 10:30,20:40\nok\n") == 0);
+
 	run("get\n");
-	CHECK(strstr(out, "fan 2 mode=pwm duty=0 rpm=1230 stall=0\n") != NULL);
-	CHECK(strstr(out, "fan 3 mode=dc duty=70 rpm=1260 stall=0\n") != NULL);
-	CHECK(strstr(out, "fan 4 mode=pwm duty=0 rpm=1290 stall=1\n") != NULL);
+	CHECK(strstr(out, "fan 1 mode=pwm duty=0 rpm=1200 stall=0 curve=ok\n") != NULL);
+	CHECK(strstr(out, "fan 2 mode=pwm duty=0 rpm=1230 stall=0 curve=ok\n") != NULL);
+	CHECK(strstr(out, "fan 3 mode=dc duty=70 rpm=1260 stall=0 curve=ok\n") != NULL);
+	CHECK(strstr(out, "fan 4 mode=pwm duty=0 rpm=1290 stall=1 curve=ok\n") != NULL);
 	CHECK(strstr(out, "ain 4 raw=2051 mv=1653\n") != NULL);
 	CHECK(strstr(out, "v12 raw=2988 mv=12050\n") != NULL);
 	CHECK(strstr(out, "ntc 1 temp=25\n") != NULL);

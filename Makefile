@@ -2,10 +2,14 @@
 #
 #   make          build firmware (firmware/build/fanny.elf/.bin)
 #   make flash    flash with OpenOCD + ST-Link
-#   make test     host-side unit tests
+#   make test     unit tests: firmware logic (native) + host/ daemon and CLI
 #   make clean
 
-all flash test clean:
+all flash clean:
 	$(MAKE) -C firmware $@
+
+test:
+	$(MAKE) -C firmware test
+	$(MAKE) -C host test
 
 .PHONY: all flash test clean

@@ -30,7 +30,12 @@ Channels with no section are left alone (not pinged, not overridden). Add
 `type = dc` to a `[fanN]` section for a 3-pin fan on a motor-switch channel;
 it defaults to `type = pwm` (4-pin). The daemon sends `mode` once at startup
 and again after any reconnect, since a firmware reset returns every channel
-to `pwm`.
+to `pwm`. It also queries each AIN-driven curve channel's table on the
+board (`curve ch`, no points) and, only if that differs from the config,
+replaces it over `curve`. The firmware keeps the table in flash for its
+own `auto on` mode, so that channel keeps running its curve if the host
+is ever unreachable; comparing first avoids rewriting flash on every
+reconnect when nothing actually changed.
 """
 import argparse
 import configparser
@@ -45,6 +50,11 @@ from fanctl import DEFAULT_PORT, FanController
 FAN_COUNT = 4
 AIN_COUNT = 4
 CONFIG_DEFAULT_PATH = "~/.config/fancontrol.conf"
+
+# Must match firmware's App/autocurve.c (MAX_CURVE_POINTS) and
+# App/protocol.c (LINE_MAX), which bound what the `curve` command accepts.
+CURVE_MAX_POINTS = 6
+CURVE_LINE_MAX = 64
 
 
 class ConfigError(Exception):
@@ -148,6 +158,31 @@ def parse_curve(text):
     return points
 
 
+def curve_command(ch, points):
+    """Builds fan ch's "curve" command line, checked against the firmware's
+    own limits so a bad config fails fast at startup instead of crash-looping
+    the daemon every reconnect. Temps are rounded to the integers the
+    firmware's parser takes; two points that round to the same or a falling
+    temperature are also rejected, since the firmware requires each curve to
+    be strictly ascending."""
+    if len(points) > CURVE_MAX_POINTS:
+        raise ConfigError(f"fan{ch} curve has {len(points)} points, firmware allows {CURVE_MAX_POINTS}")
+    rounded = [(round(t), d) for t, d in points]
+    for i, (temp, duty) in enumerate(rounded):
+        if not 0 <= duty <= 100:
+            raise ConfigError(f"fan{ch} curve point {temp}:{duty} has duty out of 0-100")
+        if i > 0 and temp <= rounded[i - 1][0]:
+            prev_temp, prev_duty = rounded[i - 1]
+            raise ConfigError(
+                f"fan{ch} curve points {prev_temp}:{prev_duty} and {temp}:{duty} round to the same "
+                "or a falling temperature; firmware needs strictly rising degC"
+            )
+    line = "curve {} {}".format(ch, ",".join(f"{temp}:{duty}" for temp, duty in rounded))
+    if len(line) > CURVE_LINE_MAX - 1:
+        raise ConfigError(f"fan{ch} curve command is {len(line)} chars, firmware allows {CURVE_LINE_MAX - 1}")
+    return line
+
+
 def load_config(path):
     cfg = configparser.ConfigParser(inline_comment_prefixes="#")
     if not cfg.read(path):
@@ -183,6 +218,7 @@ def load_config(path):
                     ntc_beta=cfg.getfloat(section, "ntc_beta", fallback=3950.0),
                     t25=cfg.getfloat(section, "t25", fallback=25.0),
                 )
+                channel.curve_cmd = curve_command(ch, points)
         else:
             raise ConfigError(f"[{section}] mode must be 'constant' or 'curve', got {mode!r}")
         channel.fan_type = cfg.get(section, "type", fallback="pwm")
@@ -196,6 +232,19 @@ def run(fc, interval, channels):
     needs_gpu = any(channel.needs_gpu for channel in channels.values())
     for ch, channel in channels.items():
         fc.command(f"mode {ch} {channel.fan_type}")
+        if isinstance(channel, NtcCurveChannel):
+            # The curve lives in flash and survives a reset, unlike mode, so
+            # only rewrite it (flash wear) when the board's copy actually
+            # differs from the config's, not on every reconnect. `curve ch`
+            # with no points queries instead of setting; the response line
+            # is formatted exactly like curve_cmd, so plain text compares.
+            current = fc.command(f"curve {ch}")
+            current_line = current[0] if current else None
+            if current_line != channel.curve_cmd:
+                try:
+                    fc.command(channel.curve_cmd)
+                except RuntimeError as e:
+                    print(f"fancontrold: fan{ch} curve rejected: {e}", file=sys.stderr, flush=True)
     while True:
         readings = {"status": fc.status(), "gpu": read_gpu_temps() if needs_gpu else {}}
         for ch, channel in channels.items():
