@@ -7,3 +7,5 @@ __pycache__/
 .history/
 *_drc_violations.json
 .mcp-backups/
+*.dsn
+*.ses
