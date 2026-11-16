@@ -1,3 +1,5 @@
+#include <limits.h>
+
 #include "autocurve.h"
 #include "board.h"
 #include "curve_store.h"
@@ -128,8 +130,15 @@ static bool parse_int(const char **s, int *out)
 		(*s)++;
 	if (**s < '0' || **s > '9')
 		return false;
-	while (**s >= '0' && **s <= '9')
-		v = v * 10 + (*(*s)++ - '0');
+	while (**s >= '0' && **s <= '9') {
+		int digit = *(*s)++ - '0';
+
+		/* Reject rather than silently wrap: a run of digits long enough
+		 * to overflow int must not produce a garbage but "valid" int. */
+		if (v > (INT_MAX - digit) / 10)
+			return false;
+		v = v * 10 + digit;
+	}
 	*out = neg ? -v : v;
 	return true;
 }
@@ -148,6 +157,8 @@ const char *autocurve_set_curve(unsigned ch, const char *text)
 			return "too many points";
 		if (!parse_int(&s, &temp) || *s != ':')
 			return "bad point, want temp:duty";
+		if (temp < INT16_MIN || temp > INT16_MAX)
+			return "temp out of range";
 		s++;
 		if (!parse_int(&s, &duty) || duty < 0 || duty > 100)
 			return "duty must be 0-100";

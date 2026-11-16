@@ -81,6 +81,9 @@ int main(void)
 	check("duty out of range rejected", autocurve_set_curve(1, "30:101") != NULL, true);
 	check("non-ascending temps rejected", autocurve_set_curve(1, "40:20,30:35") != NULL, true);
 	check("bad syntax rejected", autocurve_set_curve(1, "30-20") != NULL, true);
+	/* A temp that parses fine as an int but doesn't fit the int16_t it's
+	 * stored in must be rejected, not silently narrowed into garbage. */
+	check("out-of-range temp rejected", autocurve_set_curve(1, "40000:50") != NULL, true);
 	check("rejected table leaves channel unset", autocurve_curve_status(1), CURVE_NONE);
 
 	if (autocurve_set_curve(1, "30:20,40:35,50:55,60:75,70:100") != NULL)
@@ -154,6 +157,20 @@ int main(void)
 	set_ch(1, 100, 2048);
 	step();
 	check("auto off is a no-op", duties[1], 100);
+
+	/* A normal, human-scale curve spanning a wide 0-200 degC gradation is
+	 * unaffected by the out-of-range check above: every point here is
+	 * well within int16_t, so all five must still be accepted and stored. */
+	if (autocurve_set_curve(3, "0:10,50:40,100:70,150:90,200:100") != NULL)
+		check("set_curve with 0-200 gradation failed", 1, 0);
+	check("0-200 gradation curve status is ok", autocurve_curve_status(3), CURVE_OK);
+	check("0-200 gradation point count", autocurve_curve_count(3), 5);
+	check("0-200 gradation point 0 temp", (unsigned)autocurve_curve_temp(3, 0), 0);
+	check("0-200 gradation point 0 duty", autocurve_curve_duty(3, 0), 10);
+	check("0-200 gradation point 2 temp", (unsigned)autocurve_curve_temp(3, 2), 100);
+	check("0-200 gradation point 2 duty", autocurve_curve_duty(3, 2), 70);
+	check("0-200 gradation point 4 temp", (unsigned)autocurve_curve_temp(3, 4), 200);
+	check("0-200 gradation point 4 duty", autocurve_curve_duty(3, 4), 100);
 
 	if (failures) {
 		printf("%d failure(s)\n", failures);

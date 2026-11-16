@@ -238,6 +238,11 @@ had ever existed in this project.
   the earlier "real wires everywhere" instruction from 2026-10-23.
 - For any hard or ambiguous call — placement, part substitution, routing
   conflict, DRC that will not clear — stop and ask rather than guess.
+- During verification work (hardware checks, firmware reflash, protocol
+  probes), stop at the first issue found: a bug, an unexpected reading, a
+  failing check. Don't run further checks past it. Ask the user what to do
+  next, naming the exact issue: what was checked, what was observed, what
+  was expected (user, 2026-11-16).
 - Work one channel at a time and verify before replicating.
 - **Track width policy** (user, 2026-11-09): route at 0.3mm by default. Drop
   to 0.25mm in narrow/tight areas where 0.3mm would violate clearance against
