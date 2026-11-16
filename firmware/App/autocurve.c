@@ -2,21 +2,11 @@
 
 #include "autocurve.h"
 #include "board.h"
+#include "config.h"
 #include "curve_store.h"
 #include "fan.h"
 #include "ntc_calib.h"
 #include "thermal.h"
-
-/* Readings this close to either rail mean the sensor is open or shorted,
- * not a real temperature. */
-#define AIN_RAW_MIN_VALID 20u
-#define AIN_RAW_MAX_VALID 4075u
-
-#define UPDATE_INTERVAL_MS 1000u
-
-/* Bounded by protocol.c's LINE_MAX: "curve 1 " plus this many "-40:100,"
- * points must fit in one line. */
-#define MAX_CURVE_POINTS 6u
 
 struct fan_curve {
 	uint8_t count;
@@ -157,7 +147,7 @@ const char *autocurve_set_curve(unsigned ch, const char *text)
 			return "too many points";
 		if (!parse_int(&s, &temp) || *s != ':')
 			return "bad point, want temp:duty";
-		if (temp < INT16_MIN || temp > INT16_MAX)
+		if (temp < CURVE_TEMP_MIN_C || temp > CURVE_TEMP_MAX_C)
 			return "temp out of range";
 		s++;
 		if (!parse_int(&s, &duty) || duty < 0 || duty > 100)

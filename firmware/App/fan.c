@@ -1,12 +1,8 @@
 #include "board.h"
+#include "config.h"
 #include "fan.h"
 #include "pwm.h"
 #include "tach.h"
-
-/* A stopped fan may not start at a low duty, so start it at FAN_KICK_PCT
- * for FAN_KICK_MS before dropping to the requested duty. */
-#define FAN_KICK_PCT 30u
-#define FAN_KICK_MS  2000u
 
 static enum fan_mode modes[FAN_COUNT];
 static unsigned duties[FAN_COUNT];

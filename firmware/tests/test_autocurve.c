@@ -85,6 +85,10 @@ int main(void)
 	 * stored in must be rejected, not silently narrowed into garbage. */
 	check("out-of-range temp rejected", autocurve_set_curve(1, "40000:50") != NULL, true);
 	check("rejected table leaves channel unset", autocurve_curve_status(1), CURVE_NONE);
+	/* Only the 0-200 degC domain is a valid curve point, not just whatever
+	 * fits in int16_t. */
+	check("negative temp rejected", autocurve_set_curve(1, "-1:50") != NULL, true);
+	check("temp above 200 rejected", autocurve_set_curve(1, "201:50") != NULL, true);
 
 	if (autocurve_set_curve(1, "30:20,40:35,50:55,60:75,70:100") != NULL)
 		check("set_curve on channel 1 failed", 1, 0);

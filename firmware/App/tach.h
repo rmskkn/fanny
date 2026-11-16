@@ -4,8 +4,7 @@
 
 #include <stdint.h>
 
-#define TACH_PULSES_PER_REV 2u /* Intel 4-wire fan spec */
-#define TACH_WINDOW_US      1000000u
+#include "config.h"
 
 static inline unsigned tach_calc_rpm(uint32_t pulses, uint32_t elapsed_us)
 {

@@ -1,6 +1,7 @@
 #include <libopencm3/stm32/iwdg.h>
 
 #include "board.h"
+#include "config.h"
 #include "fan.h"
 #include "safety.h"
 #include "tach.h"

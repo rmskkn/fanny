@@ -12,9 +12,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define SAFETY_HOST_TIMEOUT_MS 20000u
-#define SAFETY_STALL_S         3u
-
 void safety_init(void);
 void safety_update(uint32_t now_ms);
 

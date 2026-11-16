@@ -4,17 +4,11 @@
 #include <libopencm3/stm32/rcc.h>
 
 #include "board.h"
+#include "config.h"
 #include "thermal.h"
 
 /* Scan order: AIN1..AIN4, 12 V sense, temperature sensor, VREFINT. */
 enum { SLOT_V12 = AIN_COUNT, SLOT_TEMP, SLOT_VREF, SLOT_COUNT };
-
-/* 12 V divider: 10k over 3.3k. */
-#define V12_DIV_NUM 133u
-#define V12_DIV_DEN 33u
-
-/* IIR filter: acc holds 2^FILTER_SHIFT times the average. ~16 ms time constant. */
-#define FILTER_SHIFT 4
 
 static uint8_t sequence[SLOT_COUNT] = { 0, 1, 2, 3, 4, ADC_CHANNEL_TEMP, ADC_CHANNEL_VREF };
 static volatile uint16_t samples[SLOT_COUNT];

@@ -3,6 +3,7 @@
 #include <libopencm3/stm32/timer.h>
 
 #include "board.h"
+#include "config.h"
 #include "pwm.h"
 
 /* Timer clock is 72 MHz (APB1 x2). */
@@ -62,10 +63,6 @@ void pwm_init(void)
 			      dcen_pin[ch]);
 	}
 }
-
-/* NF-P12 PWM neither starts nor keeps running below ~10 % real duty, so
- * 1..100 % is mapped linearly onto 10..100 %; 0 % stays off. */
-#define PWM_MIN_PCT 10u
 
 void pwm_set_signal(unsigned ch, unsigned pct)
 {
