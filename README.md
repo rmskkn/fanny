@@ -58,6 +58,22 @@ sudo apt install kicad gcc-arm-none-eabi openocd python3 python3-serial
 You also need an ST-Link V2 programmer wired to the Blue Pill's SWD header
 to flash firmware. FreeCAD 1.1 is only needed to change the printed case.
 
+`make analyze` (clang static analyzer over the firmware, see Build below)
+needs clang-23 specifically; a different major version can enable a
+different default set of checkers, which has produced false positives on
+this codebase before.
+
+```sh
+# Arch: clang already provides a clang-23 symlink, nothing extra to install
+sudo pacman -S clang
+
+# Ubuntu 24.04: its own archives don't carry clang-23, so use the LLVM
+# project's own installer instead
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 23
+```
+
 
 ## Hardware design
 
@@ -238,6 +254,7 @@ cd fanny
 make                 # firmware/build/fanny.elf, .bin (~11.5 KiB flash)
 make flash           # flash fanny.bin, OpenOCD + ST-Link over SWD
 make test            # host-side protocol and conversion tests
+make analyze         # clang static analyzer over the firmware sources
 ```
 
 The first `make` builds libopencm3 for STM32F1 only. It also runs

@@ -19,10 +19,19 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install arm-none-eabi-gcc and clang
+      - name: Install arm-none-eabi-gcc
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-arm-none-eabi clang
+          sudo apt-get install -y gcc-arm-none-eabi
+
+      # Ubuntu's own archives don't carry clang-23 yet; apt.llvm.org's
+      # bootstrap script does, and installs it as clang-23 (matches the
+      # local dev machine's own clang-23, see firmware/Makefile).
+      - name: Install clang-23
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 23
 
       - name: Build firmware
         run: make
