@@ -14715,97 +14715,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:Polyfuse")
-		(at 566.42 50.8 270)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "2aed46ce-6b51-4e84-bed0-cfffbfbddf5a")
-		(property "Reference" "F5"
-			(at 566.42 48.26 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1.1A"
-			(at 566.42 53.34 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Fuse:Fuse_1812_4532Metric"
-			(at 571.5 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" ""
-			(at 566.42 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "PTC 1.1 A hold, 16 V; a shorted fan does not trip F1"
-			(at 566.42 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "Bourns MF-MSMF110/16-2"
-			(at 566.42 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "ea057542-be74-4ee0-9702-4519af507e41")
-		)
-		(pin "2"
-			(uuid "4299863b-13c6-46bc-9b89-da30481e101f")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "F5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 401.32 115.57 0)
 		(unit 1)
@@ -18673,97 +18582,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:Polyfuse")
-		(at 365.76 52.07 270)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "81e2cc9b-3da5-49d6-8950-521444a457b8")
-		(property "Reference" "F3"
-			(at 365.76 49.53 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1.1A"
-			(at 365.76 54.61 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Fuse:Fuse_1812_4532Metric"
-			(at 370.84 53.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" ""
-			(at 365.76 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "PTC 1.1 A hold, 16 V; a shorted fan does not trip F1"
-			(at 365.76 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "Bourns MF-MSMF110/16-2"
-			(at 365.76 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "a8ef5c93-eb6f-415f-bfe9-28ec0ffab1f2")
-		)
-		(pin "2"
-			(uuid "2b4173ee-96e4-4339-b4a0-9cb21087d2df")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "F3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 421.64 226.06 0)
 		(unit 1)
@@ -21356,97 +21174,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:Polyfuse")
-		(at 264.16 52.07 270)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "bf59e453-e646-46ee-ae04-3d6c0acd34f2")
-		(property "Reference" "F2"
-			(at 264.16 49.53 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1.1A"
-			(at 264.16 54.61 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Fuse:Fuse_1812_4532Metric"
-			(at 269.24 53.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" ""
-			(at 264.16 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "PTC 1.1 A hold, 16 V; a shorted fan does not trip F1"
-			(at 264.16 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "Bourns MF-MSMF110/16-2"
-			(at 264.16 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "86392af1-cd8e-44c8-8396-281cea416d71")
-		)
-		(pin "2"
-			(uuid "ac7b92ef-6d33-4865-822e-d710b507cae0")
-		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "F2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 567.69 158.75 0)
 		(unit 1)
@@ -24004,96 +23731,45 @@
 			)
 		)
 	)
-	(symbol
-		(lib_id "Device:Polyfuse")
-		(at 464.82 50.8 270)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "ff3ce0f5-0843-478d-9ddc-222e6f50dee4")
-		(property "Reference" "F4"
-			(at 464.82 48.26 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
+	(wire
+		(pts
+			(xy 260.35 52.07) (xy 267.97 52.07)
 		)
-		(property "Value" "1.1A"
-			(at 464.82 53.34 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
+		(stroke
+			(width 0)
+			(type default)
 		)
-		(property "Footprint" "Fuse:Fuse_1812_4532Metric"
-			(at 469.9 52.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
+		(uuid "4f47cea8-f5de-4a3a-8065-d3aa88d06e01")
+	)
+	(wire
+		(pts
+			(xy 361.95 52.07) (xy 369.57 52.07)
 		)
-		(property "Datasheet" ""
-			(at 464.82 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
+		(stroke
+			(width 0)
+			(type default)
 		)
-		(property "Description" "PTC 1.1 A hold, 16 V; a shorted fan does not trip F1"
-			(at 464.82 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
+		(uuid "87f0fc16-c2a9-44cc-915f-41de43be41b1")
+	)
+	(wire
+		(pts
+			(xy 461.01 50.8) (xy 468.63 50.8)
 		)
-		(property "MPN" "Bourns MF-MSMF110/16-2"
-			(at 464.82 50.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
+		(stroke
+			(width 0)
+			(type default)
 		)
-		(pin "1"
-			(uuid "19eb0e44-a9d8-4ba3-a232-ed6704dcfd06")
+		(uuid "ce72d759-1d28-44ac-ad99-96d263cd0ee6")
+	)
+	(wire
+		(pts
+			(xy 562.61 50.8) (xy 570.23 50.8)
 		)
-		(pin "2"
-			(uuid "ec2f1853-4117-473a-a399-00286dcd33ff")
+		(stroke
+			(width 0)
+			(type default)
 		)
-		(instances
-			(project "fan_controller"
-				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "F4")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "d70cb666-e473-4571-a8a8-33d78a909aac")
 	)
 	(sheet_instances
 		(path "/"
