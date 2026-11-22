@@ -19,13 +19,16 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install arm-none-eabi-gcc
+      - name: Install arm-none-eabi-gcc and clang
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-arm-none-eabi
+          sudo apt-get install -y gcc-arm-none-eabi clang
 
       - name: Build firmware
         run: make
+
+      - name: Run static analyzer
+        run: make analyze
 
       - name: Run firmware tests
         run: make test

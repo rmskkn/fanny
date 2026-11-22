@@ -5,6 +5,8 @@
 #                     libopencm3 submodule on first run)
 #   make flash        flash build/fanny.bin with OpenOCD + ST-Link
 #   make test         host-side unit tests (native gcc)
+#   make analyze      clang static analyzer over every firmware source,
+#                     cross-targeted at the real cpu/ABI (needs clang)
 
 OPENCM3_DIR ?= Drivers/libopencm3
 
@@ -12,6 +14,7 @@ PREFIX  ?= arm-none-eabi-
 CC      := $(PREFIX)gcc
 OBJCOPY := $(PREFIX)objcopy
 SIZE    := $(PREFIX)size
+CLANG   ?= clang
 
 BUILD := build
 TARGET := $(BUILD)/fanny
@@ -65,6 +68,21 @@ test:
 clean:
 	rm -rf $(BUILD)
 
-.PHONY: all flash test clean
+# clang's own ARM sysroot lacks libopencm3 and the newlib headers the real
+# toolchain carries, so point it at arm-none-eabi-gcc's sysroot instead.
+# --analyze always exits 0 even on a warning, so grep the output for one
+# and fail the build on a hit instead of trusting the exit code.
+analyze: $(OPENCM3_DIR)/lib/libopencm3_stm32f1.a
+	@sysroot="$$($(CC) -print-sysroot)"; \
+	status=0; \
+	for src in $(SRCS); do \
+		out="$$($(CLANG) --target=arm-none-eabi $(ARCH) -isysroot "$$sysroot" \
+			-DSTM32F1 -I$(OPENCM3_DIR)/include -ICore -IApp -IUSB_DEVICE \
+			--analyze -Xclang -analyzer-output=text "$$src" 2>&1)"; \
+		if [ -n "$$out" ]; then echo "$$out"; status=1; fi; \
+	done; \
+	exit $$status
+
+.PHONY: all flash test clean analyze
 
 -include $(OBJS:.o=.d)
