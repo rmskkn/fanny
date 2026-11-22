@@ -74,13 +74,15 @@ flowchart TB
     classDef analog fill:#fbd9e8,stroke:#c2255c,color:#111
 
     subgraph PWR["Power 12 V"]
-        PSU["12 V PSU"] --> J1["J1 Mate-N-Lok"] --> F1["F1 PTC 2.5A"] --> D1["D1 Schottky"] --> V12["+12V"]
+        PSU["12 V PSU"] --> J1["J1 Mate-N-Lok"] --> F1["F1 PTC 2.5A"] --> D2["D2 Schottky"] --> V12["+12V"]
         V12 --> FANV["fan +12V x4"]
-        V12 --> DIV["47k/10k divider"] --> PB0["PB0 ADC"]
+        V12 --> DIV["10k/3.3k divider"] --> PB0["PB0 ADC"]
+        V12 --> D3["D3 1N4148WT"] --> U1["U1 AMS1117-3.3"]
     end
 
     subgraph USB3V3["USB / 3V3"]
         USB["USB via Blue Pill microB"] --> P5V["+5V"] --> LDO["Blue Pill LDO"] --> V33["+3V3"] --> FB1["FB1"] --> V33A["+3V3A"]
+        U1 --> V33
     end
 
     subgraph MCU["Blue Pill module on J2 and J3"]
@@ -101,7 +103,7 @@ flowchart TB
         SENS["sensors"] --> RCB["1k + 100n + BAT54S"] --> ADC["PA0..PA3 ADC x4"]
     end
 
-    class PSU,J1,F1,D1,V12,FANV,DIV power
+    class PSU,J1,F1,D2,V12,FANV,DIV,D3,U1 power
     class PB0 mcu
     class USB,P5V,LDO,V33,FB1,V33A usb
     class TIM4,BSS,FPWM pwm
@@ -175,10 +177,14 @@ before trusting the curve.
   Schottky diode (anode toward the PTC) that blocks a reversed supply instead
   of tripping the PTC. The PTC resets on its own, so a miswire leaves nothing
   to replace.
-- **Module supply:** USB only. The board carries no 5 V or 3.3 V regulator.
-  The LDO on the Blue Pill makes 3.3 V from USB VBUS.
-- **12 V monitoring:** a 47 kΩ/10 kΩ divider into PB0. Full scale lands near
-  18.8 V.
+- **Module supply:** USB, 12 V, or both. The LDO on the Blue Pill makes
+  3.3 V from USB VBUS. U1 (AMS1117-3.3) on the carrier makes 3.3 V from the
+  12 V bus and feeds the module 3V3 pin, so the board runs with no USB cable.
+  With both present, whichever regulator sits a little higher carries the
+  load. D3 sits in front of U1 so that a USB-only board doesn't back-feed
+  3.3 V onto the 12 V bus through U1.
+- **12 V monitoring:** a 10 kΩ/3.3 kΩ divider into PB0. Full scale lands near
+  13.3 V, so a supply above that reads as 13.3 V.
 - **USB:** the micro-B connector of the Blue Pill and nothing else. The
   carrier has no USB connector or header or ESD protection of its own. The
   firmware pulls D+ low for 10 ms at boot to force the host to re-enumerate.

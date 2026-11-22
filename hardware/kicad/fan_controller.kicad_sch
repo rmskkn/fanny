@@ -725,6 +725,183 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:C_Polarized"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C_Polarized"
+				(at 0.635 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Polarized capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "CP_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_Polarized_0_1"
+				(rectangle
+					(start -2.286 0.508)
+					(end 2.286 1.016)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 2.286) (xy -0.762 2.286)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 2.794) (xy -1.27 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 2.286 -0.508)
+					(end -2.286 -1.016)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "C_Polarized_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:D"
 			(pin_numbers
 				(hide yes)
@@ -2315,6 +2492,159 @@
 						)
 					)
 					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Regulator_Linear:AMS1117-3.3"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -3.81 3.175 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "AMS1117-3.3"
+				(at 0 3.175 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "http://www.advanced-monolithic.com/pdf/ds1117.pdf"
+				(at 2.54 -6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "1A Low Dropout regulator, positive, 3.3V fixed output, SOT-223"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "linear regulator ldo fixed positive"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT?223*TabPin2*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "AMS1117-3.3_0_1"
+				(rectangle
+					(start -5.08 -5.08)
+					(end 5.08 1.905)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "AMS1117-3.3_1_1"
+				(pin power_in line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "VO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -7.62 0 0)
+					(length 2.54)
+					(name "VI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -6354,6 +6684,12 @@
 		(uuid "c151c250-3505-4cf9-b738-21dfea95c4d3")
 	)
 	(junction
+		(at 72.39 189.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "cbd1228c-b71e-4a4f-a6b0-98dd73e839b0")
+	)
+	(junction
 		(at 624.84 302.26)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6366,10 +6702,22 @@
 		(uuid "d5a69880-1628-4028-83c0-d2e0253cf9e9")
 	)
 	(junction
+		(at 49.53 189.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "de8eaa03-e1ab-4110-9dd6-c87bff166726")
+	)
+	(junction
 		(at 267.97 302.26)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e0917aea-e51d-40cb-8f48-6a727ad6bd67")
+	)
+	(junction
+		(at 60.96 200.66)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e57f99bb-3169-4215-87ae-dd9d096cec45")
 	)
 	(junction
 		(at 575.31 165.1)
@@ -6493,6 +6841,16 @@
 	)
 	(wire
 		(pts
+			(xy 72.39 200.66) (xy 72.39 198.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "00c2b908-c1f4-4d1e-b853-e2b6a24963ac")
+	)
+	(wire
+		(pts
 			(xy 247.65 166.37) (xy 255.27 166.37)
 		)
 		(stroke
@@ -6500,6 +6858,16 @@
 			(type default)
 		)
 		(uuid "016440cd-57e8-4f30-88c4-c19304b89c0f")
+	)
+	(wire
+		(pts
+			(xy 68.58 189.23) (xy 72.39 189.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "040fea62-ec69-4c2f-a40c-74b8e92d8f0e")
 	)
 	(wire
 		(pts
@@ -6640,6 +7008,16 @@
 			(type default)
 		)
 		(uuid "160e67b4-cacd-4bdc-801a-25ce57d20ba0")
+	)
+	(wire
+		(pts
+			(xy 49.53 189.23) (xy 53.34 189.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "17544c2a-19ed-4fde-bdde-cab2f3127741")
 	)
 	(wire
 		(pts
@@ -7463,16 +7841,6 @@
 	)
 	(wire
 		(pts
-			(xy 570.23 50.8) (xy 591.82 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "68f6d7bc-4841-486f-93a3-ee781bfcc9bc")
-	)
-	(wire
-		(pts
 			(xy 574.04 119.38) (xy 589.28 119.38)
 		)
 		(stroke
@@ -7490,6 +7858,16 @@
 			(type default)
 		)
 		(uuid "6d58f6a7-ab48-4bc0-b587-0fbb4a7774c1")
+	)
+	(wire
+		(pts
+			(xy 49.53 198.12) (xy 49.53 200.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6d5a1f0a-633b-4b67-9c2a-33f061101a62")
 	)
 	(wire
 		(pts
@@ -7613,6 +7991,16 @@
 	)
 	(wire
 		(pts
+			(xy 43.18 189.23) (xy 49.53 189.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7dd93043-8911-49ce-953e-8ef9f2a5d77f")
+	)
+	(wire
+		(pts
 			(xy 707.39 300.99) (xy 707.39 304.8)
 		)
 		(stroke
@@ -7680,16 +8068,6 @@
 			(type default)
 		)
 		(uuid "800ed21d-a67d-4df5-b3a8-fc0f6bae6255")
-	)
-	(wire
-		(pts
-			(xy 369.57 52.07) (xy 391.16 52.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "80ff2365-1c8c-484f-ab23-67d63e6167e1")
 	)
 	(wire
 		(pts
@@ -8003,6 +8381,26 @@
 	)
 	(wire
 		(pts
+			(xy 49.53 200.66) (xy 60.96 200.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9dc36b69-beab-4085-949a-481ef528f117")
+	)
+	(wire
+		(pts
+			(xy 72.39 189.23) (xy 72.39 190.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9e65f16b-ef96-40fc-8d2d-9e1e112df8f1")
+	)
+	(wire
+		(pts
 			(xy 171.45 295.91) (xy 171.45 303.53)
 		)
 		(stroke
@@ -8043,7 +8441,17 @@
 	)
 	(wire
 		(pts
-			(xy 457.2 50.8) (xy 461.01 50.8)
+			(xy 72.39 189.23) (xy 78.74 189.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a9ff680d-d2ee-4f90-9ea6-7538af57ca49")
+	)
+	(wire
+		(pts
+			(xy 457.2 50.8) (xy 490.22 50.8)
 		)
 		(stroke
 			(width 0)
@@ -8113,6 +8521,16 @@
 	)
 	(wire
 		(pts
+			(xy 49.53 189.23) (xy 49.53 190.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b133e0fe-3565-40d0-b1ff-9479c8818f50")
+	)
+	(wire
+		(pts
 			(xy 448.31 116.84) (xy 471.17 116.84)
 		)
 		(stroke
@@ -8143,17 +8561,7 @@
 	)
 	(wire
 		(pts
-			(xy 468.63 50.8) (xy 490.22 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ba174f91-aff7-44d3-abc0-10b07ffb1f5f")
-	)
-	(wire
-		(pts
-			(xy 558.8 50.8) (xy 562.61 50.8)
+			(xy 558.8 50.8) (xy 591.82 50.8)
 		)
 		(stroke
 			(width 0)
@@ -8180,6 +8588,16 @@
 			(type default)
 		)
 		(uuid "bb276161-f87d-4a4b-a10c-72255c9ab233")
+	)
+	(wire
+		(pts
+			(xy 60.96 200.66) (xy 72.39 200.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bb9f9604-5b98-4ff6-a3ac-78da2299c3c3")
 	)
 	(wire
 		(pts
@@ -8353,6 +8771,16 @@
 	)
 	(wire
 		(pts
+			(xy 60.96 196.85) (xy 60.96 200.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cb80c4d4-ad14-47b1-a426-8c2e1980bc35")
+	)
+	(wire
+		(pts
 			(xy 494.03 109.22) (xy 502.92 109.22)
 		)
 		(stroke
@@ -8363,7 +8791,7 @@
 	)
 	(wire
 		(pts
-			(xy 256.54 52.07) (xy 260.35 52.07)
+			(xy 256.54 52.07) (xy 289.56 52.07)
 		)
 		(stroke
 			(width 0)
@@ -8573,16 +9001,6 @@
 	)
 	(wire
 		(pts
-			(xy 267.97 52.07) (xy 289.56 52.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e4ac6bb9-9b74-49fe-a772-481b8d31bdc0")
-	)
-	(wire
-		(pts
 			(xy 91.44 113.03) (xy 109.22 113.03)
 		)
 		(stroke
@@ -8783,7 +9201,7 @@
 	)
 	(wire
 		(pts
-			(xy 358.14 52.07) (xy 361.95 52.07)
+			(xy 358.14 52.07) (xy 391.16 52.07)
 		)
 		(stroke
 			(width 0)
@@ -10527,6 +10945,28 @@
 			)
 		)
 	)
+	(global_label "+3V3"
+		(shape bidirectional)
+		(at 78.74 189.23 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6a0c65bc-d5ea-4592-9ca1-431e156a4800")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 78.74 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "+12V"
 		(shape bidirectional)
 		(at 45.72 64.77 0)
@@ -10944,6 +11384,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+			)
+		)
+	)
+	(global_label "+12V"
+		(shape bidirectional)
+		(at 35.56 189.23 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "95dee5b5-12b1-4e8d-b01e-6cc860176aae")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 35.56 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 	)
@@ -12146,7 +12608,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "015e4eb3-5081-49d8-b31b-8bb16c92f79e")
-		(property "Reference" "R37"
+		(property "Reference" "R39"
 			(at 580.39 229.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12208,7 +12670,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R37")
+					(reference "R39")
 					(unit 1)
 				)
 			)
@@ -12312,7 +12774,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "06e8738c-f74f-432e-a3fe-36bedbf661b5")
-		(property "Reference" "#PWR023"
+		(property "Reference" "#PWR025"
 			(at 551.18 233.68 0)
 			(hide yes)
 			(show_name no)
@@ -12372,7 +12834,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR023")
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
@@ -12389,7 +12851,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "08674d5c-9221-420b-b5bf-84481e891ce2")
-		(property "Reference" "#PWR035"
+		(property "Reference" "#PWR037"
 			(at 678.18 128.27 0)
 			(hide yes)
 			(show_name no)
@@ -12449,7 +12911,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR035")
+					(reference "#PWR037")
 					(unit 1)
 				)
 			)
@@ -12466,7 +12928,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "08a464d0-9a03-4c73-9b8f-8e33354f4b1b")
-		(property "Reference" "R12"
+		(property "Reference" "R14"
 			(at 280.67 220.98 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12528,7 +12990,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R12")
+					(reference "R14")
 					(unit 1)
 				)
 			)
@@ -12644,7 +13106,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0948e052-ecc2-4857-865c-1c294f584944")
-		(property "Reference" "R29"
+		(property "Reference" "R31"
 			(at 475.742 161.29 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12717,7 +13179,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R29")
+					(reference "R31")
 					(unit 1)
 				)
 			)
@@ -12734,7 +13196,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0c3bf1fd-a5dc-410f-8d2f-959ac0db6124")
-		(property "Reference" "R41"
+		(property "Reference" "R43"
 			(at 642.62 49.022 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12796,7 +13258,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R41")
+					(reference "R43")
 					(unit 1)
 				)
 			)
@@ -12813,7 +13275,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0d8a3fe9-900f-40d6-9a2b-513c4b88f3db")
-		(property "Reference" "R46"
+		(property "Reference" "R48"
 			(at 683.26 97.282 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12886,7 +13348,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R46")
+					(reference "R48")
 					(unit 1)
 				)
 			)
@@ -13085,7 +13547,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "148eac26-4b70-4670-baaf-b2fc0ba56009")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR021"
 			(at 471.17 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -13145,7 +13607,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR019")
+					(reference "#PWR021")
 					(unit 1)
 				)
 			)
@@ -13297,6 +13759,85 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:D")
+		(at 39.37 189.23 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "15620bc8-116e-4103-991a-305cbe9438d0")
+		(property "Reference" "D3"
+			(at 39.37 186.69 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "1N4148WT"
+			(at 39.37 191.77 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-523"
+			(at 39.37 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 39.37 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Diode"
+			(at 39.37 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "da2d1ed7-0dc4-47c6-8d63-856caf1fc2d0")
+		)
+		(pin "2"
+			(uuid "0427d018-07e8-4d05-8b6d-e95316514491")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 669.29 60.96 0)
 		(unit 1)
@@ -13307,7 +13848,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "16afc812-5eb1-43e7-879a-3ffffccebc2a")
-		(property "Reference" "#PWR028"
+		(property "Reference" "#PWR030"
 			(at 669.29 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -13367,7 +13908,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR028")
+					(reference "#PWR030")
 					(unit 1)
 				)
 			)
@@ -13384,7 +13925,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "17e725ad-689d-4a2d-86d6-d1937f2fbf67")
-		(property "Reference" "#PWR06"
+		(property "Reference" "#PWR08"
 			(at 148.59 233.68 0)
 			(hide yes)
 			(show_name no)
@@ -13444,7 +13985,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR06")
+					(reference "#PWR08")
 					(unit 1)
 				)
 			)
@@ -13461,7 +14002,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "181b3dd6-02f7-44d2-9089-37d15619504c")
-		(property "Reference" "#PWR030"
+		(property "Reference" "#PWR032"
 			(at 670.56 153.67 0)
 			(hide yes)
 			(show_name no)
@@ -13521,7 +14062,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR030")
+					(reference "#PWR032")
 					(unit 1)
 				)
 			)
@@ -13538,7 +14079,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "1aae4a39-046b-4346-a5d8-bfac0ac84c6f")
-		(property "Reference" "R39"
+		(property "Reference" "R41"
 			(at 641.35 181.102 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13600,7 +14141,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R39")
+					(reference "R41")
 					(unit 1)
 				)
 			)
@@ -13617,7 +14158,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "1ab9ccb9-a0f1-4a36-9c1f-b0403031545b")
-		(property "Reference" "#PWR032"
+		(property "Reference" "#PWR034"
 			(at 673.1 173.99 0)
 			(hide yes)
 			(show_name no)
@@ -13677,7 +14218,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR032")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
@@ -13694,7 +14235,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "1abc3a26-1283-4879-9c30-cfac62397e96")
-		(property "Reference" "#PWR036"
+		(property "Reference" "#PWR038"
 			(at 707.39 316.23 0)
 			(hide yes)
 			(show_name no)
@@ -13754,7 +14295,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR036")
+					(reference "#PWR038")
 					(unit 1)
 				)
 			)
@@ -13848,7 +14389,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "1dde3b53-2f93-48d2-a3fa-b8c42d29e01e")
-		(property "Reference" "#PWR021"
+		(property "Reference" "#PWR023"
 			(at 502.92 111.76 0)
 			(hide yes)
 			(show_name no)
@@ -13908,7 +14449,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR021")
+					(reference "#PWR023")
 					(unit 1)
 				)
 			)
@@ -14070,7 +14611,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "20403778-a0d9-4e0d-ad64-eef5db08122d")
-		(property "Reference" "#PWR024"
+		(property "Reference" "#PWR026"
 			(at 561.34 233.68 0)
 			(hide yes)
 			(show_name no)
@@ -14130,7 +14671,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR024")
+					(reference "#PWR026")
 					(unit 1)
 				)
 			)
@@ -14147,7 +14688,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "22a7c74f-234b-4451-962a-2763a64f0e45")
-		(property "Reference" "#PWR015"
+		(property "Reference" "#PWR017"
 			(at 372.11 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -14207,7 +14748,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR015")
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -14225,7 +14766,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "234c3542-8365-4c7a-9d9f-8cb6657bf32a")
-		(property "Reference" "R47"
+		(property "Reference" "R3"
 			(at 34.29 148.59 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14289,7 +14830,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R47")
+					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -14306,7 +14847,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "235e54ac-da0a-4435-abd3-e778b687a236")
-		(property "Reference" "R22"
+		(property "Reference" "R24"
 			(at 412.242 227.33 90)
 			(hide yes)
 			(show_name no)
@@ -14380,7 +14921,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R22")
+					(reference "R24")
 					(unit 1)
 				)
 			)
@@ -14397,7 +14938,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2377100f-0604-445f-bca3-24a75e727e4d")
-		(property "Reference" "#PWR07"
+		(property "Reference" "#PWR09"
 			(at 171.45 313.69 0)
 			(hide yes)
 			(show_name no)
@@ -14457,7 +14998,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR07")
+					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -14474,7 +15015,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "24da6209-7354-4baf-8098-31651f4b80a3")
-		(property "Reference" "D6"
+		(property "Reference" "D8"
 			(at 678.434 53.34 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14553,7 +15094,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "D6")
+					(reference "D8")
 					(unit 1)
 				)
 			)
@@ -14570,7 +15111,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "253cd59f-0c1c-4678-8ed6-d56cbc0d94cc")
-		(property "Reference" "#PWR034"
+		(property "Reference" "#PWR036"
 			(at 676.91 76.2 0)
 			(hide yes)
 			(show_name no)
@@ -14630,7 +15171,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR034")
+					(reference "#PWR036")
 					(unit 1)
 				)
 			)
@@ -14648,7 +15189,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "27a06290-d27a-4456-b96c-bcc0317aa296")
-		(property "Reference" "#PWR047"
+		(property "Reference" "#PWR03"
 			(at 31.75 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -14660,7 +15201,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 31.75 155.57 0)
+			(at 31.75 155.702 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -14708,7 +15249,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR047")
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -14725,7 +15266,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2e7091f1-2a19-419f-a88d-4a41de5c6d4a")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR018"
 			(at 401.32 115.57 0)
 			(hide yes)
 			(show_name no)
@@ -14785,7 +15326,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR016")
+					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -14802,7 +15343,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2fc830f7-cc83-4f15-837f-5870a96e69eb")
-		(property "Reference" "D1"
+		(property "Reference" "D2"
 			(at 39.37 67.31 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14875,7 +15416,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "D1")
+					(reference "D2")
 					(unit 1)
 				)
 			)
@@ -14892,7 +15433,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "30f54715-d9f8-4693-960d-151f8a0b49aa")
-		(property "Reference" "R17"
+		(property "Reference" "R19"
 			(at 359.41 127.762 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14965,7 +15506,84 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R17")
+					(reference "R19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 60.96 200.66 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "323840b5-1f11-4f83-a76c-97f08391179d")
+		(property "Reference" "#PWR04"
+			(at 60.96 207.01 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 60.96 205.74 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 60.96 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 60.96 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 60.96 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "84b2b8b5-d9fa-4cb3-ba04-59df9474e810")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -14983,7 +15601,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "32ca6003-aca9-416e-a78a-caae3e473501")
-		(property "Reference" "R7"
+		(property "Reference" "R9"
 			(at 162.052 218.44 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15045,7 +15663,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R7")
+					(reference "R9")
 					(unit 1)
 				)
 			)
@@ -15160,7 +15778,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3312eba9-9ffe-41b3-852b-70a70af39652")
-		(property "Reference" "R43"
+		(property "Reference" "R45"
 			(at 679.45 148.082 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15233,7 +15851,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R43")
+					(reference "R45")
 					(unit 1)
 				)
 			)
@@ -15250,7 +15868,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "34449895-94a0-4c0b-8646-67dfba0fd22c")
-		(property "Reference" "R13"
+		(property "Reference" "R15"
 			(at 295.402 222.25 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15323,7 +15941,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R13")
+					(reference "R15")
 					(unit 1)
 				)
 			)
@@ -15340,7 +15958,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "35656ace-aebd-4c09-91e4-484bb53f6664")
-		(property "Reference" "#PWR020"
+		(property "Reference" "#PWR022"
 			(at 473.71 161.29 0)
 			(hide yes)
 			(show_name no)
@@ -15400,7 +16018,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR020")
+					(reference "#PWR022")
 					(unit 1)
 				)
 			)
@@ -15417,7 +16035,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "37736c66-baa8-4200-b28f-a9e1ad3d62b6")
-		(property "Reference" "R20"
+		(property "Reference" "R22"
 			(at 374.142 162.56 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15490,7 +16108,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R20")
+					(reference "R22")
 					(unit 1)
 				)
 			)
@@ -15507,7 +16125,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "37c53634-e25c-4890-aefe-b8a1482207b4")
-		(property "Reference" "#PWR09"
+		(property "Reference" "#PWR011"
 			(at 269.24 139.7 0)
 			(hide yes)
 			(show_name no)
@@ -15567,7 +16185,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR09")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -15584,7 +16202,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "39c8bc16-0050-4c04-a214-72394bcd63cc")
-		(property "Reference" "R32"
+		(property "Reference" "R34"
 			(at 558.8 229.87 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15646,7 +16264,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R32")
+					(reference "R34")
 					(unit 1)
 				)
 			)
@@ -15663,7 +16281,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3bf1848f-0686-4313-95ff-9a8f1d121890")
-		(property "Reference" "R9"
+		(property "Reference" "R11"
 			(at 257.302 162.56 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15736,7 +16354,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R9")
+					(reference "R11")
 					(unit 1)
 				)
 			)
@@ -15851,7 +16469,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3ca4936e-ef11-49a3-8133-f3921d0416ff")
-		(property "Reference" "#PWR031"
+		(property "Reference" "#PWR033"
 			(at 670.56 212.09 0)
 			(hide yes)
 			(show_name no)
@@ -15911,7 +16529,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR031")
+					(reference "#PWR033")
 					(unit 1)
 				)
 			)
@@ -15928,7 +16546,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3fa48331-9938-4dfe-9a82-75a61a3ee0a4")
-		(property "Reference" "#PWR026"
+		(property "Reference" "#PWR028"
 			(at 575.31 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -15988,7 +16606,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR026")
+					(reference "#PWR028")
 					(unit 1)
 				)
 			)
@@ -16100,7 +16718,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "41068abd-dd4d-4c42-9928-4ee13a20a1ab")
-		(property "Reference" "R8"
+		(property "Reference" "R10"
 			(at 257.302 149.86 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16173,7 +16791,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R8")
+					(reference "R10")
 					(unit 1)
 				)
 			)
@@ -16253,6 +16871,87 @@
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
 					(reference "J9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Polarized")
+		(at 72.39 194.31 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "428c5411-3b45-4694-b35f-385fcffd6a49")
+		(property "Reference" "C3"
+			(at 76.2 193.04 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "22u 10V tant"
+			(at 74.93 197.358 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A"
+			(at 73.355 190.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 72.39 194.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Polarized capacitor"
+			(at 72.39 194.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "e857eb52-c78f-4e79-b553-f1ac275a3ba4")
+		)
+		(pin "2"
+			(uuid "a619b3e7-2d8b-41c3-b1d3-702d799516fa")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "C3")
 					(unit 1)
 				)
 			)
@@ -16367,7 +17066,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4656fead-bac7-42b6-bb94-c9b1312b66fc")
-		(property "Reference" "R42"
+		(property "Reference" "R44"
 			(at 643.89 98.552 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16429,7 +17128,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R42")
+					(reference "R44")
 					(unit 1)
 				)
 			)
@@ -16446,7 +17145,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4996ccd9-b2d7-46b2-9093-3505ceb51e0c")
-		(property "Reference" "R24"
+		(property "Reference" "R26"
 			(at 434.34 226.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16508,7 +17207,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R24")
+					(reference "R26")
 					(unit 1)
 				)
 			)
@@ -16525,7 +17224,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4a3158e6-d54e-4b3b-bd46-6ae232bcc28d")
-		(property "Reference" "R44"
+		(property "Reference" "R46"
 			(at 679.45 209.042 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16598,7 +17297,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R44")
+					(reference "R46")
 					(unit 1)
 				)
 			)
@@ -16615,7 +17314,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4d686c4e-8ab5-41c0-9e70-6a622f133e2d")
-		(property "Reference" "R4"
+		(property "Reference" "R6"
 			(at 123.698 223.52 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16688,7 +17387,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R4")
+					(reference "R6")
 					(unit 1)
 				)
 			)
@@ -16705,7 +17404,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4e2d32c4-8c6d-4f86-b04e-a8637f41aaee")
-		(property "Reference" "R10"
+		(property "Reference" "R12"
 			(at 256.54 129.032 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16778,7 +17477,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R10")
+					(reference "R12")
 					(unit 1)
 				)
 			)
@@ -16795,7 +17494,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "52ac8e01-34b2-47fe-8735-3b9e8de9c1ab")
-		(property "Reference" "R28"
+		(property "Reference" "R30"
 			(at 475.742 148.59 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16868,7 +17567,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R28")
+					(reference "R30")
 					(unit 1)
 				)
 			)
@@ -16984,7 +17683,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5a79d2e0-424d-4a72-a770-bacf57d0fdbf")
-		(property "Reference" "R25"
+		(property "Reference" "R27"
 			(at 450.088 224.79 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17057,7 +17756,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R25")
+					(reference "R27")
 					(unit 1)
 				)
 			)
@@ -17153,7 +17852,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5d6fd8ff-c373-40da-9a9a-49921f1ee61a")
-		(property "Reference" "R19"
+		(property "Reference" "R21"
 			(at 374.142 149.86 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17226,7 +17925,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R19")
+					(reference "R21")
 					(unit 1)
 				)
 			)
@@ -17243,7 +17942,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5d7663fc-2c6a-4ad4-8632-0714dcfe2c88")
-		(property "Reference" "R45"
+		(property "Reference" "R47"
 			(at 681.99 49.022 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17316,7 +18015,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R45")
+					(reference "R47")
 					(unit 1)
 				)
 			)
@@ -17418,6 +18117,87 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 49.53 194.31 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "61e05901-f551-4dca-bff3-9e30fd26b755")
+		(property "Reference" "C2"
+			(at 41.656 195.326 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10u 25V"
+			(at 40.386 198.628 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+			(at 50.495 190.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 49.53 194.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 49.53 194.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "00b261d1-41c6-4cf3-ab59-2ce0647aa293")
+		)
+		(pin "2"
+			(uuid "89643e49-5918-414e-8f19-ba030186069e")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "C2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Diode:BAT54S")
 		(at 680.72 156.21 0)
 		(unit 1)
@@ -17428,7 +18208,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "677b64ac-007a-428d-9e5b-9b62cdbc5906")
-		(property "Reference" "D9"
+		(property "Reference" "D11"
 			(at 683.26 151.13 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17507,7 +18287,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "D9")
+					(reference "D11")
 					(unit 1)
 				)
 			)
@@ -17614,7 +18394,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "6872622b-484b-4767-8d84-1dca28eb8b07")
-		(property "Reference" "R34"
+		(property "Reference" "R36"
 			(at 576.072 125.73 90)
 			(hide yes)
 			(show_name no)
@@ -17688,7 +18468,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R34")
+					(reference "R36")
 					(unit 1)
 				)
 			)
@@ -17705,7 +18485,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "6a0764a5-d2a8-4983-a30d-e7066206b714")
-		(property "Reference" "R26"
+		(property "Reference" "R28"
 			(at 458.47 123.952 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17778,7 +18558,90 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R26")
+					(reference "R28")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Regulator_Linear:AMS1117-3.3")
+		(at 60.96 189.23 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "6d2b0594-1a80-461a-a0a8-a401bdc6074c")
+		(property "Reference" "U1"
+			(at 60.96 181.61 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AMS1117-3.3"
+			(at 60.96 184.15 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
+			(at 60.96 194.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "http://www.advanced-monolithic.com/pdf/ds1117.pdf"
+			(at 63.5 182.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "1A Low Dropout regulator, positive, 3.3V fixed output, SOT-223"
+			(at 60.96 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "e3da5ffc-868f-470e-8e6e-60af245fe2fe")
+		)
+		(pin "2"
+			(uuid "1ec9bd34-3c9d-48aa-88d8-5e5dd47588bf")
+		)
+		(pin "3"
+			(uuid "6e973f3b-4ffd-43ce-abd1-5ca64787797b")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "U1")
 					(unit 1)
 				)
 			)
@@ -17795,7 +18658,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "6eb97542-5a64-43e5-88f9-96261d3820ec")
-		(property "Reference" "R3"
+		(property "Reference" "R5"
 			(at 115.062 220.98 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17857,7 +18720,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R3")
+					(reference "R5")
 					(unit 1)
 				)
 			)
@@ -17954,7 +18817,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7316eefa-25d2-4abd-9814-bae8e6a4afd1")
-		(property "Reference" "#PWR017"
+		(property "Reference" "#PWR019"
 			(at 410.21 229.87 0)
 			(hide yes)
 			(show_name no)
@@ -18014,7 +18877,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR017")
+					(reference "#PWR019")
 					(unit 1)
 				)
 			)
@@ -18031,7 +18894,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7506c8f8-c0c6-4f97-91e3-8ec96134fb98")
-		(property "Reference" "#PWR012"
+		(property "Reference" "#PWR014"
 			(at 327.66 229.87 0)
 			(hide yes)
 			(show_name no)
@@ -18091,7 +18954,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR012")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -18108,7 +18971,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7511df77-de70-4944-9520-8fb05dbbd2b5")
-		(property "Reference" "#PWR05"
+		(property "Reference" "#PWR07"
 			(at 137.16 233.68 0)
 			(hide yes)
 			(show_name no)
@@ -18168,7 +19031,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR05")
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
@@ -18185,7 +19048,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "75b70b51-ca68-4eb9-9233-247bc81a9252")
-		(property "Reference" "#PWR018"
+		(property "Reference" "#PWR020"
 			(at 421.64 236.22 0)
 			(hide yes)
 			(show_name no)
@@ -18245,7 +19108,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR018")
+					(reference "#PWR020")
 					(unit 1)
 				)
 			)
@@ -18262,7 +19125,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7a4f062b-4ef7-4e0c-bccc-9e622a94e95d")
-		(property "Reference" "R40"
+		(property "Reference" "R42"
 			(at 641.35 226.822 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18324,7 +19187,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R40")
+					(reference "R42")
 					(unit 1)
 				)
 			)
@@ -18418,7 +19281,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7b6aa958-6b00-4161-b531-e4980b47c1d8")
-		(property "Reference" "R38"
+		(property "Reference" "R40"
 			(at 598.17 226.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18480,7 +19343,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R38")
+					(reference "R40")
 					(unit 1)
 				)
 			)
@@ -18592,7 +19455,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "83d41cc7-760b-4c14-b660-254d70b6c05c")
-		(property "Reference" "R23"
+		(property "Reference" "R25"
 			(at 419.1 226.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18654,7 +19517,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R23")
+					(reference "R25")
 					(unit 1)
 				)
 			)
@@ -18671,7 +19534,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "86be2e1e-7407-4bc7-b6ab-9c2b72b5418b")
-		(property "Reference" "D7"
+		(property "Reference" "D9"
 			(at 678.434 213.614 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18750,7 +19613,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "D7")
+					(reference "D9")
 					(unit 1)
 				)
 			)
@@ -18846,7 +19709,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "88d30cc7-b1f6-435b-a8ab-70b66e6a9640")
-		(property "Reference" "C3"
+		(property "Reference" "C5"
 			(at 365.125 162.56 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18921,7 +19784,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "C3")
+					(reference "C5")
 					(unit 1)
 				)
 			)
@@ -18938,7 +19801,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8914268b-7de0-4b95-a6e5-1606d98e193d")
-		(property "Reference" "#PWR033"
+		(property "Reference" "#PWR035"
 			(at 675.64 193.04 0)
 			(hide yes)
 			(show_name no)
@@ -18998,7 +19861,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR033")
+					(reference "#PWR035")
 					(unit 1)
 				)
 			)
@@ -19015,7 +19878,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "89c9c534-dabd-44a4-9570-791bc2776d3e")
-		(property "Reference" "R5"
+		(property "Reference" "R7"
 			(at 139.192 223.52 90)
 			(hide yes)
 			(show_name no)
@@ -19089,7 +19952,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R5")
+					(reference "R7")
 					(unit 1)
 				)
 			)
@@ -19106,7 +19969,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8c219059-84bf-49bc-a0f9-63e48c60dc56")
-		(property "Reference" "D8"
+		(property "Reference" "D10"
 			(at 679.196 102.362 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19185,7 +20048,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "D8")
+					(reference "D10")
 					(unit 1)
 				)
 			)
@@ -19202,7 +20065,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8c3a9b18-f9c1-461e-92cd-0c2586c76a7c")
-		(property "Reference" "#PWR08"
+		(property "Reference" "#PWR010"
 			(at 255.27 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -19262,7 +20125,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR08")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)
@@ -19279,7 +20142,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8da202cb-4f2a-49d9-9dd5-0958903ddc7b")
-		(property "Reference" "R27"
+		(property "Reference" "R29"
 			(at 473.202 128.27 90)
 			(hide yes)
 			(show_name no)
@@ -19353,7 +20216,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R27")
+					(reference "R29")
 					(unit 1)
 				)
 			)
@@ -19370,7 +20233,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8f83d97c-137b-4a5f-a21f-5cba4cdeda4e")
-		(property "Reference" "R18"
+		(property "Reference" "R20"
 			(at 374.142 132.08 90)
 			(hide yes)
 			(show_name no)
@@ -19444,7 +20307,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R18")
+					(reference "R20")
 					(unit 1)
 				)
 			)
@@ -19461,7 +20324,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "908c0ef5-22b6-4745-9814-a5f612ee736c")
-		(property "Reference" "R33"
+		(property "Reference" "R35"
 			(at 569.468 229.87 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19534,7 +20397,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R33")
+					(reference "R35")
 					(unit 1)
 				)
 			)
@@ -19552,7 +20415,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "95075481-c89d-4e48-9a9c-c93bbd0b48fe")
-		(property "Reference" "R48"
+		(property "Reference" "R4"
 			(at 41.402 138.43 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19614,7 +20477,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R48")
+					(reference "R4")
 					(unit 1)
 				)
 			)
@@ -19825,7 +20688,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a0ea1e0c-caab-4ce6-b1c1-ec77359b3beb")
-		(property "Reference" "D3"
+		(property "Reference" "D5"
 			(at 422.91 148.59 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19898,7 +20761,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "D3")
+					(reference "D5")
 					(unit 1)
 				)
 			)
@@ -20010,7 +20873,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a806d5f4-ecaf-4ada-a392-8458cd49c1cc")
-		(property "Reference" "#PWR010"
+		(property "Reference" "#PWR012"
 			(at 298.45 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -20070,7 +20933,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR010")
+					(reference "#PWR012")
 					(unit 1)
 				)
 			)
@@ -20185,7 +21048,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "abc7e957-860d-41f2-92ef-182cb0d00ec9")
-		(property "Reference" "#PWR04"
+		(property "Reference" "#PWR06"
 			(at 97.79 45.72 0)
 			(hide yes)
 			(show_name no)
@@ -20245,7 +21108,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR04")
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -20534,7 +21397,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b1c3cd30-6ee6-4c0b-8486-e4030bd997be")
-		(property "Reference" "D5"
+		(property "Reference" "D7"
 			(at 623.57 147.32 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20607,7 +21470,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "D5")
+					(reference "D7")
 					(unit 1)
 				)
 			)
@@ -20624,7 +21487,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b2c164a4-2090-4717-8e5d-195056b1bf3e")
-		(property "Reference" "#PWR03"
+		(property "Reference" "#PWR05"
 			(at 95.25 151.13 0)
 			(hide yes)
 			(show_name no)
@@ -20684,7 +21547,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR03")
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -20701,7 +21564,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b6ba583e-73cd-4f73-a0f9-7a840047ade9")
-		(property "Reference" "R21"
+		(property "Reference" "R23"
 			(at 392.43 219.71 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20763,7 +21626,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R21")
+					(reference "R23")
 					(unit 1)
 				)
 			)
@@ -20780,7 +21643,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b9f5e387-e3ff-424a-8895-0c4a7731c8d4")
-		(property "Reference" "#PWR014"
+		(property "Reference" "#PWR016"
 			(at 372.11 138.43 0)
 			(hide yes)
 			(show_name no)
@@ -20840,7 +21703,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR014")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -20858,7 +21721,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "bdbca49a-a7c2-460e-922a-2fd5e09b117b")
-		(property "Reference" "D10"
+		(property "Reference" "D1"
 			(at 29.21 128.27 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20920,7 +21783,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "D10")
+					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -20937,7 +21800,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "be2a8426-a7ac-4b8f-8535-9832ae2907b1")
-		(property "Reference" "#PWR025"
+		(property "Reference" "#PWR027"
 			(at 574.04 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -20997,7 +21860,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR025")
+					(reference "#PWR027")
 					(unit 1)
 				)
 			)
@@ -21014,7 +21877,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "be8d467a-3b83-4bd3-b3a4-1e01b9888ca7")
-		(property "Reference" "R14"
+		(property "Reference" "R16"
 			(at 302.26 222.25 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21076,7 +21939,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R14")
+					(reference "R16")
 					(unit 1)
 				)
 			)
@@ -21093,7 +21956,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "bee848cb-830e-43a0-b0a4-39580308de60")
-		(property "Reference" "R30"
+		(property "Reference" "R32"
 			(at 553.212 231.14 90)
 			(hide yes)
 			(show_name no)
@@ -21167,7 +22030,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R30")
+					(reference "R32")
 					(unit 1)
 				)
 			)
@@ -21184,7 +22047,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c17bc583-f7f5-45d1-8f62-2b7fba43a395")
-		(property "Reference" "C5"
+		(property "Reference" "C7"
 			(at 568.325 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21259,7 +22122,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "C5")
+					(reference "C7")
 					(unit 1)
 				)
 			)
@@ -21452,6 +22315,83 @@
 		)
 	)
 	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 49.53 189.23 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c500eaf1-322f-4e3b-b75f-cb2513a27560")
+		(property "Reference" "#FLG02"
+			(at 49.53 182.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 49.53 184.15 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 49.53 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 49.53 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 49.53 189.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "23b17e43-7790-46a2-a596-49ecbd3fa9b9")
+		)
+		(instances
+			(project "fan_controller"
+				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
+					(reference "#FLG02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 575.31 148.59 0)
 		(unit 1)
@@ -21462,7 +22402,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c685fb83-5f3c-4378-9332-92f91265ad14")
-		(property "Reference" "R35"
+		(property "Reference" "R37"
 			(at 577.342 148.59 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21535,7 +22475,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R35")
+					(reference "R37")
 					(unit 1)
 				)
 			)
@@ -21552,7 +22492,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "cdbac9e6-fb9e-49aa-9f08-f984e96578ca")
-		(property "Reference" "#PWR011"
+		(property "Reference" "#PWR013"
 			(at 316.23 229.87 0)
 			(hide yes)
 			(show_name no)
@@ -21612,7 +22552,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR011")
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -21706,7 +22646,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d2e79f16-63cc-4bd9-879d-4da0b7433dad")
-		(property "Reference" "#PWR013"
+		(property "Reference" "#PWR015"
 			(at 350.52 316.23 0)
 			(hide yes)
 			(show_name no)
@@ -21766,7 +22706,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR013")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -21783,7 +22723,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d9982e2f-84c9-4372-abe4-1467292c09fb")
-		(property "Reference" "#PWR027"
+		(property "Reference" "#PWR029"
 			(at 609.6 111.76 0)
 			(hide yes)
 			(show_name no)
@@ -21843,7 +22783,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR027")
+					(reference "#PWR029")
 					(unit 1)
 				)
 			)
@@ -21860,7 +22800,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "dadfeb2e-9a8c-4d76-b989-1d262498308a")
-		(property "Reference" "R11"
+		(property "Reference" "R13"
 			(at 271.272 133.35 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21933,7 +22873,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R11")
+					(reference "R13")
 					(unit 1)
 				)
 			)
@@ -22045,7 +22985,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "dc1f39ea-e11f-4df3-8d95-5a4289a6cdd0")
-		(property "Reference" "R36"
+		(property "Reference" "R38"
 			(at 577.342 161.29 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22118,7 +23058,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R36")
+					(reference "R38")
 					(unit 1)
 				)
 			)
@@ -22222,7 +23162,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e0721a08-095c-46fb-ac68-4f4245d72942")
-		(property "Reference" "R15"
+		(property "Reference" "R17"
 			(at 313.69 224.79 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22284,7 +23224,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R15")
+					(reference "R17")
 					(unit 1)
 				)
 			)
@@ -22301,7 +23241,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e24106c3-1c7f-4700-ae4d-355ad184291b")
-		(property "Reference" "C4"
+		(property "Reference" "C6"
 			(at 466.725 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22376,7 +23316,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "C4")
+					(reference "C6")
 					(unit 1)
 				)
 			)
@@ -22393,7 +23333,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e2e840d9-3da4-453a-beb7-3dd5398a027a")
-		(property "Reference" "#PWR029"
+		(property "Reference" "#PWR031"
 			(at 670.56 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -22453,7 +23393,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR029")
+					(reference "#PWR031")
 					(unit 1)
 				)
 			)
@@ -22470,7 +23410,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e3c69702-9c6d-44b6-9398-435f45310a87")
-		(property "Reference" "R6"
+		(property "Reference" "R8"
 			(at 150.622 223.52 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22532,7 +23472,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R6")
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -22640,7 +23580,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e6b4fee7-5fc8-4f8b-96f9-afba1eda28bb")
-		(property "Reference" "D2"
+		(property "Reference" "D4"
 			(at 321.31 148.59 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22713,7 +23653,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "D2")
+					(reference "D4")
 					(unit 1)
 				)
 			)
@@ -22920,7 +23860,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "eb00e946-d7d5-4bb5-8216-5b878d5cee4d")
-		(property "Reference" "R31"
+		(property "Reference" "R33"
 			(at 561.34 121.412 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22993,7 +23933,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R31")
+					(reference "R33")
 					(unit 1)
 				)
 			)
@@ -23108,7 +24048,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f32f40e1-193a-4af9-a482-c5dc2ddf61e4")
-		(property "Reference" "R16"
+		(property "Reference" "R18"
 			(at 329.692 220.98 90)
 			(hide yes)
 			(show_name no)
@@ -23182,7 +24122,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "R16")
+					(reference "R18")
 					(unit 1)
 				)
 			)
@@ -23295,7 +24235,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f5306aff-6698-4e26-8708-c0714b89dbf3")
-		(property "Reference" "D4"
+		(property "Reference" "D6"
 			(at 521.97 147.32 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23368,7 +24308,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "D4")
+					(reference "D6")
 					(unit 1)
 				)
 			)
@@ -23475,7 +24415,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "fc67d48f-49cd-4764-a04a-babd005dd630")
-		(property "Reference" "C2"
+		(property "Reference" "C4"
 			(at 248.285 162.56 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23550,7 +24490,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "C2")
+					(reference "C4")
 					(unit 1)
 				)
 			)
@@ -23567,7 +24507,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ff019812-07fd-41b8-879a-984137b8cd90")
-		(property "Reference" "#PWR022"
+		(property "Reference" "#PWR024"
 			(at 527.05 313.69 0)
 			(hide yes)
 			(show_name no)
@@ -23627,7 +24567,7 @@
 		(instances
 			(project "fan_controller"
 				(path "/70b8c4ee-a575-5d0b-ad3b-d6e1fd85f7ba"
-					(reference "#PWR022")
+					(reference "#PWR024")
 					(unit 1)
 				)
 			)
@@ -23730,46 +24670,6 @@
 				)
 			)
 		)
-	)
-	(wire
-		(pts
-			(xy 260.35 52.07) (xy 267.97 52.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4f47cea8-f5de-4a3a-8065-d3aa88d06e01")
-	)
-	(wire
-		(pts
-			(xy 361.95 52.07) (xy 369.57 52.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "87f0fc16-c2a9-44cc-915f-41de43be41b1")
-	)
-	(wire
-		(pts
-			(xy 461.01 50.8) (xy 468.63 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ce72d759-1d28-44ac-ad99-96d263cd0ee6")
-	)
-	(wire
-		(pts
-			(xy 562.61 50.8) (xy 570.23 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d70cb666-e473-4571-a8a8-33d78a909aac")
 	)
 	(sheet_instances
 		(path "/"
