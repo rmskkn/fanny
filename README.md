@@ -405,19 +405,39 @@ loginctl enable-linger "$USER"   # only if the board must run with no user sessi
 - **25 kHz chop stresses a fan's input cap** but stays inaudible. All four
   `pwm` channels share one chop frequency.
 
+## Special thanks
+
+These open-source projects helped build the project:
+
+1. [KiCAD-MCP-Server](https://github.com/mixelpixx/KiCAD-MCP-Server) by
+   mixelpixx drives KiCad schematic and PCB edits over MCP.
+2. [freecad-mcp](https://github.com/neka-nat/freecad-mcp) by neka-nat drives
+   FreeCAD over MCP for the printed case.
+3. [KiCadRoutingTools](https://github.com/drandyhaas/KiCadRoutingTools) by
+   drandyhaas reroutes nets that fail DRC.
+
 ## License
 
 Copyright © 2026 Roman Skakun.
 
-This project covers the hardware design files and the firmware and the host
-tool. All of it is licensed under
-[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](LICENSE)
-which is CC BY-NC-SA 4.0.
+The hardware and the code use different licenses.
 
-You may build and modify and share this design for personal and other
-non-commercial purposes with attribution and under the same license.
-Commercial use is not permitted without a separate written license from the
-copyright holder. That includes selling assembled boards or bare PCBs or kits.
+The hardware design files in `hardware/` (KiCad project, BOM, renders, and
+the case model files) are licensed under
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](LICENSE)
+(CC BY-NC-SA 4.0). You may build, modify and share the design for personal
+and other non-commercial purposes, with attribution and under the same
+license. Commercial use needs a separate written license from the copyright
+holder. That includes selling assembled boards, bare PCBs or kits.
+
+The 3D models in `hardware/kicad/3dmodels/` are copied from the KiCad
+library and keep their own CC-BY-SA 4.0 license with the KiCad libraries
+exception. See [`hardware/kicad/3dmodels/README.md`](hardware/kicad/3dmodels/README.md).
+
+The code in `firmware/`, `host/`, `scripts/`, `hardware/scripts/` and the
+case generator `hardware/case/fan_controller_case.py` is licensed under the [GNU General Public License v3.0](LICENSE-GPL-3.0). You
+may use, change and redistribute it, including commercially, as long as you
+release the source of every version you distribute under the same license.
 
 `firmware/Drivers/libopencm3` is a submodule under its own LGPL-3.0 license
-and is not covered by the above.
+and is covered by neither of the above.

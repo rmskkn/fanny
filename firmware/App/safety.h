@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /*
  * Safety: independent watchdog, host-loss failsafe and stall detection.
  *

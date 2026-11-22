@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-3.0-only
 # List commits as "<short-hash> <title>" for a release change list.
 #
 # Usage: scripts/changelog.sh [<from>] [<to>]

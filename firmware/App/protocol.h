@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /*
  * Line-based text protocol over USB CDC. Lines end with LF (CR ignored).
  *

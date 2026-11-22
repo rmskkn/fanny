@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /*
  * STM32F103C8: 64 KiB flash, 20 KiB SRAM. Sections come from libopencm3.
  * The linked image gets 64K - 1K: the last 1 KiB page (0x0800FC00) is

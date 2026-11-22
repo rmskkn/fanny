@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-only
 # Top-level entry point; the firmware build lives in firmware/Makefile.
 #
 #   make          build firmware (firmware/build/fanny.elf/.bin)

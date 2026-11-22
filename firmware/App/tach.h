@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /* Fan tachometer: falling-edge count over a 1 s window. */
 #ifndef TACH_H
 #define TACH_H

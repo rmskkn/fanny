@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /* Tunable behavior knobs, gathered in one place. Hardware addresses,
  * protocol/buffer sizes, and values derived from the clock or a table are
  * not here; they stay next to the code that depends on them. */

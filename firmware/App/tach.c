@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 #include <stdbool.h>
 
 #include <libopencm3/cm3/dwt.h>

@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /*
  * Persists autocurve.c's per-channel curve tables across reset, in the
  * last flash page (reserved for this and nothing else, see

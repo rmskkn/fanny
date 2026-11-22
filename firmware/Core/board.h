@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /*
  * Board pin map. Must match hardware/kicad schematic (see docs in README.md).
  *

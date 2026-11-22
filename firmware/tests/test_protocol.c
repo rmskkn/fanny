@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /*
  * Host-side tests for the command protocol and the pure conversion helpers.
  * Hardware modules are replaced by the fakes below.

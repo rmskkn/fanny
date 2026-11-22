@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-only
 # STM32F103C8 PWM fan controller firmware (libopencm3).
 #
 #   make              build build/fanny.elf/.bin (inits and builds the

@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /* USB CDC-ACM virtual serial port (libopencm3, polled from the main loop). */
 #ifndef USB_CDC_H
 #define USB_CDC_H

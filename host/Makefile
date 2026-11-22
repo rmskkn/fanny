@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-only
 # Host-side Python unit tests for fanctl.py/fancontrold.py. No hardware
 # needed: tests fake the serial port / board connection.
 #

@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /*
  * Per-channel mV -> degC calibration for the onboard autocurve NTC
  * conversion (see autocurve.c). One table per AIN channel so a channel's

@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /* Timer and GPIO outputs for the fan control paths. Duty is in percent, 0..100. */
 #ifndef PWM_H
 #define PWM_H

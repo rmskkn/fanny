@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 #include <libopencm3/stm32/iwdg.h>
 
 #include "board.h"

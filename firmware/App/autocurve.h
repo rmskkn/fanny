@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /*
  * Autonomous mode: no host needed. While active, every channel's duty is
  * recomputed once a second from its onboard NTC thermistor (channel N

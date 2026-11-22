@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-only
 """Unit tests for fancontrold.py. No hardware needed: run() is driven
 against a fake FanController, same spirit as the firmware's host-side C
 tests driving autocurve.c against fakes."""

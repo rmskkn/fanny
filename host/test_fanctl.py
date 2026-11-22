@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-only
 """Unit tests for fanctl.py. No hardware needed: serial.Serial is replaced
 with a mock, same approach as test_fancontrold.py's fake FanController."""
 import unittest

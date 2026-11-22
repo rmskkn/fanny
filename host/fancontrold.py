@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
 """Temperature-based fan control daemon for the STM32 PWM fan controller.
 
 Reads a config file that sets each fan channel to either a constant duty, a

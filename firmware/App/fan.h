@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /* Per-channel fan state: mode and duty, mapped onto the signal and motor-switch PWM. */
 #ifndef FAN_H
 #define FAN_H

@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /*
  * Analog inputs: AIN1..AIN6 (sensor headers), 12 V rail, VDDA and MCU temperature.
  * ADC1 scans continuously into RAM by DMA; values are low-pass filtered.

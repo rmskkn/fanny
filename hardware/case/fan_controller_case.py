@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-only
 """Two-part printed case for the fan controller PCB (hardware/kicad/fan_controller.kicad_pcb).
 
 tray:  low open tray. The PCB screws onto 4 standoffs. The wall rises only

@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /*
  * Host-side tests for the autocurve NTC mv->degC->duty lookup (autocurve.c).
  * Black-box: drives the module through its public API and the thermal/fan

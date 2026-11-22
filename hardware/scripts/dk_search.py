@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
 """DigiKey cheapest-candidate search for a list of BOM line items.
 
 Report-only: prints ranked candidates per line, does not touch bom.csv.
