@@ -9,3 +9,6 @@ __pycache__/
 .mcp-backups/
 *.dsn
 *.ses
+
+# FreeCAD backup files
+*.FCBak
