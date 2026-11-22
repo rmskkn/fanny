@@ -41,6 +41,8 @@ jobs:
             firmware/build/fanny.elf
             firmware/build/fanny.bin
             hardware/gerbers/fanny-gerbers.zip
+            hardware/case/fan_controller_tray.stl
+            hardware/case/fan_controller_cover.stl
             LICENSE
             LICENSE-GPL-3.0
             firmware/Drivers/libopencm3/COPYING.LGPL3

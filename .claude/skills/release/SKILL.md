@@ -16,12 +16,17 @@ to write — don't go looking for one.
 
 1. `ci` job calls `firmware.yml` (build)
 2. `gerbers` job calls `gerbers.yml` (export)
-3. `release` job (needs both) downloads the `fanny-firmware` and
-   `fanny-gerbers` artifacts and publishes a GitHub release via
-   `softprops/action-gh-release@v2`, attaching:
+3. `release` job (needs both) checks out the repo with submodules,
+   downloads the `fanny-firmware` and `fanny-gerbers` artifacts and
+   publishes a GitHub release via `softprops/action-gh-release@v2`,
+   attaching:
    - `firmware/build/fanny.elf`
    - `firmware/build/fanny.bin`
    - `hardware/gerbers/fanny-gerbers.zip`
+   - `hardware/case/fan_controller_tray.stl` and
+     `fan_controller_cover.stl`, the committed files as they are (CI
+     doesn't run FreeCAD), so they must be current before tagging
+   - `LICENSE`, `LICENSE-GPL-3.0` and libopencm3's `COPYING.LGPL3`
 
 ## Steps
 

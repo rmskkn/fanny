@@ -88,7 +88,8 @@ inside `execute_code`. Its `render()` ends with
 
 The repo rule applies: `make` and `make test` from the root on the exact
 staged tree. Stage the script together with every regenerated output
-(`.FCStd`, `*.step`, `*.stl`, `case_*.png`). A rebuild with no geometry
+(`.FCStd`, `*.step`, `*.stl`, `case_*.png`). Every tagged release
+attaches the committed STLs as they are, so a stale STL ships. A rebuild with no geometry
 change still rewrites the STEP and FCStd files (timestamps), and that is fine
 to commit. `README.md` has a Case section; touch it only when asked, but
 tell the user when the change makes it stale (screws, windows, weight).
