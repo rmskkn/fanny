@@ -8,10 +8,9 @@ cover: plate with a skirt that sits on the tray wall. A lip goes inside the
        .kicad_pcb still shows, different shroud), so their cable leaves
        sideways through a slot cut into the front wall, shared by the tray
        and the cover skirt, instead of a hole in the top. The JST PH sensor
-       inputs each get a pyramidal hole through the top plate, wide at the
-       outer face and tapering down to the connector's own footprint, to
-       guide the small plug in. A plain window sits over the 12 V Mate-N-Lok
-       input, and a notch in the skirt leaves the micro-B USB free.
+       inputs and the 12 V Mate-N-Lok input each get a plain rectangular
+       window through the top plate, and a hole in the right wall leaves
+       the micro-B USB free.
 
 Build (headless): writes fan_controller_case.FCStd, the STEP files and the
 print-ready STL files next to this script.
@@ -22,9 +21,11 @@ Build and render the README images (opens the FreeCAD window briefly):
 Print: no supports. Tray floor down. The cover STL is flipped, top face down,
 so the windows are plain holes and the USB notch opens upward. 0.2 mm
 layers, 2 perimeters, 15 % infill. PLA or PETG.
-Fasten: 4x M2x6 self-tapping screws (or M2 screws into heat-set inserts with
-INSERT_D set to the insert's hole size). Screw MH4 before plugging in the
-Blue Pill, because it sits under the module.
+Fasten: 4x M2x6 countersunk screws (DIN 965) from under the tray, through the
+PCB, with an M2 nut on the PCB top. Fit MH4 before plugging in the Blue Pill,
+because it sits under the module. The through-hole pins drop into blind
+pockets in the floor's inner face, so trim them to 1.5 mm or less under the
+PCB. The outer bottom stays closed except for 5 vent slots.
 
 Coordinates: X = KiCad x, Y = BOARD_H - KiCad y (KiCad Y points down), so the
 top view matches the PCB editor view. Rectangles below are KiCad footprint
@@ -32,6 +33,7 @@ bounding boxes (x0, y0, x1, y1) taken from the .kicad_pcb.
 """
 
 import os
+import subprocess
 
 import FreeCAD as App
 import MeshPart
@@ -49,37 +51,53 @@ FAN_HEADERS = [  # J4..J7, Molex 47053-1000
     (8.72, 59.27, 19.87, 66.32), (24.64, 59.27, 35.79, 66.32),
     (41.23, 59.27, 52.38, 66.32), (58.23, 59.27, 69.38, 66.32)]
 JST_INPUTS = [  # J10, J11, J8, J9, JST B2B-PH-K
-    (23.02, 52.23, 29.97, 57.78), (39.02, 52.73, 45.97, 58.28),
-    (54.02, 52.77, 60.97, 58.32), (70.53, 52.73, 77.48, 58.28)]
-POWER_IN = (3.46, 0.91, 13.55, 24.70)  # J1, On-Shore OSTOQ045450 Mate-N-Lok
-USB_Y = 13.84                          # Blue Pill centre line, KiCad y
+    (11.51, 52.73, 18.46, 58.27), (27.35, 52.73, 34.30, 58.27),
+    (43.18, 52.73, 50.13, 58.27), (61.51, 52.73, 68.46, 58.27)]
+POWER_IN = (4.0, 0.8, 13.0, 24.8)  # J1 Mate-N-Lok body, measured 9 x 24 mm, centred on its footprint
+POWER_IN_H = 12.0                  # J1 top above the PCB underside, measured, the tallest part
+USB_Y = 13.84                      # Blue Pill centre line, KiCad y
+USB_Z0, USB_Z1 = 5.0, 9.0          # USB receptacle bottom and top edge above the PCB underside, measured
+PIN_ROWS = [  # through-hole pad bounding boxes: J1, J2, J3, J4..J7, J10, J11, J8, J9
+    (7.25, 3.93, 9.75, 21.67), (25.89, 23.15, 75.85, 24.85), (25.89, 2.83, 75.85, 4.53),
+    (9.63, 61.48, 18.98, 63.52), (25.55, 61.48, 34.91, 63.52),
+    (42.13, 61.48, 51.48, 63.52), (59.13, 61.48, 68.48, 63.52),
+    (13.39, 54.08, 16.59, 55.83), (29.22, 54.08, 32.42, 55.83),
+    (45.05, 54.08, 48.25, 55.83), (63.39, 54.08, 66.59, 55.83)]
 
 # Tray
 CLEARANCE = 0.5   # gap between PCB edge and wall
 WALL = 1.6
 FLOOR_T = 1.2
-STANDOFF_H = 4.0  # PCB underside height above floor; THT leads stick out 1.9 mm
+STANDOFF_H = 0.7  # PCB underside height above floor
+PIN_SLOT_M = 0.3  # gap around each through-hole pad row in its floor pocket
+POCKET_SKIN = 0.4  # closed floor left under each pin pocket; pins must stick out <= 1.5 mm
+VENT_C = (38.75, 39.5)  # vent slot group centre, KiCad x, y
+VENT_N, VENT_L, VENT_W, VENT_PITCH = 5, 70.0, 2.0, 5.0  # horizontal stadium vent slots
 WALL_ABOVE = 2.0  # wall height above PCB top surface
 LEDGE_W = 1.0     # edge support ledge under the PCB perimeter
 STANDOFF_D = 5.5
-INSERT_D = 1.7    # pilot hole for M2 self-tapping screw
-CELL = 9.0        # floor lightening cell pitch
-RIB = 2.0         # floor rib width
+SCREW_D = 2.4     # M2 clearance hole
+CSK_D = 4.0       # countersink for the DIN 965 M2 head (3.8 mm), 90 degrees
 CORNER_R = 2.0
 
 # Cover
-TOP_CLEAR = 20.0  # PCB top to cover underside; Blue Pill stack with BOOT jumpers is about 18.6 mm
-TOP_T = 1.6
+TOP_CLEAR = POWER_IN_H - PCB_T  # PCB top to cover underside
+TOP_T = 1.1
 FIT = 0.15        # gap between cover lip and tray wall, per side
 LIP_T = 1.2
 LIP_H = 1.8       # stops 0.2 mm above the PCB top
 FAN_MARGIN = 1.5  # finger room around each fan header (16.5 mm pitch leaves 2.35 mm ribs)
-WIN_MARGIN = 1.5  # room around the other connectors
-USB_NOTCH_W = 18.0  # notch width (Y), rounded ends; the real USB-C port is 8.34x2.56 mm, too
-USB_NOTCH_H = 14.0  # small to pass this micro-B plug (overmould up to 10.6x8.5 mm), so this is
-                    # landscape like every real USB connector without going that thin
+WIN_MARGIN = 0.5  # gap around the J1 body in its window
+MOLEX_CHAMFER = 2.0  # 45 degree chamfer on both left corners of the J1 body; verify against the real part
+USB_NOTCH_W = 9.0  # USB hole width (Y), rounded ends, measured
+USB_NOTCH_H = 3.0  # USB hole height, measured
 FAN_CONN_H = 6.0  # right-angle fan header + cable clearance above the PCB top; verify against the real part
-NTC_FLARE = 3.0   # extra half-width, outer face only, that flares each NTC funnel's mouth
+
+LOGO_TEXT = "Fanny"
+LOGO_C = (46.0, 26.0)  # logo centre on the cover top, KiCad x, y, clear of every window
+LOGO_BOX = (25.0, 15.0)  # logo fits inside this w x h
+LOGO_DEPTH = 0.4  # engraved, so the face-down cover prints without supports
+LOGO_FONT = "Liberation Sans:bold"  # fontconfig pattern
 
 EXPLODE = 35.0    # cover lift in the exploded render
 
@@ -133,21 +151,7 @@ def tray():
     o = -CLEARANCE - WALL
     out_w, out_h = IN_W + 2 * WALL, IN_H + 2 * WALL
 
-    # floor with a lightening grid inside a solid rim
-    cells = []
-    lo_x, hi_x = WALL, BOARD_W - WALL
-    lo_y, hi_y = WALL, BOARD_H - WALL
-    x = 0.0
-    while x < BOARD_W:
-        y = 0.0
-        while y < BOARD_H:
-            x0, x1 = max(x + RIB / 2, lo_x), min(x + CELL - RIB / 2, hi_x)
-            y0, y1 = max(y + RIB / 2, lo_y), min(y + CELL - RIB / 2, hi_y)
-            if x1 - x0 > 0.5 and y1 - y0 > 0.5:
-                cells.append(Part.makeBox(x1 - x0, y1 - y0, FLOOR_T + 2, V(x0, y0, -1)))
-            y += CELL
-        x += CELL
-    floor = rounded_box(o, o, 0, out_w, out_h, FLOOR_T, CORNER_R).cut(Part.makeCompound(cells))
+    floor = rounded_box(o, o, 0, out_w, out_h, FLOOR_T, CORNER_R)
 
     walls = ring(o, o, 0, out_w, out_h, WALL, WALL_H, CORNER_R)
     ledge = Part.makeBox(IN_W, IN_H, PCB_Z, V(-CLEARANCE, -CLEARANCE, 0)).cut(
@@ -155,14 +159,25 @@ def tray():
                      V(LEDGE_W, LEDGE_W, -1)))
 
     parts = [floor, walls, ledge]
-    pilots = []
+    cuts = []
     for hx, hy in HOLES:
-        parts.append(Part.makeCylinder((STANDOFF_D + 2.4) / 2, FLOOR_T, V(hx, hy, 0)))
-        parts.append(Part.makeCone((STANDOFF_D + 2.4) / 2, STANDOFF_D / 2, FLOOR_T + 1.5, V(hx, hy, 0)))
         parts.append(Part.makeCylinder(STANDOFF_D / 2, PCB_Z, V(hx, hy, 0)))
-        pilots.append(Part.makeCylinder(INSERT_D / 2, PCB_Z, V(hx, hy, FLOOR_T)))
-    shape = fuse(parts).cut(Part.makeCompound(pilots))
-    return shape.cut(Part.makeCompound(fan_openings()))
+        cuts.append(Part.makeCylinder(SCREW_D / 2, PCB_Z + 2, V(hx, hy, -1)))
+        # cone starts 0.5 mm below the floor so its face doesn't sit coplanar with it
+        cuts.append(Part.makeCone(CSK_D / 2 + 0.5, SCREW_D / 2, (CSK_D - SCREW_D) / 2 + 0.5, V(hx, hy, -0.5)))
+    for x0, y0, x1, y1 in PIN_ROWS:
+        m = PIN_SLOT_M
+        cuts.append(Part.makeBox(x1 - x0 + 2 * m, y1 - y0 + 2 * m, PCB_Z,
+                                 V(x0 - m, BOARD_H - y1 - m, POCKET_SKIN)))
+    r = VENT_W / 2
+    vx0 = VENT_C[0] - VENT_L / 2 + r
+    for i in range(VENT_N):
+        vy = BOARD_H - VENT_C[1] + (i - (VENT_N - 1) / 2) * VENT_PITCH
+        cuts += [Part.makeCylinder(r, FLOOR_T + 2, V(vx0, vy, -1)),
+                 Part.makeCylinder(r, FLOOR_T + 2, V(vx0 + VENT_L - VENT_W, vy, -1)),
+                 Part.makeBox(VENT_L - VENT_W, VENT_W, FLOOR_T + 2, V(vx0, vy - r, -1))]
+    shape = fuse(parts).cut(Part.makeCompound(cuts))
+    return shape.cut(Part.makeCompound(fan_openings() + [usb_notch()]))
 
 
 def window(b, m):
@@ -172,39 +187,44 @@ def window(b, m):
     return Part.makeBox(x1 - x0, y1 - y0, TOP_T + 2, V(x0, BOARD_H - y1, COVER_Z - TOP_T - 1))
 
 
-def ntc_funnel(b):
-    """Pyramidal hole for one JST PH sensor input: snug to the connector's
-    own footprint at the inner face, flared by NTC_FLARE at the outer face,
-    to guide the small plug through the top plate. The flare shrinks by the
-    same amount on every side, so the outer square stays centred on the
-    connector instead of clamping each side independently, which could
-    otherwise pull one side in past the inner square and invert the taper
-    for a header close to the board edge (J9 sits only 0.02 mm shy of it)."""
-    x0, x1 = b[0], b[2]
-    y0, y1 = BOARD_H - b[3], BOARD_H - b[1]
-    flare = max(0.0, min(NTC_FLARE, x0 - 0.5, BOARD_W - 0.5 - x1, y0 - 0.5, BOARD_H - 0.5 - y1))
-    small = Part.makePolygon([V(x0, y0, 0), V(x1, y0, 0), V(x1, y1, 0), V(x0, y1, 0), V(x0, y0, 0)])
-    big = Part.makePolygon([
-        V(x0 - flare, y0 - flare, 0), V(x1 + flare, y0 - flare, 0),
-        V(x1 + flare, y1 + flare, 0), V(x0 - flare, y1 + flare, 0),
-        V(x0 - flare, y0 - flare, 0)])
-    small.translate(V(0, 0, COVER_Z - TOP_T - 0.2))
-    big.translate(V(0, 0, COVER_Z + 0.5))
-    return Part.makeLoft([small, big], True, True)
+def molex_window():
+    """J1 body outline with its two chamfered left corners, grown by
+    WIN_MARGIN and clipped to keep a rim inside the skirt."""
+    x0, x1 = POWER_IN[0], POWER_IN[2]
+    y0, y1 = BOARD_H - POWER_IN[3], BOARD_H - POWER_IN[1]
+    c = MOLEX_CHAMFER
+    outline = Part.makePolygon([
+        V(x0 + c, y0, 0), V(x1, y0, 0), V(x1, y1, 0), V(x0 + c, y1, 0),
+        V(x0, y1 - c, 0), V(x0, y0 + c, 0), V(x0 + c, y0, 0)])
+    face = Part.Face(outline).makeOffset2D(WIN_MARGIN, 2)  # join 2: keep the corners sharp
+    face.translate(V(0, 0, COVER_Z - TOP_T - 1))
+    rim = Part.makeBox(BOARD_W - 1, BOARD_H - 1, COVER_Z + 2, V(0.5, 0.5, -1))
+    return face.extrude(V(0, 0, TOP_T + 2)).common(rim)
+
+
+def logo():
+    """LOGO_TEXT scaled to fit LOGO_BOX, centred on LOGO_C, cut LOGO_DEPTH into the cover top."""
+    font = subprocess.run(["fc-match", "-f", "%{file}", LOGO_FONT],
+                          capture_output=True, text=True, check=True).stdout
+    chars = Part.makeWireString(LOGO_TEXT, font, 10.0)
+    faces = [Part.makeFace(wires, "Part::FaceMakerBullseye") for wires in chars if wires]
+    text = Part.makeCompound(faces)
+    bb = text.BoundBox
+    k = min(LOGO_BOX[0] / bb.XLength, LOGO_BOX[1] / bb.YLength)
+    text.scale(k, V(bb.Center.x, bb.Center.y, 0))
+    text.translate(V(LOGO_C[0] - bb.Center.x, BOARD_H - LOGO_C[1] - bb.Center.y, COVER_Z - LOGO_DEPTH))
+    return text.extrude(V(0, 0, LOGO_DEPTH + 1))
 
 
 def usb_notch():
-    """Micro-B USB cable notch through the right skirt, open at the bottom:
-    a landscape stadium, wide with flat top and bottom and rounded left and
-    right ends, like every real USB connector (the real USB-C port is
-    8.34x2.56 mm, too small to pass this micro-B plug, so this is sized to
-    fit the plug and still read as USB-shaped rather than matching that
-    ratio exactly)."""
+    """USB hole through the right wall, centred on the receptacle: a
+    landscape stadium with flat top and bottom and rounded ends. Also cut
+    from the tray, in case the hole ever reaches below the wall top."""
     depth = CLEARANCE + WALL + 3
     x0 = BOARD_W - 2
     yc = BOARD_H - USB_Y
-    z0 = (WALL_H - LIP_H) - 1
     r = USB_NOTCH_H / 2
+    z0 = PCB_Z + (USB_Z0 + USB_Z1) / 2 - r
     cap_lo = Part.makeCylinder(r, depth, V(x0, yc - USB_NOTCH_W / 2 + r, z0 + r), V(1, 0, 0))
     cap_hi = Part.makeCylinder(r, depth, V(x0, yc + USB_NOTCH_W / 2 - r, z0 + r), V(1, 0, 0))
     mid = Part.makeBox(depth, USB_NOTCH_W - 2 * r, 2 * r, V(x0, yc - USB_NOTCH_W / 2 + r, z0))
@@ -224,10 +244,11 @@ def cover():
     # band that joins the lip to the skirt
     band = ring(-CLEARANCE, -CLEARANCE, WALL_H, IN_W, IN_H, FIT + LIP_T, 2, IN_R)
 
-    cuts = [ntc_funnel(b) for b in JST_INPUTS]
-    cuts.append(window(POWER_IN, WIN_MARGIN))
+    cuts = [window(b, 0) for b in JST_INPUTS]
+    cuts.append(molex_window())
     cuts.append(usb_notch())
     cuts += fan_openings()  # right-angle fan header cable slot, shared with the tray wall
+    cuts.append(logo())
     return fuse([shell, lip, band]).cut(Part.makeCompound(cuts))
 
 
