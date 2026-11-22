@@ -16,7 +16,15 @@ struct fan_curve {
 	uint32_t crc;
 };
 
-static struct fan_curve curves[FAN_COUNT];
+/* AUTO_ON_MAGIC in auto_flag means `auto on` survives a reset. Any other
+ * value, including the 0xFFFFFFFF of an erased page or of a store written
+ * before this field existed, boots with auto off. */
+#define AUTO_ON_MAGIC 0x4F545541u /* "AUTO" */
+
+static struct {
+	struct fan_curve curves[FAN_COUNT];
+	uint32_t auto_flag;
+} store;
 
 static bool active;
 static uint32_t last_update_ms;
@@ -48,12 +56,20 @@ static uint32_t curve_crc(const struct fan_curve *c)
 
 void autocurve_init(void)
 {
-	curve_store_read(curves, sizeof curves);
+	curve_store_read(&store, sizeof store);
+	active = store.auto_flag == AUTO_ON_MAGIC;
 }
 
 void autocurve_set(bool on)
 {
+	uint32_t flag = on ? AUTO_ON_MAGIC : 0;
+
 	active = on;
+	/* Write only on a change, to spare the flash page erase cycles. */
+	if (store.auto_flag != flag) {
+		store.auto_flag = flag;
+		curve_store_write(&store, sizeof store);
+	}
 }
 
 bool autocurve_active(void)
@@ -166,10 +182,10 @@ const char *autocurve_set_curve(unsigned ch, const char *text)
 	if (c.count == 0)
 		return "curve needs at least one point";
 	c.crc = curve_crc(&c);
-	curves[ch] = c;
+	store.curves[ch] = c;
 	/* Whole-array rewrite: the flash page has no sub-page erase, so every
 	 * channel's current table is written back, not just ch's. */
-	curve_store_write(curves, sizeof curves);
+	curve_store_write(&store, sizeof store);
 	return NULL;
 }
 
@@ -177,48 +193,62 @@ enum curve_status autocurve_curve_status(unsigned ch)
 {
 	/* An erased or never-written flash slot reads back as 0xFF fill, so
 	 * count must be range-checked before it is trusted as an array index. */
-	if (ch >= FAN_COUNT || curves[ch].count == 0 || curves[ch].count > MAX_CURVE_POINTS)
+	if (ch >= FAN_COUNT || store.curves[ch].count == 0 || store.curves[ch].count > MAX_CURVE_POINTS)
 		return CURVE_NONE;
-	return curve_crc(&curves[ch]) == curves[ch].crc ? CURVE_OK : CURVE_BAD;
+	return curve_crc(&store.curves[ch]) == store.curves[ch].crc ? CURVE_OK : CURVE_BAD;
 }
 
 /* Only meaningful when autocurve_curve_status(ch) == CURVE_OK; callers
  * (protocol.c's `curve` query) check that first. i is 0-based. */
 unsigned autocurve_curve_count(unsigned ch)
 {
-	return curves[ch].count;
+	return store.curves[ch].count;
 }
 
 int autocurve_curve_temp(unsigned ch, unsigned i)
 {
-	return curves[ch].temp_c[i];
+	return store.curves[ch].temp_c[i];
 }
 
 unsigned autocurve_curve_duty(unsigned ch, unsigned i)
 {
-	return curves[ch].duty[i];
+	return store.curves[ch].duty[i];
 }
 
 #ifdef AUTOCURVE_TEST_HOOKS
 void autocurve_corrupt_for_test(unsigned ch)
 {
-	curves[ch].duty[0] ^= 0xFF;
+	store.curves[ch].duty[0] ^= 0xFF;
 }
 #endif
 
-void autocurve_update(uint32_t now_ms)
+static bool any_curve_bad(void)
 {
-	if (!active)
+	for (unsigned ch = 0; ch < FAN_COUNT; ch++)
+		if (autocurve_curve_status(ch) == CURVE_BAD)
+			return true;
+	return false;
+}
+
+void autocurve_update(uint32_t now_ms, bool host_lost)
+{
+	bool fallback = host_lost && !active;
+
+	if (!active && !fallback)
 		return;
 	if (ms_since(last_update_ms, now_ms) < UPDATE_INTERVAL_MS)
 		return;
 	last_update_ms = now_ms;
 
+	/* A corrupted table on any channel means flash can't be trusted, so the
+	 * host-loss fallback runs every fan at 100 % instead of the curves. */
+	bool all_full = fallback && any_curve_bad();
+
 	for (unsigned ch = 0; ch < FAN_COUNT; ch++) {
-		if (!ain_valid(ch) || autocurve_curve_status(ch) != CURVE_OK) {
+		if (all_full || !ain_valid(ch) || autocurve_curve_status(ch) != CURVE_OK) {
 			fan_set_duty(ch, 100);
 			continue;
 		}
-		fan_set_duty(ch, duty_for_curve(&curves[ch], temp_c_for_mv(ch, thermal_ain_mv(ch))));
+		fan_set_duty(ch, duty_for_curve(&store.curves[ch], temp_c_for_mv(ch, thermal_ain_mv(ch))));
 	}
 }

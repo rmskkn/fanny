@@ -3,7 +3,9 @@
  * Safety: independent watchdog, host-loss failsafe and stall detection.
  *
  * Fans run at 100 % until the host sends its first command, and return to
- * 100 % when no command arrives for SAFETY_HOST_TIMEOUT_MS. The watchdog
+ * 100 % when no command arrives for SAFETY_HOST_TIMEOUT_MS. While that
+ * failsafe is active, main.c hands it to autocurve_update(), which runs the
+ * saved curves as a fallback (see autocurve.h). The watchdog
  * resets the MCU if the main loop hangs; the board pull-ups keep the fans at
  * full speed while the MCU is in reset.
  */

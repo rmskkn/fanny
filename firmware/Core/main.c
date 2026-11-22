@@ -62,12 +62,15 @@ int main(void)
 	gpio_set(GPIOC, GPIO13);
 	gpio_set_mode(GPIOC, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO13);
 
-	/* Fans first: they leave reset at 100 % and stay there until the host takes over. */
+	/* Fans first: they leave reset at 100 % until the host or the curve fallback takes over. */
 	fan_init();
 	tach_init();
 	thermal_init();
 	safety_init();
 	autocurve_init();
+	/* A saved `auto on` runs the curves from boot, with no host-silence
+	 * failsafe, same as the `auto on` command does. */
+	safety_set_host_check(!autocurve_active());
 	protocol_init(emit_line);
 	usb_cdc_init();
 
@@ -89,7 +92,7 @@ int main(void)
 		tach_update();
 		fan_update(now);
 		thermal_update(now);
-		autocurve_update(now);
+		autocurve_update(now, safety_failsafe_active());
 		safety_update(now);
 		led_update(now);
 	}

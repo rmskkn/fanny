@@ -31,12 +31,13 @@ Channels with no section are left alone (not pinged, not overridden). Add
 `type = dc` to a `[fanN]` section for a 3-pin fan on a motor-switch channel;
 it defaults to `type = pwm` (4-pin). The daemon sends `mode` once at startup
 and again after any reconnect, since a firmware reset returns every channel
-to `pwm`. It also queries each AIN-driven curve channel's table on the
-board (`curve ch`, no points) and, only if that differs from the config,
-replaces it over `curve`. The firmware keeps the table in flash for its
-own `auto on` mode, so that channel keeps running its curve if the host
-is ever unreachable; comparing first avoids rewriting flash on every
-reconnect when nothing actually changed.
+to `pwm`. It sends `auto off` at the same points, since the board ignores
+`set` while its own `auto on` mode runs. It also queries each AIN-driven
+curve channel's table on the board (`curve ch`, no points) and, only if
+that differs from the config, replaces it over `curve`. The firmware keeps
+the table in flash, so `fanctl.py auto on` can later run the same curve
+with no host; comparing first avoids rewriting flash on every reconnect
+when nothing actually changed.
 """
 import argparse
 import configparser
@@ -231,6 +232,10 @@ def load_config(path):
 
 def run(fc, interval, channels):
     needs_gpu = any(channel.needs_gpu for channel in channels.values())
+    # With `auto on` (saved in flash across resets) the board overwrites every
+    # `set` with its own curve once a second, so the daemon takes control
+    # first. The firmware writes flash only when the flag actually changes.
+    fc.command("auto off")
     for ch, channel in channels.items():
         fc.command(f"mode {ch} {channel.fan_type}")
         if isinstance(channel, NtcCurveChannel):

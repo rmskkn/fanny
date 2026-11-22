@@ -224,6 +224,15 @@ class RunTest(unittest.TestCase):
         self.assertIn(channels[1].curve_cmd, fc.sent)  # then pushed
         self.assertEqual(fc.current_curve[1], channels[1].curve_cmd)
 
+    def test_auto_off_sent_before_any_set(self):
+        # A board left in `auto on` would overwrite every duty the daemon sets.
+        fc = FakeFanController()
+        with self.assertRaises(_StopTest):
+            fcd.run(fc, 2.0, {1: self._channel()})
+        self.assertIn("auto off", fc.sent)
+        first_set = next(i for i, line in enumerate(fc.sent) if line.startswith("set"))
+        self.assertLess(fc.sent.index("auto off"), first_set)
+
     def test_matching_curve_skips_rewrite(self):
         channel = self._channel()
         fc = FakeFanController(current_curve_by_ch={1: channel.curve_cmd})

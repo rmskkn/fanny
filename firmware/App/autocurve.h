@@ -18,11 +18,15 @@
  * saved by a previous session. */
 void autocurve_init(void);
 
+/* Saved to flash on a change, so the last setting survives a reset. */
 void autocurve_set(bool on);
 bool autocurve_active(void);
 
-/* Call every main loop pass; it throttles itself to once a second. */
-void autocurve_update(uint32_t now_ms);
+/* Call every main loop pass; it throttles itself to once a second. Runs
+ * the curves while `auto on`, and also as a fallback while host_lost (the
+ * host-silence failsafe is active) with `auto off`. In that fallback a
+ * corrupted table on any channel sends every fan to 100 %. */
+void autocurve_update(uint32_t now_ms, bool host_lost);
 
 /* NTC temperature for channel ch's AIN, via the same calibration table and
  * validity check autocurve_update() uses. *valid is false when the reading

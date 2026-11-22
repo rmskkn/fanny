@@ -163,7 +163,9 @@ module is. Expected mV at a given temperature:
 10k/3950 column of Focusensing's
 [10k thermistor reference chart](https://www.focusensing.com/10k-thermistor-chart-type-2-vs-type-3-vs-3950-tables_n196).
 The onboard autocurve mode (`auto on`) uses the same table, baked into
-`firmware/App/ntc_calib.h`.
+`firmware/App/ntc_calib.h`. The firmware saves `auto on` or `auto off` to
+flash with the curves, so a board that reboots without a host comes back in
+the same mode.
 
 A different R25 needs a matching pull-up swap, since the pull-up sets both
 the divider's output range and the firmware's calibration constant: match
@@ -265,14 +267,16 @@ mode reaches 100 % the same way.
 
 | Case | Result |
 |---|---|
-| Power-up before the first command from the host | 100 % |
-| USB unplugged or host powered off | Module unpowered and both switches rest on at 100 % |
+| Power-up before the first command from the host, `auto off` saved | 100 % at reset, then the curve fallback below within 1 s |
+| Power-up with `auto on` saved | Each fan follows its temperature curve from boot, with or without a host |
+| USB unplugged or host powered off, `auto on` | Module stays powered from 12 V through U1 and keeps driving each fan from its temperature curve |
+| USB unplugged or host powered off, `auto off` | Module stays powered from 12 V through U1, gets no commands, and after 20 s falls back to the curves as in the last row |
 | Module pulled out of its socket | Both switches rest on at 100 % |
 | Supply sags below the reset threshold of the STM32 near 1.9 V | MCU held in reset and both switches rest on at 100 % |
 | Firmware hangs | Watchdog resets the MCU after 1 s and both switches rest on during reset at 100 % |
-| No valid command for 10 s while the module is still powered | Firmware failsafe sets 100 % and the LED blinks fast and the mode stays unchanged |
+| No valid command for 20 s while the module is still powered and `auto off` | Firmware failsafe sets 100 %, the LED blinks fast and the mode stays unchanged. Within 1 s each fan falls back to its saved curve. A channel with no curve or a bad sensor stays at 100 %, and a corrupted curve on any channel keeps every fan at 100 %. The next valid command hands control back to the host |
 
-Running `fanctl.py watch` or a control daemon keeps the 10 s timer from
+Running `fanctl.py watch` or a control daemon keeps the 20 s timer from
 expiring. A fan is flagged `stall=1` when its duty sits above 0 but its tach
 reads 0 RPM for 3 s. Fans without a tach wire always show this flag.
 
@@ -328,9 +332,10 @@ python3 host/fanctl.py -p /dev/ttyACM1 set 2 40   # board on another port
   as `1-3` are not accepted.
 - To check a fan run `python3 host/fanctl.py get` and read the
   `fan N mode=... duty=... rpm=...` line.
-- Settings hold only while the host keeps talking to the board. When no
-  command arrives for 10 s all fans return to 100 %. Keep `fanctl.py watch`
-  or a control daemon running to hold the values.
+- With `auto off`, settings hold only while the host keeps talking to the
+  board. When no command arrives for 20 s the fans fall back to the saved
+  curves, or 100 % without them. Keep `fanctl.py watch` or a control daemon
+  running to hold the values.
 - `mode <1-4|all> pwm|dc` picks the speed-control path for a channel: `pwm`
   for a 4-pin fan, `dc` for a 3-pin fan. It falls back to `pwm` at every
   boot and after every reconnect so the channel of a 3-pin fan needs
@@ -350,9 +355,12 @@ curve driven by the temperature of an NVIDIA GPU through `sensor = gpuN` read
 via `nvidia-smi` using the higher of the core and memory temperature. A
 managed channel also takes `type = pwm` for the 4-pin default or `type = dc`
 for a 3-pin fan. The daemon sends `mode` once at startup and again after every
-reconnect because a firmware reset returns every channel to `pwm`. Every cycle
+reconnect because a firmware reset returns every channel to `pwm`. It sends
+`auto off` at the same points, because the board ignores `set` while `auto on`
+runs. Stopping the daemon leaves the board in `auto off`, so run
+`fanctl.py auto on` to hand control back to the board. Every cycle
 it re-sends the duty of each managed channel which doubles as the ping that
-holds off the 10 s firmware failsafe. A channel with no `[fanN]` section is
+holds off the 20 s firmware failsafe. A channel with no `[fanN]` section is
 left alone. `nvidia-smi` must be on `PATH` and no extra Python dependency is
 needed.
 

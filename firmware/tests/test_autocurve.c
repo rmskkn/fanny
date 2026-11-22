@@ -54,10 +54,15 @@ static void set_ch(unsigned ch, unsigned mv, unsigned raw)
 	fake_raw[ch] = raw;
 }
 
+static void step_host(bool host_lost)
+{
+	autocurve_update(now_ms, host_lost);
+	now_ms += 1000;
+}
+
 static void step(void)
 {
-	autocurve_update(now_ms);
-	now_ms += 1000;
+	step_host(false);
 }
 
 int main(void)
@@ -65,6 +70,7 @@ int main(void)
 	/* Starts erased, like real flash on first boot. */
 	memset(fake_flash, 0xFF, sizeof(fake_flash));
 	autocurve_init();
+	check("erased flash boots with auto off", autocurve_active(), false);
 
 	/* Both channels use the nominal 10k/B3950 mv->degC table quoted in
 	 * the comments below; these checks use channels 1 and 2. */
@@ -102,6 +108,10 @@ int main(void)
 	autocurve_init();
 	check("curve survives reinit", autocurve_curve_status(1), CURVE_OK);
 	check("channel 2's curve survives too", autocurve_curve_status(2), CURVE_OK);
+	check("auto on survives reinit", autocurve_active(), true);
+	/* The page as it stands with auto on, for the reset check further down. */
+	uint8_t flash_auto_on[sizeof fake_flash];
+	memcpy(flash_auto_on, fake_flash, sizeof flash_auto_on);
 
 	/* Read-back accessors (protocol.c's `curve` query uses these) report
 	 * exactly the points that were set, in order. */
@@ -162,6 +172,41 @@ int main(void)
 	set_ch(1, 100, 2048);
 	step();
 	check("auto off is a no-op", duties[1], 100);
+	autocurve_init();
+	check("auto off survives reinit", autocurve_active(), false);
+
+	/* A reset with auto on saved must come back with auto on, even though
+	 * the RAM state right before it says off. */
+	memcpy(fake_flash, flash_auto_on, sizeof fake_flash);
+	autocurve_init();
+	check("saved auto on restored at boot", autocurve_active(), true);
+	autocurve_set(false);
+
+	/* Host-loss fallback with auto off: the saved curves take over, and a
+	 * channel with no table still runs at 100 %. Tables 1 and 2 are good
+	 * here (the restored page predates the corruption above). */
+	set_ch(1, 871, 2048); /* 50 C -> 55 */
+	duties[1] = 0;
+	step();
+	check("auto off with host present is a no-op", duties[1], 0);
+	step_host(true);
+	check("host-loss fallback runs the curve", duties[1], 55);
+	check("fallback channel with no table runs full", duties[0], 100);
+
+	/* One corrupted table in the fallback sends every fan to 100 %, the
+	 * good channel 1 included. */
+	autocurve_corrupt_for_test(2);
+	step_host(true);
+	check("fallback with corrupted table: ch 1 full", duties[1], 100);
+	check("fallback with corrupted table: ch 2 full", duties[2], 100);
+
+	/* `auto on` keeps the per-channel rule: only the bad channel goes full. */
+	autocurve_set(true);
+	step();
+	check("auto on with corrupted ch 2 still runs ch 1", duties[1], 55);
+	autocurve_set(false);
+	if (autocurve_set_curve(2, "30:20,40:35,50:55,60:75,70:100") != NULL)
+		check("restoring channel 2's curve failed", 1, 0);
 
 	/* A normal, human-scale curve spanning a wide 0-200 degC gradation is
 	 * unaffected by the out-of-range check above: every point here is
