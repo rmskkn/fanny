@@ -72,23 +72,28 @@ test:
 clean:
 	rm -rf $(BUILD)
 
-# clang's own ARM sysroot lacks libopencm3 and the newlib headers the real
-# toolchain carries, so point it at arm-none-eabi-gcc's sysroot instead.
-# -isysroot alone found newlib's own headers (string.h etc.) with one clang
-# build but not another, so the sysroot's include dir is also added
-# explicitly rather than relied on implicitly. CLANG is pinned to clang-18
-# specifically (see the help text above): an untested other major version
-# can have a different default checker set, which bit us once already (a
-# checker that flags every MMIO register access as a "fixed address
-# dereference" even though that's the normal, intended way to touch
-# hardware here; clang-18 doesn't carry that checker at all).
+# clang's own ARM target has no newlib headers (string.h etc.) of its own,
+# and guessing the right sysroot layout for them broke twice already: once
+# across clang builds, once across how two different distros package
+# gcc-arm-none-eabi's sysroot. So instead of guessing, ask arm-none-eabi-gcc
+# itself (the same compiler the real build uses) where it finds its own
+# headers, with the same cpu/ABI flags, and hand clang that exact list via
+# -isystem. CLANG is pinned to clang-23 (see the help text above): an
+# untested other major version can have a different default checker set,
+# which bit us once already (a checker that flags every MMIO register
+# access as a "fixed address dereference" even though that's the normal,
+# intended way to touch hardware here).
 # --analyze always exits 0 even on a warning, so grep the output for one
 # and fail the build on a hit instead of trusting the exit code.
 analyze: $(OPENCM3_DIR)/lib/libopencm3_stm32f1.a
-	@sysroot="$$($(CC) -print-sysroot)"; \
+	@incdirs="$$($(CC) $(ARCH) -E -Wp,-v -xc /dev/null 2>&1 \
+		| sed -n '/#include <\.\.\.> search starts here:/,/End of search list\./p' \
+		| sed -e '1d;$$d' -e 's/^ //')"; \
+	isystem=""; \
+	for d in $$incdirs; do isystem="$$isystem -isystem $$d"; done; \
 	status=0; \
 	for src in $(SRCS); do \
-		out="$$($(CLANG) --target=arm-none-eabi $(ARCH) -isysroot "$$sysroot" -I"$$sysroot/include" \
+		out="$$($(CLANG) --target=arm-none-eabi $(ARCH) $$isystem \
 			-DSTM32F1 -I$(OPENCM3_DIR)/include -ICore -IApp -IUSB_DEVICE \
 			--analyze -Xclang -analyzer-output=text \
 			"$$src" 2>&1)"; \
