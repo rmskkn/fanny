@@ -205,8 +205,6 @@ friction. Each fan header gets a window wide enough for a finger on the plug
 latch. More windows sit over the sensor inputs, the 12 V input and the Blue
 Pill SWD pins, and a notch in the side leaves room for the USB plug.
 
-![Case assembled](hardware/case/case_assembled.png)
-
 All sizes are constants at the top of `fan_controller_case.py`. After you
 change one, rebuild the FreeCAD document, the STEP files and the STLs:
 
