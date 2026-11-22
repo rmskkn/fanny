@@ -264,3 +264,24 @@ had ever existed in this project.
   ```
   python3 hardware/scripts/dk_search.py specs.json [--qty N] [--limit N]
   ```
+
+### After a schematic or PCB edit
+
+1. Verify first: ERC and DRC must both come back clean (0 errors) before
+   anything downstream is regenerated.
+2. Regenerate `hardware/pcb_3d.png`:
+   ```sh
+   kicad-cli pcb render --output hardware/pcb_3d.png --width 1600 --height 900 \
+       --quality high --floor --rotate "-45,0,45" --background opaque \
+       hardware/kicad/fan_controller.kicad_pcb
+   ```
+3. Regenerate `hardware/bom.csv`: diff its `References` column against the
+   schematic's reference list and fix any part that was added, removed, or
+   swapped.
+4. Update `README.md` only where the edit changed what it describes: the
+   block diagram, pin map, feature list, or a value/part named in prose
+   (e.g. a component swap or removal). Don't touch unaffected sections.
+
+Keep this order. A render taken before DRC passes needs retaking, and a BOM
+diffed against an unverified schematic can miss a part that still needs
+fixing.

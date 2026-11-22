@@ -18,7 +18,6 @@ on the host as a USB CDC serial port (`/dev/ttyACM*` or `COMx`).
   state by default, held there by pull resistors alone. A fan runs at
   100% on power-up, after a crash, or with the MCU pulled out. No firmware
   or host required.
-- **Per-channel and board-level PTC fusing** plus a 12 V TVS.
 - **Text protocol over USB CDC.** Comes with a Python CLI (`fanctl.py`) and
   a daemon (`fancontrold.py`) for temperature or GPU-temperature curves.
 
@@ -34,6 +33,7 @@ on the host as a USB CDC serial port (`/dev/ttyACM*` or `COMx`).
 │   └── tests/         host-side unit tests
 ├── hardware/
 │   ├── kicad/         schematic, symbol lib, board
+│   ├── case/          3D-printed tray and cover (FreeCAD script, STEP, STL, renders)
 │   ├── bom.csv        bill of materials
 │   ├── pcb_3d.png     3D render of the placed board
 │   ├── pcb_top.png    placement plot seen from the top
@@ -56,7 +56,7 @@ sudo apt install kicad gcc-arm-none-eabi openocd python3 python3-serial
 ```
 
 You also need an ST-Link V2 programmer wired to the Blue Pill's SWD header
-to flash firmware.
+to flash firmware. FreeCAD 1.1 is only needed to change the printed case.
 
 
 ## Hardware design
@@ -64,7 +64,7 @@ to flash firmware.
 ### Block overview
 
 ```mermaid
-flowchart LR
+flowchart TB
     classDef power fill:#fde3d8,stroke:#e2572b,color:#111
     classDef usb fill:#dbe7ff,stroke:#2f6fed,color:#111
     classDef mcu fill:#e8d7f5,stroke:#5b4b8a,color:#111
@@ -74,8 +74,8 @@ flowchart LR
     classDef analog fill:#fbd9e8,stroke:#c2255c,color:#111
 
     subgraph PWR["Power 12 V"]
-        PSU["12 V PSU"] --> J1["J1 Mate-N-Lok"] --> F1["F1 PTC 2.5A"] --> D1["D1 TVS"] --> V12["+12V"]
-        V12 --> F25["F2..F5 1.1A PTC x4"] --> FANV["fan +12V x4"]
+        PSU["12 V PSU"] --> J1["J1 Mate-N-Lok"] --> F1["F1 PTC 2.5A"] --> D1["D1 Schottky"] --> V12["+12V"]
+        V12 --> FANV["fan +12V x4"]
         V12 --> DIV["47k/10k divider"] --> PB0["PB0 ADC"]
     end
 
@@ -98,10 +98,10 @@ flowchart LR
     end
 
     subgraph ANALOG["Analog inputs"]
-        SENS["sensors"] --> RCB["1k + 100n + BAT54S"] --> ADC["PA0..PA5 ADC x6"]
+        SENS["sensors"] --> RCB["1k + 100n + BAT54S"] --> ADC["PA0..PA3 ADC x4"]
     end
 
-    class PSU,J1,F1,D1,V12,F25,FANV,DIV power
+    class PSU,J1,F1,D1,V12,FANV,DIV power
     class PB0 mcu
     class USB,P5V,LDO,V33,FB1,V33A usb
     class TIM4,BSS,FPWM pwm
@@ -171,9 +171,10 @@ before trusting the curve.
 
 ### Power
 
-- **12 V input:** a screw terminal followed by a PTC that holds 2.5 A and
-  then an SMBJ13A TVS. Reversed polarity makes the TVS conduct and that trips
-  the PTC.
+- **12 V input:** a screw terminal, a PTC that holds 2.5 A, then an SS54
+  Schottky diode (anode toward the PTC) that blocks a reversed supply instead
+  of tripping the PTC. The PTC resets on its own, so a miswire leaves nothing
+  to replace.
 - **Module supply:** USB only. The board carries no 5 V or 3.3 V regulator.
   The LDO on the Blue Pill makes 3.3 V from USB VBUS.
 - **12 V monitoring:** a 47 kΩ/10 kΩ divider into PB0. Full scale lands near
@@ -185,6 +186,41 @@ before trusting the curve.
 ## BOM list
 
 The full bill of materials is in [`hardware/bom.csv`](hardware/bom.csv).
+
+## Case
+
+![Case with the cover lifted](hardware/case/case_exploded.png)
+
+[`hardware/case/`](hardware/case/) holds a two-part printed case: a low tray
+and a cover. Both parts print without supports and weigh about 33 g together
+in PLA.
+
+The PCB screws onto four standoffs in the tray with M2x6 self-tapping screws.
+Fit the MH4 screw before you plug in the Blue Pill, because the module covers
+it. The tray wall stands 2 mm above the board, so the tray works on its own
+too.
+
+The cover sits on the tray wall, and a lip inside the wall holds it by
+friction. Each fan header gets a window wide enough for a finger on the plug
+latch. More windows sit over the sensor inputs, the 12 V input and the Blue
+Pill SWD pins, and a notch in the side leaves room for the USB plug.
+
+![Case assembled](hardware/case/case_assembled.png)
+
+All sizes are constants at the top of `fan_controller_case.py`. After you
+change one, rebuild the FreeCAD document, the STEP files and the STLs:
+
+```sh
+cd hardware/case
+freecadcmd fan_controller_case.py
+```
+
+Run `freecad fan_controller_case.py` instead to also redraw the two images
+above. The FreeCAD window opens for a few seconds and closes on its own.
+
+The cover underside sits 20 mm above the PCB. That figure comes from an
+estimated 18.6 mm Blue Pill stack with the BOOT jumpers fitted, so measure
+your module and raise `TOP_CLEAR` if it stands taller.
 
 ## Firmware
 
