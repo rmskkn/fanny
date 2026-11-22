@@ -215,6 +215,11 @@ had ever existed in this project.
   tools, or forming a plan — reinforces the project `CLAUDE.md` "Skills
   first" rule (user, 2026-11-15).
 
+- For any change to the printed case in `hardware/case/`, use the
+  `freecad-case` skill (`.claude/skills/freecad-case/SKILL.md`). It reads
+  connector positions from the PCB, rebuilds the case headless, and reloads
+  the one FreeCAD window kept open for the session (user, 2026-11-22).
+
 - Before every commit, run `make` and `make test` from the repo root, even
   when the commit touches only hardware or docs (user, 2026-11-14). Both
   must pass on the exact tree you are committing. If you leave uncommitted
