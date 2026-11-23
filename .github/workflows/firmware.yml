@@ -19,10 +19,10 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install arm-none-eabi-gcc
+      - name: Install arm-none-eabi-gcc and cppcheck
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-arm-none-eabi
+          sudo apt-get install -y gcc-arm-none-eabi cppcheck
 
       # Ubuntu's own archives don't carry clang-23 yet; apt.llvm.org's
       # bootstrap script does, and installs it as clang-23 (matches the
