@@ -24,6 +24,10 @@ static char *put_str(char *p, const char *s)
 {
 	while (*s)
 		*p++ = *s++;
+	/* cppcheck can't see that p only ever gets written through, never
+	 * read, so it mistakes the caller's uninitialized scratch buffer
+	 * for an uninitialized pointer. */
+	// cppcheck-suppress uninitvar
 	return p;
 }
 
@@ -210,7 +214,7 @@ static void emit_curve(unsigned ch)
 {
 	char out[LINE_MAX];
 	char *p = put_str(out, "curve ");
-	char *end = out + sizeof(out) - 1; /* leave room for the '\0' */
+	const char *end = out + sizeof(out) - 1; /* leave room for the '\0' */
 	enum curve_status status = autocurve_curve_status(ch);
 
 	p = put_uint(p, ch + 1);

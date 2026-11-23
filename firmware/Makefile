@@ -5,20 +5,21 @@
 #                     libopencm3 submodule on first run)
 #   make flash        flash build/fanny.bin with OpenOCD + ST-Link
 #   make test         host-side unit tests (native gcc)
-#   make analyze      clang static analyzer over every firmware source,
-#                     cross-targeted at the real cpu/ABI. Needs clang-23
-#                     specifically (checker defaults drift between major
-#                     versions): on CI, apt.llvm.org's llvm.sh installs it
-#                     as clang-23; on Arch, the clang package's own
+#   make analyze      clang static analyzer + cppcheck over every firmware
+#                     source, cross-targeted at the real cpu/ABI. Needs
+#                     clang-23 specifically (checker defaults drift between
+#                     major versions): on CI, apt.llvm.org's llvm.sh installs
+#                     it as clang-23; on Arch, the clang package's own
 #                     clang-23 symlink already puts it on PATH.
 
 OPENCM3_DIR ?= Drivers/libopencm3
 
-PREFIX  ?= arm-none-eabi-
-CC      := $(PREFIX)gcc
-OBJCOPY := $(PREFIX)objcopy
-SIZE    := $(PREFIX)size
-CLANG   ?= clang-23
+PREFIX   ?= arm-none-eabi-
+CC       := $(PREFIX)gcc
+OBJCOPY  := $(PREFIX)objcopy
+SIZE     := $(PREFIX)size
+CLANG    ?= clang-23
+CPPCHECK ?= cppcheck
 
 BUILD := build
 TARGET := $(BUILD)/fanny
@@ -85,6 +86,15 @@ clean:
 # intended way to touch hardware here).
 # --analyze always exits 0 even on a warning, so grep the output for one
 # and fail the build on a hit instead of trusting the exit code.
+#
+# cppcheck runs second, as a different engine over the same sources: it
+# catches classes of bug clang's analyzer doesn't model (e.g. this project's
+# protocol.c constVariablePointer fix). missingIncludeSystem is suppressed
+# because, unlike clang above, cppcheck is never given libc's real headers;
+# the vendored libopencm3 tree is suppressed entirely since its style is not
+# ours to fix. A finding that's a false positive or conflicts with an
+# external API's required signature gets a `// cppcheck-suppress <id>`
+# comment at the spot instead of widening these build-wide suppressions.
 analyze: $(OPENCM3_DIR)/lib/libopencm3_stm32f1.a
 	@incdirs="$$($(CC) $(ARCH) -E -Wp,-v -xc /dev/null 2>&1 \
 		| sed -n '/#include <\.\.\.> search starts here:/,/End of search list\./p' \
@@ -99,6 +109,11 @@ analyze: $(OPENCM3_DIR)/lib/libopencm3_stm32f1.a
 			"$$src" 2>&1)"; \
 		if [ -n "$$out" ]; then echo "$$out"; status=1; fi; \
 	done; \
+	$(CPPCHECK) --enable=warning,style,performance,portability --inline-suppr \
+		--suppress=missingIncludeSystem --suppress='*:$(OPENCM3_DIR)/*' \
+		--error-exitcode=1 --std=c11 \
+		-DSTM32F1 -I$(OPENCM3_DIR)/include -ICore -IApp -IUSB_DEVICE \
+		$(SRCS) -q || status=1; \
 	exit $$status
 
 .PHONY: all flash test clean analyze

@@ -144,6 +144,10 @@ static volatile bool host_dtr;
 static uint8_t rx_buf[256];
 static volatile uint16_t rx_head, rx_tail;
 
+/* req stays non-const: libopencm3's usbd_control_callback typedef requires
+ * this exact signature, and set_config() below passes this function straight
+ * to usbd_register_control_callback(). */
+// cppcheck-suppress constParameterCallback
 static enum usbd_request_return_codes control_request(usbd_device *dev, struct usb_setup_data *req,
 	uint8_t **buf, uint16_t *len, usbd_control_complete_callback *complete)
 {
