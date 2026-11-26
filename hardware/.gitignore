@@ -1,0 +1,5 @@
+# LTspice/SPICE generated output (scratchpad/ltspice/*.cir is committed, this isn't)
+scratchpad/ltspice/*.log
+scratchpad/ltspice/*.raw
+scratchpad/ltspice/*.db
+scratchpad/ltspice/*.op.raw

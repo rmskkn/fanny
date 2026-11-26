@@ -1,0 +1,70 @@
+* Fan controller CH1 motor-switch cascode - PWM MODE (DCEN=0, 4-pin fan, 50% duty)
+* Topology/values read live from hardware/kicad/fan_controller.kicad_sch via
+* the kicad-happy analyzer (2026-11-26). Reproduces the duty point (50%) from
+* the field report in SUMMARY.md where Q_hs was seen chopping on the real
+* board even though DCEN should hold it fully on.
+* Expectation if the cascode is clean: FAN1_HS_G and FAN1_12V stay steady,
+* no 25 kHz ripple.
+
+.param DUTY=0.5
+.param FSW=25k
+.param TR=10n
+
+.model PMOS_AO3401A PMOS(VTO=-0.9 KP=4.0 LAMBDA=0.01 RS=0.02 RD=0.02)
+.model NMOS_BSS138  NMOS(VTO=1.5  KP=0.08 LAMBDA=0.01 RS=0.3  RD=2)
+.model D_SS34 D(IS=1e-6 RS=0.02 N=1.05)
+
+V12 PLUS12V 0 DC 12
+V33 PLUS3V3 0 DC 3.3
+
+* FAN1_PWM_G from TIM4 PWM2: HIGH for (1-DUTY) of the period (AGENTS.md note)
+Vpwm FAN1_PWM_G 0 PULSE(3.3 0 0 {TR} {TR} {(1-DUTY)/FSW} {1/FSW})
+Vdcen FAN1_DCEN 0 DC 0
+
+R6  FAN1_DCEN_G FAN1_DCEN 100
+R8  FAN1_DCEN_G 0 10k
+R12 FAN1_PWM_GATE FAN1_PWM_G 100
+R13 FAN1_PWM_GATE 0 100k
+R9  FAN1_PNP_B PLUS12V 10k
+R5  FAN1_RB FAN1_PNP_B 4.7k
+R7  FAN1_HS_G 0 2.2k
+
+.subckt MYPMOS d g s b
+Mcore d g s b PMOS_AO3401A
+Cgd g d 40p
+Cgs g s 130p
+.ends
+
+.subckt MYNMOS d g s b
+Mcore d g s b NMOS_BSS138
+Cgd g d 4p
+Cgs g s 28p
+.ends
+
+* Q1 Q_pnp:  D=FAN1_HS_G    G=FAN1_PNP_B   S=+12V
+XQ1 FAN1_HS_G    FAN1_PNP_B    PLUS12V PLUS12V MYPMOS
+* Q2 Q_hs:   D=FAN1_12V     G=FAN1_HS_G    S=+12V
+XQ2 FAN1_12V     FAN1_HS_G     PLUS12V PLUS12V MYPMOS
+* Q3 Q_inv:  D=FAN1_RB      G=FAN1_PWM_GATE S=UNNAMED0
+XQ3 FAN1_RB      FAN1_PWM_GATE UNNAMED0 0      MYNMOS
+* Q4 Q_en:   D=UNNAMED0     G=FAN1_DCEN_G  S=GND
+XQ4 UNNAMED0     FAN1_DCEN_G   0       0       MYNMOS
+* Q7 Q_sig:  D=FAN1_PWM_OUT G=FAN1_PWM_GATE S=GND (fan pin4, idle in dc mode)
+XQ7 FAN1_PWM_OUT FAN1_PWM_GATE 0       0       MYNMOS
+
+D4 0 FAN1_12V D_SS34
+Rfan FAN1_12V 0 24
+Rfanpullup FAN1_PWM_OUT PLUS3V3 10k
+
+.tran 0 240u 0 {TR/5}
+
+.meas tran hsg_max MAX V(FAN1_HS_G) FROM=40u TO=240u
+.meas tran hsg_min MIN V(FAN1_HS_G) FROM=40u TO=240u
+.meas tran fan12v_max MAX V(FAN1_12V) FROM=40u TO=240u
+.meas tran fan12v_min MIN V(FAN1_12V) FROM=40u TO=240u
+.meas tran pnpb_max MAX V(FAN1_PNP_B) FROM=40u TO=240u
+.meas tran pnpb_min MIN V(FAN1_PNP_B) FROM=40u TO=240u
+.meas tran rb_max MAX V(FAN1_RB) FROM=40u TO=240u
+.meas tran rb_min MIN V(FAN1_RB) FROM=40u TO=240u
+
+.end

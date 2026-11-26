@@ -98,6 +98,19 @@ freewheel K, header +), `FANn_HS_G` (`Q_hs` G, `R_gpd`, `Q_pnp` C),
 pulldown), `FANn_PWM_GATE` (series R, pulldown, `Q_sig` G, `Q_inv` G),
 `FANn_PWM_OUT` (`Q_sig` D, header pin 4).
 
+## LTspice verification
+
+Channel-1 cascode (`Q1` Q_pnp, `Q2` Q_hs, `Q3` Q_inv, `Q4` Q_en, `Q7` Q_sig —
+current schematic refs, not the table above) checked against the live
+netlist, 50% duty, both `FAN1_DCEN_G` states. Netlists and `.log` results:
+`hardware/scratchpad/ltspice/fan1_pwm_mode.cir` and `hardware/scratchpad/ltspice/fan1_dc_mode.cir`.
+Rerun with `wine /usr/share/ltspice/LTspice.exe -b "$(winepath -w <file>.cir)"`
+(plain Unix path fails silently — "No schematic nor netlist specified").
+Result: `Q_hs` gate stays flat (no chop) with DCEN low, chops cleanly with
+DCEN high. No leakage path found at the schematic level — the CH1 chop bug
+in SUMMARY.md is not reproduced here, so it points at the physical board,
+not this topology.
+
 ## What was wrong before this session, and what fixed it
 
 Everything below was found in commit `d9a9085` ("WIP") and is now repaired.
@@ -269,6 +282,11 @@ had ever existed in this project.
   ```
   python3 hardware/scripts/dk_search.py specs.json [--qty N] [--limit N]
   ```
+
+- **SPICE/LTspice models go in `hardware/scratchpad/ltspice/`** — commit the `.cir`
+  netlist only, for any channel or subcircuit, not just CH1. `.log`,
+  `.raw`, `.db`, `.op.raw` are generated output, gitignored, regenerate
+  on rerun (user, 2026-11-26).
 
 ### After a schematic or PCB edit
 
