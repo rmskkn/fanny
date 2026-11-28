@@ -4,30 +4,29 @@
 # Core/flash_layout.h; no A/B, no trial-boot: an interrupted update needs
 # a re-flash over the same CDC link, not an automatic revert).
 #
-#   make fw           build the whole firmware as one image, no bootloader,
-#                     no OTA: build/fanny.elf/.bin, same as before any OTA
-#                     work -- bench/dev use, or a board that never updates
-#   make flash_fw     flash that image with OpenOCD + ST-Link
-#   make fw_ota       build bootloader.elf/.bin and fanny_app.elf/.bin
-#                     (inits and builds the libopencm3 submodule on first
-#                     run)
-#   make flash_fw_ota flash both with OpenOCD + ST-Link (a fresh board;
-#                     once the bootloader is on it, update fanny_app.bin
-#                     with the "update" command instead, over CDC)
-#   make test         host-side unit tests (native gcc)
-#   make analyze      clang static analyzer + cppcheck over every source this
-#                     project owns, cross-targeted at the real cpu/ABI. Needs
-#                     clang-23 specifically (checker defaults drift between
-#                     major versions): on CI, apt.llvm.org's llvm.sh installs
-#                     it as clang-23; on Arch, the clang package's own
-#                     clang-23 symlink already puts it on PATH.
-#
 # The bootloader reuses chunky_bootloader's (Bootloader/chunky, git
 # submodule) format2 wire format for the update blob (SPEC.md 4.1/4.2:
 # magic/version/image-SHA-256/seal) and its sha256/crc32 utilities, but
 # none of its A/B flash.h/bootloader.c/device.c machinery, which this
 # single-partition layout has no use for -- see Bootloader/fw_image.c's
 # header comment.
+
+.DEFAULT_GOAL := help
+
+help:
+	@echo "make full_fw    build the whole firmware as one image, no bootloader, no OTA:"
+	@echo "                build/fanny.elf/.bin -- bench/dev use, or a board that never updates"
+	@echo "make flash_fw   flash that image with OpenOCD + ST-Link"
+	@echo "make ota_fw     build bootloader.elf/.bin and fanny_app.elf/.bin (inits and builds"
+	@echo "                the libopencm3 submodule on first run)"
+	@echo "make flash_ota  flash fanny_app.bin alone with OpenOCD + ST-Link; assumes a"
+	@echo "                bootloader is already on the board and leaves it untouched"
+	@echo "                (no target here flashes the bootloader binary itself)"
+	@echo "make test       host-side unit tests (native gcc)"
+	@echo "make analyze    clang static analyzer + cppcheck over every source this project"
+	@echo "                owns, cross-targeted at the real cpu/ABI. Needs clang-23"
+	@echo "                specifically (checker defaults drift between major versions)"
+	@echo "make clean"
 
 OPENCM3_DIR ?= Drivers/libopencm3
 CHUNKY_DIR  ?= Bootloader/chunky
@@ -70,7 +69,7 @@ BOOT_LIB_SRCS := $(CHUNKY_LIB)/format2.c $(CHUNKY_LIB)/sha256.c $(CHUNKY_LIB)/ut
 BOOT_OBJS := $(BOOT_OWN_SRCS:%.c=$(BUILD)/boot/%.o) $(BOOT_LIB_SRCS:$(CHUNKY_LIB)/%.c=$(BUILD)/boot/%.o)
 BOOT_CFLAGS := $(CFLAGS) -I$(CHUNKY_LIB) -I$(FMT_C) -ICore -IBootloader -IUSB_DEVICE
 
-fw_ota: $(APP_TARGET).bin $(BOOT_TARGET).bin
+ota_fw: $(APP_TARGET).bin $(BOOT_TARGET).bin
 	$(SIZE) $(BOOT_TARGET).elf $(APP_TARGET).elf
 
 # --- app objects and link ---
@@ -106,17 +105,15 @@ $(OPENCM3_DIR)/lib/libopencm3_stm32f1.a:
 	test -f $(OPENCM3_DIR)/Makefile || git submodule update --init $(OPENCM3_DIR)
 	$(MAKE) -C $(OPENCM3_DIR) TARGETS=stm32/f1
 
-# Bootloader then app, at their fixed addresses -- the two-binary flash a
-# fresh board needs. Re-flashing just the app once a bootloader is already
-# on the board should go through an update instead (the "update" command,
-# then streaming fanny_app.bin's matching full-image blob over CDC), not
-# this target.
-flash_fw_ota: $(BOOT_TARGET).bin $(APP_TARGET).bin
+# The app part of the OTA split, on its own: assumes a bootloader is
+# already on the board and leaves it untouched. Over USB instead, once
+# the bootloader is on the board, use the "update" command plus
+# host/fwtool.py instead of this target.
+flash_ota: $(APP_TARGET).bin
 	openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \
-		-c "program $(BOOT_TARGET).bin verify 0x08000000" \
 		-c "program $(APP_TARGET).bin verify reset exit 0x08005000"
 
-# --- fw: the app alone, no bootloader, no OTA (see
+# --- full_fw: the app alone, no bootloader, no OTA (see
 # Core/stm32f103x8_monolithic.ld). For bench/dev use or a board that will
 # never run an update. ---
 $(BUILD)/fanny.elf: $(APP_OBJS) Core/stm32f103x8_monolithic.ld $(OPENCM3_DIR)/lib/libopencm3_stm32f1.a
@@ -125,14 +122,12 @@ $(BUILD)/fanny.elf: $(APP_OBJS) Core/stm32f103x8_monolithic.ld $(OPENCM3_DIR)/li
 $(BUILD)/fanny.bin: $(BUILD)/fanny.elf
 	$(OBJCOPY) -O binary $< $@
 
-fw: $(BUILD)/fanny.bin
+full_fw: $(BUILD)/fanny.bin
 	$(SIZE) $(BUILD)/fanny.elf
 
 flash_fw: $(BUILD)/fanny.bin
 	openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \
 		-c "program $(BUILD)/fanny.bin verify reset exit 0x08000000"
-
-all: fw fw_ota
 
 test:
 	@mkdir -p $(BUILD)
@@ -203,7 +198,7 @@ analyze: $(OPENCM3_DIR)/lib/libopencm3_stm32f1.a
 		$(ANALYZE_SRCS) -q || status=1; \
 	exit $$status
 
-.PHONY: all fw flash_fw fw_ota flash_fw_ota test clean analyze
+.PHONY: help full_fw flash_fw ota_fw flash_ota test clean analyze
 
 -include $(APP_OBJS:.o=.d)
 -include $(BOOT_OBJS:.o=.d)

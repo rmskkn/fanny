@@ -414,8 +414,11 @@ loginctl enable-linger "$USER"   # only if the board must run with no user sessi
 
 ### Updating firmware via USB
 
-A board running the bootloader (`make fw_ota`, flashed with `make
-flash_fw_ota`) takes updates over the same USB CDC link. No SWD needed.
+A fresh board's first flash still needs SWD: `make ota_fw` builds the
+bootloader and app, `make flash_ota` writes the app part at its fixed
+address (the bootloader itself has no `make` target yet, so it still
+needs its own manual OpenOCD `program` command). From there, every
+later update goes over the same USB CDC link, no SWD needed.
 
 ```sh
 python3 host/fwtool.py flash firmware/build/fanny_app.bin -v 2
@@ -430,6 +433,9 @@ bump it on every release. To build the sealed image without flashing it:
 python3 host/fwtool.py build firmware/build/fanny_app.bin -v 2 -o update.img
 ```
 
+The image format `fwtool.py` builds, and the bootloader checks, comes from
+the `firmware/Bootloader/chunky` submodule
+([rmskkn/chunky_mcu_updater](https://github.com/rmskkn/chunky_mcu_updater)).
 
 ## Known limits
 

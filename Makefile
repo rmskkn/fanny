@@ -1,17 +1,22 @@
 # SPDX-License-Identifier: GPL-3.0-only
 # Top-level entry point; the firmware build lives in firmware/Makefile.
-#
-#   make           build firmware (firmware/build/fanny.elf/.bin)
-#   make flash     flash with OpenOCD + ST-Link
-#   make test      unit tests: firmware logic (native) + host/ daemon and CLI
-#   make analyze   clang static analyzer over the firmware sources
-#   make clean
 
-all flash clean analyze:
+.DEFAULT_GOAL := help
+
+help:
+	@echo "make full_fw     build firmware/build/fanny.elf/.bin (no bootloader, no OTA)"
+	@echo "make flash_fw    flash it with OpenOCD + ST-Link"
+	@echo "make ota_fw      build firmware/build/bootloader.elf/.bin + fanny_app.elf/.bin"
+	@echo "make flash_ota   flash fanny_app.bin alone (bootloader must already be on the board)"
+	@echo "make test        unit tests: firmware logic (native) + host/ daemon and CLI"
+	@echo "make analyze     clang static analyzer over the firmware sources"
+	@echo "make clean"
+
+full_fw flash_fw ota_fw flash_ota clean analyze:
 	$(MAKE) -C firmware $@
 
 test:
 	$(MAKE) -C firmware test
 	$(MAKE) -C host test
 
-.PHONY: all flash test clean analyze
+.PHONY: help full_fw flash_fw ota_fw flash_ota test clean analyze
