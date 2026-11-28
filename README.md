@@ -412,6 +412,25 @@ systemctl --user enable --now fancontrold.service
 loginctl enable-linger "$USER"   # only if the board must run with no user session logged in
 ```
 
+### Updating firmware via USB
+
+A board running the bootloader (`make fw_ota`, flashed with `make
+flash_fw_ota`) takes updates over the same USB CDC link. No SWD needed.
+
+```sh
+python3 host/fwtool.py flash firmware/build/fanny_app.bin -v 2
+```
+
+This sends `update` to the running app, which reboots into the bootloader.
+The bootloader erases the app region, writes the new image, checks its
+SHA-256, and boots it. `-v` sets the version number sealed into the image;
+bump it on every release. To build the sealed image without flashing it:
+
+```sh
+python3 host/fwtool.py build firmware/build/fanny_app.bin -v 2 -o update.img
+```
+
+
 ## Known limits
 
 - **0 % doesn't stop every 4-pin fan in `pwm` mode** (fan-dependent). It does

@@ -6,6 +6,8 @@
  *   set <1-4|all> <0-100>    fan duty in percent
  *   mode <1-4|all> pwm|dc    pwm: 4-pin fan, dc: 3-pin fan (supply chopping)
  *   auto on|off              autonomous mode: no host needed, see autocurve.h
+ *   update                   resets into the bootloader's update receiver
+ *                              (App/fw_update.c): never returns, no "ok"
  *   curve <1-4|all> [t:d,...]  set, or with no table, read back that
  *                              channel's auto-mode temp(C)->duty(%) table
  *   ping                     keepalive

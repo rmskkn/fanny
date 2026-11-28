@@ -229,20 +229,25 @@ bool usb_cdc_getc(uint8_t *c)
 	return true;
 }
 
-void usb_cdc_write(const char *s)
+void usb_cdc_write_bytes(const void *data, size_t len)
 {
-	size_t len = strlen(s);
+	const uint8_t *p = data;
 
 	while (len && host_dtr) {
 		uint16_t n = len > PACKET_SIZE ? PACKET_SIZE : (uint16_t)len;
 		uint32_t t0 = millis();
 
-		while (usbd_ep_write_packet(usbd, EP_DATA_IN, s, n) == 0) {
+		while (usbd_ep_write_packet(usbd, EP_DATA_IN, p, n) == 0) {
 			if (ms_since(t0, millis()) >= TX_TIMEOUT_MS)
 				return;
 			usbd_poll(usbd);
 		}
-		s += n;
+		p += n;
 		len -= n;
 	}
+}
+
+void usb_cdc_write(const char *s)
+{
+	usb_cdc_write_bytes(s, strlen(s));
 }

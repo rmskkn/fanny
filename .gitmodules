@@ -1,3 +1,6 @@
 [submodule "firmware/Drivers/libopencm3"]
 	path = firmware/Drivers/libopencm3
 	url = https://github.com/libopencm3/libopencm3
+[submodule "firmware/Bootloader/chunky"]
+	path = firmware/Bootloader/chunky
+	url = git@github.com:rmskkn/chunky_mcu_updater.git

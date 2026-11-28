@@ -5,6 +5,7 @@
 #include "autocurve.h"
 #include "board.h"
 #include "fan.h"
+#include "fw_update.h"
 #include "protocol.h"
 #include "safety.h"
 #include "tach.h"
@@ -307,6 +308,13 @@ void protocol_exec(char *s)
 	if (argc == 0)
 		return;
 
+	if (strcmp(argv[0], "update") == 0 && argc == 1) {
+		/* Resets into the bootloader's update receiver (App/fw_update.c):
+		 * never returns, so there is no "ok" to send. */
+		fw_update_start();
+		return;
+	}
+
 	if (strcmp(argv[0], "get") == 0 && argc == 1) {
 		cmd_get();
 	} else if (strcmp(argv[0], "set") == 0) {
@@ -322,7 +330,7 @@ void protocol_exec(char *s)
 		emit(FW_VERSION);
 	} else if (strcmp(argv[0], "help") == 0 && argc == 1) {
 		emit("get | set <1-4|all> <0-100> | mode <1-4|all> pwm|dc | "
-		     "curve <1-4|all> [t:d,...] | auto on|off | ping | version");
+		     "curve <1-4|all> [t:d,...] | auto on|off | update | ping | version");
 	} else {
 		err = "unknown command";
 	}

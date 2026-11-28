@@ -9,6 +9,7 @@
 #include "autocurve.h"
 #include "board.h"
 #include "fan.h"
+#include "fw_update.h"
 #include "protocol.h"
 #include "safety.h"
 #include "tach.h"
@@ -40,6 +41,8 @@ bool safety_fan_stalled(unsigned ch) { return ch == 3; }
 void safety_set_host_check(bool enabled) { host_check_enabled = enabled; }
 void autocurve_set(bool on) { autocurve_on = on; }
 bool autocurve_active(void) { return autocurve_on; }
+static int fw_update_starts;
+void fw_update_start(void) { fw_update_starts++; }
 static enum curve_status curve_stat[FAN_COUNT];
 /* A fixed canned table stands in for whatever text was actually sent: this
  * file tests protocol dispatch, not curve parsing (test_autocurve.c covers
@@ -119,6 +122,10 @@ int main(void)
 	CHECK(!autocurve_on && host_check_enabled);
 	run("auto sideways\n");
 	CHECK(strcmp(out, "err auto must be on or off\n") == 0);
+
+	run("update\n");
+	CHECK(out[0] == '\0'); /* no "ok": fw_update_start() never returns on real hardware */
+	CHECK(fw_update_starts == 1);
 
 	host_seen = 0;
 	run("set 5 10\n");
