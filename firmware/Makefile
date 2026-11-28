@@ -14,8 +14,8 @@
 .DEFAULT_GOAL := help
 
 help:
-	@echo "make full_fw    build the whole firmware as one image, no bootloader, no OTA:"
-	@echo "                build/fanny.elf/.bin -- bench/dev use, or a board that never updates"
+	@echo "make full_fw    build bootloader + app as one combined image:"
+	@echo "                build/fanny.bin -- for first-time flashing a blank board"
 	@echo "make flash_fw   flash that image with OpenOCD + ST-Link"
 	@echo "make ota_fw     build bootloader.elf/.bin and fanny_app.elf/.bin (inits and builds"
 	@echo "                the libopencm3 submodule on first run)"
@@ -113,17 +113,18 @@ flash_ota: $(APP_TARGET).bin
 	openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \
 		-c "program $(APP_TARGET).bin verify reset exit 0x08005000"
 
-# --- full_fw: the app alone, no bootloader, no OTA (see
-# Core/stm32f103x8_monolithic.ld). For bench/dev use or a board that will
-# never run an update. ---
-$(BUILD)/fanny.elf: $(APP_OBJS) Core/stm32f103x8_monolithic.ld $(OPENCM3_DIR)/lib/libopencm3_stm32f1.a
-	$(CC) $(LDARCH) -TCore/stm32f103x8_monolithic.ld -Wl,-Map=$(BUILD)/fanny.map $(APP_OBJS) $(LDLIBS) -o $@
+# --- full_fw: bootloader + app combined into one flashable image, for
+# first-time flashing of a blank board over SWD. The bootloader image is
+# padded with 0xff out to APP_BASE (Core/flash_layout.h) so the app lands
+# at the offset it was linked for, then the app binary is appended. ---
+$(BUILD)/bootloader_padded.bin: $(BOOT_TARGET).elf
+	$(OBJCOPY) -O binary --pad-to=0x08005000 --gap-fill=0xff $< $@
 
-$(BUILD)/fanny.bin: $(BUILD)/fanny.elf
-	$(OBJCOPY) -O binary $< $@
+$(BUILD)/fanny.bin: $(BUILD)/bootloader_padded.bin $(APP_TARGET).bin
+	cat $(BUILD)/bootloader_padded.bin $(APP_TARGET).bin > $@
 
 full_fw: $(BUILD)/fanny.bin
-	$(SIZE) $(BUILD)/fanny.elf
+	$(SIZE) $(BOOT_TARGET).elf $(APP_TARGET).elf
 
 flash_fw: $(BUILD)/fanny.bin
 	openocd -f interface/stlink.cfg -f target/stm32f1x.cfg \

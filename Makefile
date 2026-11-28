@@ -4,7 +4,7 @@
 .DEFAULT_GOAL := help
 
 help:
-	@echo "make full_fw     build firmware/build/fanny.elf/.bin (no bootloader, no OTA)"
+	@echo "make full_fw     build firmware/build/fanny.bin (bootloader + app combined)"
 	@echo "make flash_fw    flash it with OpenOCD + ST-Link"
 	@echo "make ota_fw      build firmware/build/bootloader.elf/.bin + fanny_app.elf/.bin"
 	@echo "make flash_ota   flash fanny_app.bin alone (bootloader must already be on the board)"
